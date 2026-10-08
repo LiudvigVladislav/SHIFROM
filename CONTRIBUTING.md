@@ -1,6 +1,6 @@
-# Contributing to PHANTOM
+# Contributing to SHIFROM
 
-Thanks for your interest. PHANTOM is a privacy-first end-to-end
+Thanks for your interest. SHIFROM is a privacy-first end-to-end
 encrypted messenger, and contributions that align with the
 [Product Doctrine](docs/doctrine/Product_Doctrine.md) are always
 welcome.

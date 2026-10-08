@@ -9,12 +9,12 @@ model body is in Russian below it.
 
 ## English executive summary
 
-PHANTOM is a privacy-first messenger built for users on networks
+SHIFROM is a privacy-first messenger built for users on networks
 they cannot trust. This document defines what we defend against,
 what we explicitly do not, and how the trust model is laid out
 across the actors in the system.
 
-**What PHANTOM defends against.** A passive network observer
+**What SHIFROM defends against.** A passive network observer
 (ISP, carrier middlebox, transit-level adversary) sees only
 TLS-encrypted bytes — message content, sender, recipient, and
 contact graph remain confidential because every envelope is
@@ -37,7 +37,7 @@ local data is encrypted at rest via SQLCipher with a key derived
 from the user's unlock authentication, so a powered-off seized
 device leaks nothing useful without the user's biometric or PIN.
 
-**What PHANTOM does not defend against.** A compromised endpoint
+**What SHIFROM does not defend against.** A compromised endpoint
 with the screen unlocked and the user logged in (a malicious
 process with `READ_USER_DATA` permission, or root-level
 adversary on the device, or a coercion scenario where the user
@@ -52,7 +52,7 @@ correlate metadata at the network egress *and* the relay
 ingress simultaneously can probabilistically link sender to
 recipient — this is the same global-passive-adversary case Tor
 itself does not solve, and we accept it as out-of-scope at the
-PHANTOM layer.
+SHIFROM layer.
 
 **Adversary capability matrix** (formalised in §3 of the Russian
 body below): six adversary classes are tracked — network observer,
@@ -90,7 +90,7 @@ external audit pass becomes appropriate.
 
 ## 1. Цель документа
 
-Определить, от каких угроз PHANTOM защищает пользователей на раннем этапе,
+Определить, от каких угроз SHIFROM защищает пользователей на раннем этапе,
 какие угрозы считаются вне scope MVP, и какие инженерные меры обязательны до релиза Alpha-0 / MVP.
 
 ## 2. Активы, которые нужно защищать

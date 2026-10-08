@@ -5,7 +5,7 @@ Status: **not engaged.** No vendor has been selected, no engagement letter has
 been signed, and no review has been scheduled. This document exists so that a
 prospective reviewer can quote the work without a discovery call.
 
-PHANTOM has never had an independent cryptographic or application-security
+SHIFROM has never had an independent cryptographic or application-security
 review. Every security claim the project makes today rests on the founder's own
 reading of the code.
 
@@ -13,7 +13,7 @@ reading of the code.
 
 In priority order. A reviewer who can only take the first two should say so.
 
-1. **The custom protocol composition.** PHANTOM composes X3DH-style key
+1. **The custom protocol composition.** SHIFROM composes X3DH-style key
    agreement, a Double Ratchet, and sealed-sender-inspired envelopes over
    libsodium. It is not the Signal Protocol and carries none of that protocol's
    review history. We want the composition itself examined, not just the
@@ -49,7 +49,7 @@ store-and-forward relay → recipient.
 
 ## 3. Custom cryptographic code paths
 
-These are the paths where PHANTOM wrote its own logic rather than calling a
+These are the paths where SHIFROM wrote its own logic rather than calling a
 vetted implementation, and they are where review effort is worth most.
 
 - Double Ratchet implementation over libsodium primitives.

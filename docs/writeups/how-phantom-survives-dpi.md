@@ -1,8 +1,8 @@
 # When TLS stays open but accepted writes do not arrive: diagnosing a mobile-path flow stall
 
-*An engineering note from the PHANTOM project (Willen LLC).*
+*An engineering note from the SHIFROM project (Willen LLC).*
 
-PHANTOM is an open-source, end-to-end encrypted messenger built on the assumption that the network is hostile. "Hostile" is easy to say and hard to design against, because a hostile network rarely fails cleanly. It does not send you a `403`. It does not close the connection with a reason. It lets TLS and WebSocket setup complete; the client-side API accepts application writes; and yet the relay never reports seeing them, while the socket stays open and your client keeps believing everything is fine — right up until it declares the connection failed.
+SHIFROM is an open-source, end-to-end encrypted messenger built on the assumption that the network is hostile. "Hostile" is easy to say and hard to design against, because a hostile network rarely fails cleanly. It does not send you a `403`. It does not close the connection with a reason. It lets TLS and WebSocket setup complete; the client-side API accepts application writes; and yet the relay never reports seeing them, while the socket stays open and your client keeps believing everything is fine — right up until it declares the connection failed.
 
 This is a write-up about one specific fight with that kind of failure: a repeatable, deniable stall on a Russian mobile path that took down our direct WebSocket transport, and the falsification process we used before we changed a single line of transport code.
 
@@ -111,7 +111,7 @@ So the honest statement is: **in this one configuration, the relay application o
 
 **On prior art.** The community has documented flow-level freezes on Russian mobile operators — the [net4people/bbs Issue #490](https://github.com/net4people/bbs/issues/490) thread initially describes a freeze after roughly 15–20 KB server→client, with a later update characterising it as around 25 packets in either direction, averaging near 16 KB. Two things make that a poor calibration for our run. The original case is predominantly server→client while our slow POST is client→server. And more fundamentally, the two figures are different kinds of quantity: theirs is an inferred cutoff, ours is simply the last complete chunk observed. Our run cannot be placed below or above theirs, because we never measured a cutoff at all. What survives the comparison is only this: nobody should assume a universal threshold, and the two observations may not even share a trigger. A design that hard-codes an assumption about "the threshold" is building on sand.
 
-**What we say, and what we don't.** From this testbed: on Tele2 LTE, the baseline diagnostic WebSocket sessions showed 30/45-second lifetimes; in the 20 anchored Caddy-edge sessions, the relay received no application heartbeat; and in one slow HTTPS POST, the relay application observed only the first 5 KiB chunk. What we deliberately do **not** say: that we have identified a threshold, that it holds for other operators, that we know the mechanism, or that PHANTOM "defeats" anything. We route around a specific, observed effect on a specific testbed. That is a much smaller and much truer claim.
+**What we say, and what we don't.** From this testbed: on Tele2 LTE, the baseline diagnostic WebSocket sessions showed 30/45-second lifetimes; in the 20 anchored Caddy-edge sessions, the relay received no application heartbeat; and in one slow HTTPS POST, the relay application observed only the first 5 KiB chunk. What we deliberately do **not** say: that we have identified a threshold, that it holds for other operators, that we know the mechanism, or that SHIFROM "defeats" anything. We route around a specific, observed effect on a specific testbed. That is a much smaller and much truer claim.
 
 ---
 
@@ -121,7 +121,7 @@ Here the diagnosis stops being a war story and becomes a design constraint. A no
 
 **No single transport is a foundation.** Direct WebSocket, plain HTTPS long-poll, TLS-mimicry tunnels, and Tor present different failure modes and trade-offs. If your realtime substrate is one wire protocol, you inherit that protocol's specific failure. So the substrate cannot be a protocol. It has to be a *set* of them behind one interface — though not every mode gets a fallback, and that is a deliberate choice rather than an oversight (see the privacy modes below).
 
-PHANTOM speaks to its transports through a single `RelayTransport` interface, with several classes behind it:
+SHIFROM speaks to its transports through a single `RelayTransport` interface, with several classes behind it:
 
 - **Direct WebSocket** — the cheapest and lowest-latency option when application delivery is demonstrably healthy. On the diagnostic WebSocket paths we tested over Tele2 it was not (we did not test application heartbeats over Wi-Fi), so whatever its merits elsewhere, it cannot be assumed as the system's delivery foundation.
 - **REST send and poll.** Envelope transfer over bounded HTTPS request/response. Each exchange is bounded *by construction* — small request, small response, one envelope at a time — which **reduces exposure** to whatever ends the long-lived flows. It is not immunity: our own slow POST shows an HTTPS request can stall early too. Where a longer-held poll is viable it is used; the short poll is the most conservative fallback we retain, not a guarantee of delivery.
@@ -157,4 +157,4 @@ None of this required knowing *who* was doing it or *why*. It required treating 
 
 ---
 
-*PHANTOM is open source (AGPL-3.0-or-later). Architecture decisions, threat model, and known issues are public. If you build transports for hostile networks, or want to poke holes in ours, the code and design docs are at [github.com/LiudvigVladislav/Phantom](https://github.com/LiudvigVladislav/Phantom) — and the project lives at [phntm.pro](https://phntm.pro).*
+*SHIFROM is open source (AGPL-3.0-or-later). Architecture decisions, threat model, and known issues are public. If you build transports for hostile networks, or want to poke holes in ours, the code and design docs are at [github.com/LiudvigVladislav/SHIFROM](https://github.com/LiudvigVladislav/SHIFROM) — and the project lives at [phntm.pro](https://phntm.pro).*

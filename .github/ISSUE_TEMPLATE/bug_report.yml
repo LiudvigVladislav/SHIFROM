@@ -1,11 +1,11 @@
 name: Bug report
-description: Report reproducible PHANTOM app, transport, or relay behavior.
+description: Report reproducible SHIFROM app, transport, or relay behavior.
 title: "[Bug]: "
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for helping improve PHANTOM. **Do not report security vulnerabilities here.** Follow the private process in [SECURITY.md](https://github.com/LiudvigVladislav/Phantom/blob/master/SECURITY.md) instead.
+        Thanks for helping improve SHIFROM. **Do not report security vulnerabilities here.** Follow the private process in [SECURITY.md](https://github.com/LiudvigVladislav/SHIFROM/blob/master/SECURITY.md) instead.
 
   - type: input
     id: device
@@ -27,7 +27,7 @@ body:
   - type: input
     id: app_version
     attributes:
-      label: PHANTOM version
+      label: SHIFROM version
       description: Release tag, commit SHA, or build identifier.
       placeholder: v0.1.0-alpha.2 or ea66889f
     validations:

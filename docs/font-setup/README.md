@@ -1,4 +1,4 @@
-# PHANTOM Fonts — bundled variable .ttf
+# SHIFROM Fonts — bundled variable .ttf
 
 **Status (2026-04-29):** Geist, Inter, and JetBrains Mono are bundled in
 the apk as variable .ttf binaries. No download, no Google Play Services

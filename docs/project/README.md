@@ -1,6 +1,6 @@
 # `docs/project/` — public project planning
 
-This directory holds the **public-facing** project planning artefacts for PHANTOM. Anything tracked here is intended to be read by external contributors, security researchers, grant reviewers, and anyone else evaluating the project at the planning / governance layer.
+This directory holds the **public-facing** project planning artefacts for SHIFROM. Anything tracked here is intended to be read by external contributors, security researchers, grant reviewers, and anyone else evaluating the project at the planning / governance layer.
 
 ## What lives here
 

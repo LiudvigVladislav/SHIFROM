@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About PHANTOM — Independent privacy messenger</title>
-<meta name="description" content="Why PHANTOM is being built: private, censorship-resistant communication that should answer to no one but its users.">
+<title>About SHIFROM — Independent privacy messenger</title>
+<meta name="description" content="Why SHIFROM is being built: private, censorship-resistant communication that should answer to no one but its users.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://phntm.pro/about.html">
 <link rel="alternate" hreflang="en" href="https://phntm.pro/about.html">
@@ -18,23 +18,23 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://phntm.pro/about.html">
-<meta property="og:title" content="About PHANTOM — Independent privacy messenger">
-<meta property="og:description" content="Why PHANTOM is being built: private, censorship-resistant communication that should answer to no one but its users.">
+<meta property="og:title" content="About SHIFROM — Independent privacy messenger">
+<meta property="og:description" content="Why SHIFROM is being built: private, censorship-resistant communication that should answer to no one but its users.">
 <meta property="og:image" content="https://phntm.pro/static/og-image.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="PHANTOM — open-source, end-to-end encrypted messenger built for hostile networks">
-<meta property="og:site_name" content="PHANTOM">
+<meta property="og:image:alt" content="SHIFROM — open-source, end-to-end encrypted messenger built for hostile networks">
+<meta property="og:site_name" content="SHIFROM">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="ru_RU">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="About PHANTOM — Independent privacy messenger">
-<meta name="twitter:description" content="Why PHANTOM is being built: private, censorship-resistant communication that should answer to no one but its users.">
+<meta name="twitter:title" content="About SHIFROM — Independent privacy messenger">
+<meta name="twitter:description" content="Why SHIFROM is being built: private, censorship-resistant communication that should answer to no one but its users.">
 <meta name="twitter:image" content="https://phntm.pro/static/og-image.png">
-<meta name="twitter:image:alt" content="PHANTOM — open-source, end-to-end encrypted messenger built for hostile networks">
+<meta name="twitter:image:alt" content="SHIFROM — open-source, end-to-end encrypted messenger built for hostile networks">
 
 <style>
 /* self-hosted fonts (Phase 4 — no external font requests).
@@ -194,7 +194,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border-sub);margin
   .mode:hover,.principle:hover,.path:hover,.donate-card:hover{transform:none}
 }
 </style>
-<script>// PHANTOM site — nav + interactions
+<script>// SHIFROM site — nav + interactions
 (function(){
   document.addEventListener('DOMContentLoaded', function(){
     // mobile menu
@@ -289,26 +289,26 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border-sub);margin
 <div class="atmos"></div>
 <div class="grid-bg"></div>
 <nav>
-  <a href="index.html" class="nav-logo"><img src="/static/favicon.png" alt="PHANTOM logo"><span>PHANTOM</span></a>
+  <a href="index.html" class="nav-logo"><img src="/static/favicon.png" alt="SHIFROM logo"><span>SHIFROM</span></a>
   <button class="menu-btn" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
   <div class="nav-links">
     <a href="index.html">Home</a>    <a href="about.html" class="active">About</a>    <a href="roadmap.html">Roadmap</a>    <a href="/writeups/">Engineering</a>    <a href="donate.html">Support</a>    <div class="lang"><a href="/about.html" class="active" hreflang="en">EN</a><a href="/ru/about.html" hreflang="ru">RU</a></div>
   </div>
 </nav><header class="about-hero">
   <div class="wrap">
-    <div class="mark"><span class="r"></span><span class="r"></span><span class="r"></span><img src="/static/favicon.png" alt="PHANTOM logo"></div>
-    <h1>About PHANTOM</h1>    <div class="tag">The right to communicate, by design</div>
+    <div class="mark"><span class="r"></span><span class="r"></span><span class="r"></span><img src="/static/favicon.png" alt="SHIFROM logo"></div>
+    <h1>About SHIFROM</h1>    <div class="tag">The right to communicate, by design</div>
       </div>
 </header><div class="about-body">
   <div class="about-block lede reveal">
-    <div class="label">Mission</div>    <p>Communication has become constant and essential — and at the same time increasingly restricted, filtered, and watched. PHANTOM is being built so that people can stay in contact and speak freely regardless of circumstances, limitations, or borders. Access to private communication should never depend on permission.</p>
+    <div class="label">Mission</div>    <p>Communication has become constant and essential — and at the same time increasingly restricted, filtered, and watched. SHIFROM is being built so that people can stay in contact and speak freely regardless of circumstances, limitations, or borders. Access to private communication should never depend on permission.</p>
       </div>
 
   <div class="about-block reveal">
     <div class="label">How it's built</div>    <h2>Built assuming the network is hostile.</h2>
         <p>Messages are end-to-end encrypted with a custom Double Ratchet implementation over libsodium, using <strong>ED25519 identity keys generated on your device</strong>. Sealed-sender-style envelopes reduce sender metadata exposed to the relay. The relay still observes timing, message size, authenticated sessions, and delivery destinations.</p>
         <p>To stay reachable under censorship, the app routes through several transports and falls back automatically when a route is blocked. REALITY changes the wire pattern but does not provide anonymity or guaranteed censorship bypass. Everything is open-source under <strong>AGPL-3.0-or-later</strong>.</p>
-        <p style="color:var(--ts);font-size:0.88rem;margin-top:6px">The assumptions, adversaries, and out-of-scope cases are written down in full — <a href="https://github.com/LiudvigVladislav/Phantom/blob/master/docs/threat-model/Threat_Model_v0.md" style="color:var(--cyan);text-decoration:none">read the threat model →</a></p>
+        <p style="color:var(--ts);font-size:0.88rem;margin-top:6px">The assumptions, adversaries, and out-of-scope cases are written down in full — <a href="https://github.com/LiudvigVladislav/SHIFROM/blob/master/docs/threat-model/Threat_Model_v0.md" style="color:var(--cyan);text-decoration:none">read the threat model →</a></p>
         <div class="principles">
       <div class="principle reveal">
         <div class="pi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
@@ -327,7 +327,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border-sub);margin
 
   <div class="about-block reveal">
     <div class="label">Who builds it</div>    <h2>Independent development with transparent funding.</h2>
-        <p>PHANTOM is built by Vladislav Liudvig through <strong>Willen LLC</strong>, a Wyoming company formed in June 2025. The project is currently pre-revenue and is seeking mission-aligned grants and pre-seed investment for external security review, beta testing, iOS development, and operating runway.</p>
+        <p>SHIFROM is built by Vladislav Liudvig through <strong>Willen LLC</strong>, a Wyoming company formed in June 2025. The project is currently pre-revenue and is seeking mission-aligned grants and pre-seed investment for external security review, beta testing, iOS development, and operating runway.</p>
         <p>Funding will not change the AGPL license or remove the published threat model, known issues, and security boundaries.</p>
       </div>
 
@@ -336,13 +336,13 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border-sub);margin
 </div><footer>
   <div class="foot-inner">
     <div>
-      <div class="foot-brand">PHANTOM</div>
+      <div class="foot-brand">SHIFROM</div>
       <div class="foot-meta">
         <span>Maintained by Willen LLC · Wyoming, USA<br>AGPL-3.0-or-later · Open source · Security boundaries published.</span>
               </div>
     </div>
     <div class="foot-links">
-      <a href="https://github.com/LiudvigVladislav/Phantom">GitHub</a>
+      <a href="https://github.com/LiudvigVladislav/SHIFROM">GitHub</a>
       <a href="https://codeberg.org/VladislavLiudvig/Phantom">Codeberg</a>
       <a href="donate.html">Donate</a>      <a href="index.html">Home</a>    </div>
   </div>

@@ -1,6 +1,6 @@
 # Privacy Mode behaviour
 
-PHANTOM has three Privacy Modes. The setting is exposed in **Settings → Privacy
+SHIFROM has three Privacy Modes. The setting is exposed in **Settings → Privacy
 Mode** and is also chosen during onboarding (Step 3 — defaults to **Standard**).
 The mode drives two things:
 

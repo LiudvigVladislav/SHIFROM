@@ -364,7 +364,7 @@ fun SettingsScreen(
             item {
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text = "PHANTOM · ${BuildConfig.VERSION_NAME}",
+                    text = "SHIFROM · ${BuildConfig.VERSION_NAME}",
                     color = TextDim.copy(alpha = 0.55f),
                     fontSize = 10.sp,
                     fontFamily = PhantomFontMono,

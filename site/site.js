@@ -1,4 +1,4 @@
-// PHANTOM site — nav + interactions
+// SHIFROM site — nav + interactions
 //
 // Reference copy of the JS inlined into each of the 8 HTML pages
 // (/ /about.html /roadmap.html /donate.html + /ru/ mirror).

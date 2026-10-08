@@ -1,4 +1,4 @@
-# PHANTOM — Known Issues
+# SHIFROM — Known Issues
 
 **Last updated:** 2026-09-22
 **Build:** `master` at `73e24d3` — current Alpha 2 development baseline. The latest tagged pre-release, `v0.1.0-alpha.2`, is a historical snapshot; development on `master` has moved substantially beyond it. Earlier Alpha 1 investigation remains in this document as historical context. The [README](README.md) is the source of truth for the current public feature surface, [ROADMAP.md](ROADMAP.md) describes direction without fixed release dates, and [`docs/project/STATUS_2026_09_22.md`](docs/project/STATUS_2026_09_22.md) records the current reconciliation.
@@ -30,7 +30,7 @@
 
 ## Overview
 
-PHANTOM is a privacy-focused E2E messenger with verified end-to-end encryption (Double Ratchet via libsodium, Sealed Sender, identity-prekey separation per ADR-009), Trust Tier message requests, multi-transport stack (direct WSS / Reality through Xray / Tor v3 onion as text-only emergency fallback) plus a REST-poll fallback for carrier-middlebox-affected networks, and store-and-forward delivery via a self-hosted relay.
+SHIFROM is a privacy-focused E2E messenger with verified end-to-end encryption (Double Ratchet via libsodium, Sealed Sender, identity-prekey separation per ADR-009), Trust Tier message requests, multi-transport stack (direct WSS / Reality through Xray / Tor v3 onion as text-only emergency fallback) plus a REST-poll fallback for carrier-middlebox-affected networks, and store-and-forward delivery via a self-hosted relay.
 
 This document is intentionally exhaustive. Transparency about limitations is essential for a privacy tool — users deserve to know exactly what works and what doesn't. New issues are added at the bottom of each severity section; resolved issues stay in place with their resolution annotated so the project's evolution is readable.
 
@@ -83,10 +83,10 @@ The most recent policy is the PR-H1e "Run C" configuration (PR #134, master `bcc
 
 **Workaround for Tecno HiOS users** (in case the device-side radio parking dominates on a less-affected network):
 
-1. *Settings → Apps → PHANTOM → Battery* → Unrestricted
-2. *Settings → Apps → Special access → Battery optimization* → PHANTOM → Don't optimize
+1. *Settings → Apps → SHIFROM → Battery* → Unrestricted
+2. *Settings → Apps → Special access → Battery optimization* → SHIFROM → Don't optimize
 3. *Settings → Battery → Battery saver* → off during use
-4. If "Power Marathon" / "Smart Power" / "Phone Master" exists in the OEM apps, add PHANTOM to the whitelist
+4. If "Power Marathon" / "Smart Power" / "Phone Master" exists in the OEM apps, add SHIFROM to the whitelist
 
 **Long-term direction (no fixed deadline; tracked in `docs/PROJECT_LOG.md → Open follow-ups`).** The push-on-disconnect approach earlier docs pointed at (Unified Push / FCM hybrids) was retired during the 2026-05-14 strategic pivot — both UnifiedPush and FCM are out of scope because the metadata-leak posture documented in [ADR-001](docs/adr/ADR-001-System-Boundaries.md) and [Threat Model v0](docs/threat-model/Threat_Model_v0.md) makes any always-on third-party push channel an architectural non-starter. The current answer is the H1c/H1e mitigations above plus the REST fallback. If a future approach is identified, it will land as its own ADR.
 
@@ -210,7 +210,7 @@ This section documents intentional design decisions with known trade-offs. These
 
 **Status:** Documented architectural choice, hardening in progress.
 
-**Background.** PHANTOM Alpha 2 implements the Signal protocol (X3DH handshake + Double Ratchet) on top of libsodium primitives, rather than using Signal Foundation's `libsignal-client` directly. The original ADR-006 (2026-04-15) accepted libsignal-client; the implementation shipped a libsodium-based equivalent. ADR-006 has been revised (2026-04-29) to reconcile this — see `docs/adr/ADR-006-Crypto-Library-Decision.md`.
+**Background.** SHIFROM Alpha 2 implements the Signal protocol (X3DH handshake + Double Ratchet) on top of libsodium primitives, rather than using Signal Foundation's `libsignal-client` directly. The original ADR-006 (2026-04-15) accepted libsignal-client; the implementation shipped a libsodium-based equivalent. ADR-006 has been revised (2026-04-29) to reconcile this — see `docs/adr/ADR-006-Crypto-Library-Decision.md`.
 
 **Current limitations** (all tracked for Phase 1 closure or as known P3 items):
 
@@ -342,7 +342,7 @@ production-ready release promise.
 
 **Server-side audit (2026-05-11).** Caddy access logs (`docker logs phantom-caddy --since 12h`) show **zero requests** in the probe window for the test from the device's VPN exit IP. The relay's `phantom-relay` container correspondingly logs no `connect` event for that identity. The packets do not reach the relay's edge.
 
-**Root cause.** Below the application layer; cannot be fixed in PHANTOM. Three plausible mechanisms (only one needs to apply for the symptom to occur):
+**Root cause.** Below the application layer; cannot be fixed in SHIFROM. Three plausible mechanisms (only one needs to apply for the symptom to occur):
 
 - The VPN provider's egress applies DPI / classifier rules that drop the REALITY-mirrored TLS handshake (REALITY's TLS fingerprint is designed to look like a legitimate site visit, but heuristics on long-lived single-host TLS streams from a residential IP can still flag it).
 - Path-MTU on the VPN tunnel fragments the REALITY ClientHello / ServerHello, breaking the ECH-like state machine that REALITY relies on.
@@ -389,7 +389,7 @@ The non-VPN path is unchanged — Reality remains the privacy-preferred default 
 
 **Compare to pre-PR-E state.** PR-D + the older snowflake bridges (Netlify-hosted, fronted on `vuejs.org`) timed out at 30 % after 12 minutes on the same network in Test #5 the previous day. The new bridge pool reached 100 % in half that time. The Google-AMP-cache snowflake entries from `bridges-s-ru` are the most likely cause — TSPU cannot block `www.google.com` without breaking the local internet, so the broker-discovery TLS request gets through where the older `vuejs.org`-fronted broker was silently dropped.
 
-**Caveat:** single test on a single device on a single MTS session. Worth a few more MTS sessions across different times of day before claiming production stability. The architecture-side question ("can PHANTOM offer Ghost without VPN to RU users at all?") is answered yes; the operational question ("how often does it work in practice?") needs more data.
+**Caveat:** single test on a single device on a single MTS session. Worth a few more MTS sessions across different times of day before claiming production stability. The architecture-side question ("can SHIFROM offer Ghost without VPN to RU users at all?") is answered yes; the operational question ("how often does it work in practice?") needs more data.
 
 **Original problem (kept for context).**
 
@@ -404,7 +404,7 @@ The non-VPN path is unchanged — Reality remains the privacy-preferred default 
 
 `AllFailed (chain exhausted, 4 profiles tried)` after 12 min total walk.
 
-**Root cause.** Upstream censorship layer (TSPU) on Russian carrier networks blocks Tor bridge wire signatures and throttles Tor circuit traffic even when an individual bridge handshake succeeds. The 50%/72% stall on snowflake/mixed is the classic "circuit build" or "loading consensus document" phase — the bridge negotiated a connection but the underlying Tor protocol traffic between guard and middle relays is being filtered. This matches the externally documented behaviour of TSPU against Tor (see e.g. Tor Project's "Russia" bridge guidance, which itself recommends VPN+Tor for users in cellular RU). It is below the application layer and cannot be fixed in PHANTOM code without either deploying additional bridges in non-blocked CIDR ranges or adding alternative pluggable transports.
+**Root cause.** Upstream censorship layer (TSPU) on Russian carrier networks blocks Tor bridge wire signatures and throttles Tor circuit traffic even when an individual bridge handshake succeeds. The 50%/72% stall on snowflake/mixed is the classic "circuit build" or "loading consensus document" phase — the bridge negotiated a connection but the underlying Tor protocol traffic between guard and middle relays is being filtered. This matches the externally documented behaviour of TSPU against Tor (see e.g. Tor Project's "Russia" bridge guidance, which itself recommends VPN+Tor for users in cellular RU). It is below the application layer and cannot be fixed in SHIFROM code without either deploying additional bridges in non-blocked CIDR ranges or adding alternative pluggable transports.
 
 **What works on MTS without VPN (verified Test #5 + earlier tests):**
 - ✅ Standard (Direct WSS) — connects in ~1.3 s.
@@ -430,14 +430,14 @@ The non-VPN path is unchanged — Reality remains the privacy-preferred default 
 
 **Privacy properties of the Snowflake broker fronting (PR-E).** Two of the four imported `bridges-s-ru` entries route their *broker-discovery* request through Google's AMP cache (`https://cdn.ampproject.org/`) fronted on `www.google.com`. This needs to be honest:
 
-- *What Google sees.* Your IP making TLS connections to a Google CDN endpoint, with `www.google.com` in the SNI field. A frequency / size pattern of these requests can in principle be classified as "this client uses Snowflake-style broker discovery" (this is not PHANTOM-specific — Tor Browser users with Snowflake on RU send the same pattern).
-- *What Google does NOT see.* Your PHANTOM identity, your Ed25519 signing key, the relay's onion address (`zmdrxlrkd7iv...`), your contacts, or any message content. Once the broker matches you to a volunteer browser proxy, the actual Tor circuit traffic flows over WebRTC DataChannel directly between your device and that volunteer — Google is not on that path.
+- *What Google sees.* Your IP making TLS connections to a Google CDN endpoint, with `www.google.com` in the SNI field. A frequency / size pattern of these requests can in principle be classified as "this client uses Snowflake-style broker discovery" (this is not SHIFROM-specific — Tor Browser users with Snowflake on RU send the same pattern).
+- *What Google does NOT see.* Your SHIFROM identity, your Ed25519 signing key, the relay's onion address (`zmdrxlrkd7iv...`), your contacts, or any message content. Once the broker matches you to a volunteer browser proxy, the actual Tor circuit traffic flows over WebRTC DataChannel directly between your device and that volunteer — Google is not on that path.
 - *What TSPU sees.* Only the TLS connection to `www.google.com`. At the SNI layer that is not separable from the dozens of legitimate Google services Russian carriers route every minute; timing and volume analysis is a separate question this does not address. Blocking `www.google.com` would have catastrophic consequences for the local internet, which is precisely why this fronting domain is resilient.
 - *What we relied on before PR-E.* The previous default Snowflake set fronted on `vuejs.org` via Netlify CDN — Netlify saw exactly the same pattern Google now sees. The privacy property is unchanged in kind, only the CDN identity changes; Google's value here is resilience against censorship, not a new privacy compromise.
 
 The other two `bridges-s-ru` entries front on `cdn.zk.mk, img.icons8.com, cdn.kde.org` via cdn77 — no Google involvement. Tor walks the bridge list internally and uses whichever the network admits first, so on a network that does not block cdn77 the request never reaches the AMP path. The AMP entries are the *resilience fallback*, not the primary path.
 
-This pattern (Snowflake broker fronting via Google AMP cache) is the same one Tor Browser ships by default for RU users in `tor-browser-build` and that Briar ships in `bridges-s-ru`. PHANTOM follows the established censorship-circumvention industry practice rather than inventing its own.
+This pattern (Snowflake broker fronting via Google AMP cache) is the same one Tor Browser ships by default for RU users in `tor-browser-build` and that Briar ships in `bridges-s-ru`. SHIFROM follows the established censorship-circumvention industry practice rather than inventing its own.
 
 **Trust trade-off documented for the user.** Onboarding / Privacy Policy text should reflect that, when Ghost mode falls back to the Snowflake-via-AMP path, a Google CDN endpoint is on the *broker-discovery* leg of the connection. End-to-end encrypted message content, identity, and contact graph remain protected by the Double Ratchet + Sealed Sender + Tor onion service properties regardless of which bridge profile delivered the circuit. This addition is tracked as a follow-up wording task on the Privacy Policy page; no shipped behaviour change is required.
 
@@ -585,6 +585,6 @@ Both are queued as **PR-MEDIA-CANCEL-PROTOCOL** with no fixed schedule. Once shi
 ## Tracking
 
 This list is maintained as a living document. Issues are tracked in GitHub Issues at:
-https://github.com/LiudvigVladislav/Phantom/issues
+https://github.com/LiudvigVladislav/SHIFROM/issues
 
 For external review and Beta planning, this snapshot represents the state of `master` at `ea66889f` (2026-07-19). The Alpha-1 baseline snapshot is preserved upstream in this file's git history — `git log -p KNOWN_ISSUES.md` will reproduce the original wording for any issue ID.

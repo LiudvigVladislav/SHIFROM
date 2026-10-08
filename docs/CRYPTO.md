@@ -1,15 +1,15 @@
-# PHANTOM — Cryptography Overview
+# SHIFROM — Cryptography Overview
 
 **Status:** draft v0.1 (2026-04-24). **Authoritative code:**
 [`shared/core/crypto/`](../shared/core/crypto/src/commonMain/kotlin/phantom/core/crypto).
 **Decision record:** [ADR-006](adr/ADR-006-Crypto-Library-Decision.md).
 
-PHANTOM writes no custom cryptography (Product Doctrine §2.4). All
+SHIFROM writes no custom cryptography (Product Doctrine §2.4). All
 primitives come from two audited libraries:
 
 - [**libsignal**](https://github.com/signalapp/libsignal) — the
   Signal-Foundation Rust implementation of the Signal Protocol.
-  AGPL-3.0, which is license-compatible because PHANTOM itself is
+  AGPL-3.0, which is license-compatible because SHIFROM itself is
   AGPL-3.0 on the relay and GPL-3.0 on the client.
 - [**libsodium**](https://libsodium.org) — ISC-licensed primitives.
   Used via [`ionspin/kotlin-multiplatform-crypto`](https://github.com/ionspin/kotlin-multiplatform-crypto)
@@ -104,11 +104,11 @@ and `decrypt()`, and `dhOutput.zeroize()` after every ratchet step).
 ## 4. Key Rotation Detection
 
 A contact who reinstalls the app produces a new identity key. Today,
-PHANTOM detects this in two ways:
+SHIFROM detects this in two ways:
 
 1. **Explicit control message.** A `TYPE_KEY_ROTATION` payload in
    [`MessagePayload.kt`](../shared/core/messaging/src/commonMain/kotlin/phantom/core/messaging/MessagePayload.kt)
-   allows a peer to announce a key rotation. On receipt, PHANTOM:
+   allows a peer to announce a key rotation. On receipt, SHIFROM:
    - Updates the stored public key.
    - Sets `identity_key_changed_at = now()` in the conversation row.
    - Resets `is_verified = false`.
@@ -155,7 +155,7 @@ let us mlock them and guarantee zero-on-free semantics.
 ## 6. Safety Numbers
 
 Before Alice trusts a conversation, she can verify that her view of
-Bob's public key matches Bob's view of her public key. PHANTOM shows
+Bob's public key matches Bob's view of her public key. SHIFROM shows
 a 60-digit fingerprint grouped as 5 × 12 digits, plus a QR code for
 in-person scanning.
 

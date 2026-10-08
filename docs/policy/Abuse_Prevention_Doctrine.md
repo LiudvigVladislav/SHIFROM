@@ -1,6 +1,6 @@
 # Abuse Prevention Doctrine
 
-**Project:** PHANTOM Messenger  
+**Project:** SHIFROM Messenger
 **Version:** 0.1-draft  
 **Status:** Working product doctrine for prototype and MVP  
 **Owner:** [fill in]  
@@ -8,16 +8,16 @@
 
 ## Purpose
 
-This document defines how PHANTOM reduces abuse risk **without breaking the privacy model** of the product.
+This document defines how SHIFROM reduces abuse risk **without breaking the privacy model** of the product.
 
-PHANTOM is not designed as an anonymous free-for-all. It is designed as a **privacy-first messenger with accountable public surfaces**. The system must make private communication safe and resilient, while making mass abuse, recruitment, coordinated fraud, and distribution of illegal content materially harder.
+SHIFROM is not designed as an anonymous free-for-all. It is designed as a **privacy-first messenger with accountable public surfaces**. The system must make private communication safe and resilient, while making mass abuse, recruitment, coordinated fraud, and distribution of illegal content materially harder.
 
 This doctrine is intentionally stricter for **public or discovery-facing surfaces** than for **private 1:1 encrypted conversations**.
 
 ## Core principles
 
 1. **Private chats are not a moderation playground**
-   - PHANTOM should not rely on reading private end-to-end encrypted chats to enforce safety.
+   - SHIFROM should not rely on reading private end-to-end encrypted chats to enforce safety.
    - The system should prefer metadata-minimizing, behavior-based, and surface-based controls.
 
 2. **Public surfaces are accountable by design**
@@ -30,11 +30,11 @@ This doctrine is intentionally stricter for **public or discovery-facing surface
    - Report, block, mute, hide, appeal, escalation, enforcement logging, and emergency response are MVP-level requirements.
 
 5. **Minimal data, maximum operational clarity**
-   - PHANTOM should collect only the minimum service data necessary for security, abuse handling, and legal compliance.
+   - SHIFROM should collect only the minimum service data necessary for security, abuse handling, and legal compliance.
    - Abuse-response workflows must be clear, auditable, and role-based.
 
 6. **No marketing claims that sabotage safety**
-   - Do not market PHANTOM as "fully anonymous for anything", "impossible to trace", or "unmoderated".
+   - Do not market SHIFROM as "fully anonymous for anything", "impossible to trace", or "unmoderated".
    - Positioning should be: **private by default, resilient by design, accountable in public spaces**.
 
 ## Scope split
@@ -80,7 +80,7 @@ Target model:
 - human review path
 - stronger identity and trust controls for high-reach entities
 
-## Threat classes PHANTOM must explicitly defend against
+## Threat classes SHIFROM must explicitly defend against
 
 1. Terrorist propaganda and recruitment
 2. CSAM / child sexual abuse and exploitation
@@ -199,7 +199,7 @@ Recommended:
 
 ### H. Safety-preserving evidence handling
 
-PHANTOM should avoid broad surveillance, but must preserve enough structured evidence to handle abuse:
+SHIFROM should avoid broad surveillance, but must preserve enough structured evidence to handle abuse:
 - report category
 - reported object type
 - timestamp
@@ -239,13 +239,13 @@ PHANTOM should avoid broad surveillance, but must preserve enough structured evi
 
 ## Non-goals
 
-PHANTOM will not claim:
+SHIFROM will not claim:
 - perfect prevention of all illegal use
 - blanket immunity from abuse
 - total untraceability for all circumstances
 - a zero-governance model
 
-Instead, PHANTOM aims for:
+Instead, SHIFROM aims for:
 - strong private communication protections
 - clear abuse policy
 - strong public-surface governance
@@ -271,7 +271,7 @@ Implements policy hooks, logging, controls, case tooling.
 
 ## MVP requirements derived from this doctrine
 
-Before public launch, PHANTOM should have:
+Before public launch, SHIFROM should have:
 - published Terms and Community Rules
 - in-app report and block flows
 - message requests for non-contacts
@@ -299,7 +299,7 @@ Even in a prototype, include placeholders for:
 2. Will non-contacts be able to send text immediately, or only requests?
 3. Which trust signals are acceptable for public verification?
 4. What minimum service logs are retained, for how long, and where?
-5. Which jurisdiction and legal contact model will PHANTOM use at launch?
+5. Which jurisdiction and legal contact model will SHIFROM use at launch?
 
 ## Approval checklist
 

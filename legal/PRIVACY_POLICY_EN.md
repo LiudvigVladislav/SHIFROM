@@ -3,13 +3,13 @@
 **Effective date:** April 27, 2026
 **Last updated:** April 27, 2026
 
-This Privacy Policy explains how PHANTOM ("the Service"), operated by Willen LLC, handles information when you use our messenger.
+This Privacy Policy explains how SHIFROM ("the Service"), operated by Willen LLC, handles information when you use our messenger.
 
 The short version: **we are designed to know as little about you as possible**. The rest of this document explains exactly what that means.
 
 ## What we do not collect
 
-PHANTOM does not collect, store, or have access to:
+SHIFROM does not collect, store, or have access to:
 
 - Your **message content** — all messages are end-to-end encrypted; only sender and recipient can read them
 - **Phone numbers, email addresses, or real names** — none are required to use the Service
@@ -60,7 +60,7 @@ To make any privacy request, contact privacy@phntm.pro.
 
 ## Children's privacy
 
-PHANTOM is not directed at children under 16, and we do not knowingly collect data from anyone under 16.
+SHIFROM is not directed at children under 16, and we do not knowingly collect data from anyone under 16.
 
 ## Security
 
@@ -75,7 +75,7 @@ Our relay servers run in containers on hardened Linux infrastructure, with TLS-o
 
 ## International data transfers
 
-Our relay infrastructure is currently hosted in the European Union (Helsinki, Finland). When you use PHANTOM, your encrypted message envelopes briefly transit through these servers regardless of your location.
+Our relay infrastructure is currently hosted in the European Union (Helsinki, Finland). When you use SHIFROM, your encrypted message envelopes briefly transit through these servers regardless of your location.
 
 ## Changes to this Policy
 

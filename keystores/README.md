@@ -1,6 +1,6 @@
-# PHANTOM Release Keystore
+# SHIFROM Release Keystore
 
-**This directory contains the production signing key for the PHANTOM
+**This directory contains the production signing key for the SHIFROM
 Android app. Losing this keystore means you cannot publish updates to
 Google Play — the key IS the app's identity and must remain identical
 for the lifetime of the app.**
@@ -80,5 +80,5 @@ If rotation is truly necessary:
 ## Legal
 
 Willen LLC (Wyoming, USA) is the holder of record for this key. Any
-transfer of the PHANTOM app ownership must include a formal transfer
+transfer of the SHIFROM app ownership must include a formal transfer
 of this keystore and associated Play Console credentials.

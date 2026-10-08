@@ -1,4 +1,4 @@
-PHANTOM Messenger
+SHIFROM Messenger
 Copyright (c) 2026 Willen LLC
 Copyright (c) 2026 Vladislav Liudvig
 
@@ -15,7 +15,7 @@ software components. Each retains its original license; the list below
 acknowledges them, names the upstream project, and points at the
 governing licence text.
 
-If you redistribute PHANTOM in source or binary form, you must
+If you redistribute SHIFROM in source or binary form, you must
 preserve this NOTICE alongside the LICENSE file (AGPL-3.0 §5(a),
 Apache-2.0 §4(d), and equivalent clauses in MIT / ISC / BSD).
 
@@ -28,7 +28,7 @@ libsodium
   Licence:   ISC
   Used in:   Cryptographic core (Curve25519, XChaCha20-Poly1305, BLAKE2b,
              X3DH key agreement, Double Ratchet primitives) on every
-             platform PHANTOM ships to. Linked through the
+             platform SHIFROM ships to. Linked through the
              multiplatform-crypto-libsodium-bindings wrapper described
              below.
 
@@ -123,7 +123,7 @@ tower / tower-http (rust)
 
 serde / serde_json (rust)
   Upstream:  https://github.com/serde-rs/serde
-  Licence:   MIT OR Apache-2.0 (dual-licensed; PHANTOM uses MIT)
+  Licence:   MIT OR Apache-2.0 (dual-licensed; SHIFROM uses MIT)
   Used in:   Wire-format encoding for relay envelopes and admin
              endpoints.
 
@@ -135,7 +135,7 @@ tracing / tracing-subscriber (rust)
 
 futures-util (rust)
   Upstream:  https://github.com/rust-lang/futures-rs
-  Licence:   MIT OR Apache-2.0 (PHANTOM uses MIT)
+  Licence:   MIT OR Apache-2.0 (SHIFROM uses MIT)
   Used in:   Stream / Sink combinators in the WebSocket loop.
 
 subtle (rust)
@@ -154,11 +154,11 @@ Caddy
   Used in:   Reverse proxy in front of the relay; serves static
              /terms and /privacy pages and Android App Links
              /.well-known/assetlinks.json. Runs as a Docker
-             container, not bundled into the PHANTOM binaries.
+             container, not bundled into the SHIFROM binaries.
 
 Docker (Linux Foundation, Apache-2.0)
   Used purely as the container runtime in the production deploy.
-  PHANTOM does not redistribute Docker.
+  SHIFROM does not redistribute Docker.
 
 ================================================================================
 Brand fonts (used in design mocks only — not bundled with the app)

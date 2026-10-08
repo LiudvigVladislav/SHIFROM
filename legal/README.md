@@ -1,6 +1,6 @@
-# PHANTOM Legal Documents — Draft v1
+# SHIFROM Legal Documents — Draft v1
 
-This folder contains the initial legal/privacy documentation drafts for PHANTOM Alpha 1.
+This folder contains the initial legal/privacy documentation drafts for SHIFROM Alpha 1.
 
 ## Files
 
@@ -39,7 +39,7 @@ does not need any build step on the VPS — Caddy bind-mounts
 
 ## Key design decisions
 
-1. **"We cannot disclose what we do not have"** — central legal/marketing principle. PHANTOM is technically architected to retain the absolute minimum of data. This protects against subpoenas the way Telegram cannot.
+1. **"We cannot disclose what we do not have"** — central legal/marketing principle. SHIFROM is technically architected to retain the absolute minimum of data. This protects against subpoenas the way Telegram cannot.
 
 2. **Data minimization explicitly listed.** Privacy Policy includes a clear "What we do NOT collect" section with phone numbers, emails, contacts, location, analytics, etc. — making the privacy posture concrete.
 
@@ -67,7 +67,7 @@ These are **drafts**. Before going live:
 
 ## License clause TBD
 
-The Terms of Service references "the license specified in our public repository." Confirm which license PHANTOM uses (AGPL-3.0? MIT? GPL-3.0?) and ensure the repo `LICENSE` file matches before publishing.
+The Terms of Service references "the license specified in our public repository." Confirm which license SHIFROM uses (AGPL-3.0? MIT? GPL-3.0?) and ensure the repo `LICENSE` file matches before publishing.
 
 ## Contact for questions
 

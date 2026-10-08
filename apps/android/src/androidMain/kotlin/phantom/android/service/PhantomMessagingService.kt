@@ -1961,7 +1961,7 @@ class PhantomMessagingService : Service() {
     }
 
     private fun buildNotification(statusText: String) = NotificationCompat.Builder(this, CHANNEL_ID)
-        .setContentTitle("PHANTOM")
+        .setContentTitle("SHIFROM")
         .setContentText(statusText)
         // TODO(Beta): replace with a dedicated monochrome status-bar icon
         // (24dp, white-on-transparent). Android status-bar icons must be

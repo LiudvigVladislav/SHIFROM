@@ -1,4 +1,4 @@
-# PHANTOM — 12-Month Strategic Roadmap
+# SHIFROM — 12-Month Strategic Roadmap
 
 > **Historical planning baseline.** This dated plan is preserved because it
 > records the assumptions used in April 2026. It is not the current execution
@@ -20,7 +20,7 @@
 
 ### Где мы сейчас
 
-PHANTOM Alpha 1 **функционально полнее** чем казалось до inventory:
+SHIFROM Alpha 1 **функционально полнее** чем казалось до inventory:
 - Production-grade криптография (Double Ratchet, Sealed Sender, libsodium)
 - Groups + channels на ~70%
 - WebRTC voice calls (Android, audio-only)
@@ -259,7 +259,7 @@ Premium / Stripe / Recovery Phrase / verification authority — **отдельн
 - Extended disappearing messages (1s-1year, vs Free 24h)
 - Pinned chats до 10 (vs Free 5)
 - Premium ◆ badge в profile + ChatList
-- Settings section: "Phantom Premium" management
+- Settings section: "SHIFROM Premium" management
 
 ### Architectural Decisions
 
@@ -365,7 +365,7 @@ Pluggable transports + Tor onion service для censorship resistance. Push noti
 - Snowflake integration (WebRTC-based circumvention)
 - Domain fronting fallback
 - Tor v3 onion service для relay (`xxxxx.onion` address)
-- Documentation: how to self-host PHANTOM relay с Tor
+- Documentation: how to self-host SHIFROM relay с Tor
 - Reproducible build pipeline (для verification против tampered binaries)
 - Censorship-resistance threat model document
 
@@ -405,7 +405,7 @@ Pluggable transports + Tor onion service для censorship resistance. Push noti
 
 ### Success Criteria
 
-- ✅ PHANTOM работает в censored сетях (тест в одной такой среде минимум)
+- ✅ SHIFROM работает в censored сетях (тест в одной такой среде минимум)
 - ✅ Push notifications работают на Android (UnifiedPush primary, FCM fallback) и iOS (APNs)
 - ✅ Audit вошёл в active phase
 
@@ -737,7 +737,7 @@ These remain in **vision document** but not in active roadmap until Beta 1 done.
 5. **Honesty about state** — KNOWN_ISSUES.md, threat model, audit findings — всё публично
 6. **Sustainable pace** — solo на 12 месяцев означает burnout management critical
 
-К Апрелю 2027 PHANTOM становится **production-ready privacy messenger** с Premium revenue model, audited security, multi-platform support, и foundation for scaling.
+К Апрелю 2027 SHIFROM становится **production-ready privacy messenger** с Premium revenue model, audited security, multi-platform support, и foundation for scaling.
 
 Если external funding получим — финансирует core. Если не получим — медленнее но не блокирует. Premium revenue + Kickstarter — sustainability post-grant.
 

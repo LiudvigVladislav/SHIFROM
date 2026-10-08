@@ -17,7 +17,7 @@ If a report mixes categories (e.g. a vulnerability that also has privacy implica
 
 ## Supported versions
 
-PHANTOM is pre-release. Security fixes land on `master` first. Tagged alpha
+SHIFROM is pre-release. Security fixes land on `master` first. Tagged alpha
 releases are historical snapshots and do not receive a long-term maintenance
 window.
 
@@ -80,7 +80,7 @@ Encrypted communication:
 - Issues confined to upstream dependencies such as `libsodium`, `axum`,
   Compose Multiplatform, `kmp-tor`, or Xray — please report those to the
   respective projects.
-  We are happy to coordinate on fixes that also affect PHANTOM.
+  We are happy to coordinate on fixes that also affect SHIFROM.
 
 ## Coordinated disclosure
 
@@ -98,7 +98,7 @@ mastodon/matrix/email contact — reporter's choice.
 
 ## Signature verification
 
-APK assets published by PHANTOM are signed with the PHANTOM production keystore. The
+APK assets published by SHIFROM are signed with the SHIFROM production keystore. The
 SHA-256 fingerprint of the signing certificate:
 
 ```

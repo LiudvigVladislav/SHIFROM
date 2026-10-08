@@ -1,4 +1,4 @@
-# PHANTOM — https://phntm.pro
+# SHIFROM — https://phntm.pro
 # Open-source encrypted messenger by Willen LLC
 
 # Default: allow all conventional search engines

@@ -1,4 +1,4 @@
-# PHANTOM — phntm.pro site
+# SHIFROM — phntm.pro site
 
 Static site for **phntm.pro**. Four pages, mirrored in two languages
 (English at the tree root, Russian at `/ru/`), each page single-language,
@@ -195,7 +195,7 @@ When swapping web roots, these MUST be preserved:
   NOT inside `site/`. Do not duplicate.
 - `.well-known/funding-manifest-urls` at repo root — exists for the
   FLOSS/fund wellKnown proof on GitHub
-  (`https://github.com/LiudvigVladislav/Phantom/blob/master/.well-known/funding-manifest-urls`).
+  (`https://github.com/LiudvigVladislav/SHIFROM/blob/master/.well-known/funding-manifest-urls`).
   NOT served via phntm.pro and NOT needed inside `site/`.
 - `deploy/well-known/assetlinks.json` — Android App Links manifest,
   separately bind-mounted to `/srv/well-known` and served via

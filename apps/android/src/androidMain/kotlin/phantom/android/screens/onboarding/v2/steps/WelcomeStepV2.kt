@@ -169,7 +169,7 @@ fun WelcomeStepV2(onContinueClick: () -> Unit) {
 
         // Wordmark — Geist SemiBold 31 sp, .14 em letter-spacing ≈ 4.34 sp at 31.
         Text(
-            text = "PHANTOM",
+            text = "SHIFROM",
             color = DesignV2Tokens.Colors.TextPrimary,
             style = TextStyle(
                 fontFamily = DesignV2FontDisplay,

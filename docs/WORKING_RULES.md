@@ -1,4 +1,4 @@
-# PHANTOM — Working Rules (Single-Developer Discipline)
+# SHIFROM — Working Rules (Single-Developer Discipline)
 
 **Locked:** 2026-05-21
 **Scope:** Engineering process. Applies to every track and every PR.

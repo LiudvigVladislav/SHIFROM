@@ -3,19 +3,19 @@
 **Effective date:** April 27, 2026
 **Last updated:** April 27, 2026
 
-These Terms of Service ("Terms") govern your use of PHANTOM ("the Service"), a privacy-focused, end-to-end encrypted messenger operated by Willen LLC ("we", "us", "our"), a limited liability company registered in Wyoming, United States.
+These Terms of Service ("Terms") govern your use of SHIFROM ("the Service"), a privacy-focused, end-to-end encrypted messenger operated by Willen LLC ("we", "us", "our"), a limited liability company registered in Wyoming, United States.
 
-By using PHANTOM, you agree to these Terms. If you do not agree, do not use the Service.
+By using SHIFROM, you agree to these Terms. If you do not agree, do not use the Service.
 
 ## 1. The Service
 
-PHANTOM is a peer-to-peer encrypted messaging application. Messages between users are encrypted end-to-end using the Double Ratchet protocol (libsodium / X3DH). Our relay servers route encrypted message envelopes between users but cannot decrypt their contents.
+SHIFROM is a peer-to-peer encrypted messaging application. Messages between users are encrypted end-to-end using the Double Ratchet protocol (libsodium / X3DH). Our relay servers route encrypted message envelopes between users but cannot decrypt their contents.
 
-PHANTOM does not require a phone number, email address, or real name. Users are identified by cryptographic keys generated on their device.
+SHIFROM does not require a phone number, email address, or real name. Users are identified by cryptographic keys generated on their device.
 
 ## 2. Eligibility
 
-You must be at least 16 years old to use PHANTOM. By using the Service, you confirm that you meet this requirement. If you are under 16, you may not use PHANTOM under any circumstances.
+You must be at least 16 years old to use SHIFROM. By using the Service, you confirm that you meet this requirement. If you are under 16, you may not use SHIFROM under any circumstances.
 
 ## 3. Your Account
 
@@ -31,7 +31,7 @@ We **cannot** recover lost keys, transfer accounts, or reset identities. If you 
 
 ## 4. Privacy Principles
 
-PHANTOM is designed around the principle of **data minimization**. We do not collect what we do not need.
+SHIFROM is designed around the principle of **data minimization**. We do not collect what we do not need.
 
 - **We do not have access to your message content, ever.** Messages are encrypted end-to-end on the sending device and decrypted only on the recipient's device.
 - **We do not collect personal identifiers** such as phone numbers, email addresses, or real names.
@@ -42,7 +42,7 @@ For full details, see our [Privacy Policy](https://phntm.pro/privacy).
 
 ## 5. Acceptable Use
 
-You agree to use PHANTOM responsibly. You agree not to:
+You agree to use SHIFROM responsibly. You agree not to:
 
 - Use the Service for activities that are illegal in your jurisdiction
 - Harass, threaten, or harm others through the Service
@@ -54,7 +54,7 @@ We do not actively monitor user communications (and technically cannot, due to e
 
 ## 6. Service Status & Limitations
 
-PHANTOM is currently in **Alpha**. The Service is provided on an "as-is" and "as-available" basis, without warranties of any kind. You acknowledge that:
+SHIFROM is currently in **Alpha**. The Service is provided on an "as-is" and "as-available" basis, without warranties of any kind. You acknowledge that:
 
 - The Service may contain bugs, errors, or security vulnerabilities
 - We may modify, suspend, or discontinue any part of the Service at any time
@@ -65,13 +65,13 @@ Encrypted message envelopes held by our relay for delivery are retained for a ma
 
 ## 7. Termination
 
-You may stop using PHANTOM at any time by uninstalling the application. There is no account closure procedure because there is no account stored on our side beyond the public key and ephemeral routing data.
+You may stop using SHIFROM at any time by uninstalling the application. There is no account closure procedure because there is no account stored on our side beyond the public key and ephemeral routing data.
 
 We may terminate or restrict your access to the Service if we have reasonable grounds to believe you have violated these Terms.
 
 ## 8. Intellectual Property
 
-PHANTOM client applications are open source under the license specified in our public repository at [github.com/LiudvigVladislav/Phantom](https://github.com/LiudvigVladislav/Phantom). The "PHANTOM" name and logo are trademarks of Willen LLC.
+SHIFROM client applications are open source under the license specified in our public repository at [github.com/LiudvigVladislav/SHIFROM](https://github.com/LiudvigVladislav/SHIFROM). The "SHIFROM" name and logo are trademarks of Willen LLC.
 
 ## 9. Disclaimers and Limitation of Liability
 

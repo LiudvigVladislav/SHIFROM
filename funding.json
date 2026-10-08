@@ -7,7 +7,7 @@
     "name": "Willen LLC",
     "email": "legal@phntm.pro",
     "phone": "",
-    "description": "Willen LLC is a Wyoming, USA company that maintains PHANTOM, an AGPL-3.0-or-later end-to-end encrypted, censorship-resistant messenger. The company exists to develop and steward PHANTOM as public-interest software infrastructure.",
+    "description": "Willen LLC is a Wyoming, USA company that maintains SHIFROM, an AGPL-3.0-or-later end-to-end encrypted, censorship-resistant messenger. The company exists to develop and steward SHIFROM as public-interest software infrastructure.",
     "webpageUrl": {
       "url": "https://phntm.pro"
     }
@@ -15,14 +15,14 @@
   "projects": [
     {
       "guid": "phantom-messenger",
-      "name": "PHANTOM",
+      "name": "SHIFROM",
       "description": "An open-source, Android-first end-to-end encrypted messenger in Alpha 2. Current development builds include 1:1 text messaging, encrypted voice notes, Direct WSS, VLESS+REALITY, a Tor text path, REST fallback, and a Rust relay. Founder-run field tests covered specific devices and configurations on Yota, T2, and MTS in Russia's Irkutsk Region; they do not establish universal resistance to filtering. The custom protocol composition has not received an independent third-party security audit. iOS and production web clients are planned, not shipped. These funding.json amounts are donation and grant milestones. They are a separate funding route from the $250,000 pre-seed round described in the investor materials, and the two are alternatives for the same work rather than additive budgets.",
       "webpageUrl": {
         "url": "https://phntm.pro"
       },
       "repositoryUrl": {
-        "url": "https://github.com/LiudvigVladislav/Phantom",
-        "wellKnown": "https://github.com/LiudvigVladislav/Phantom/blob/master/.well-known/funding-manifest-urls"
+        "url": "https://github.com/LiudvigVladislav/SHIFROM",
+        "wellKnown": "https://github.com/LiudvigVladislav/SHIFROM/blob/master/.well-known/funding-manifest-urls"
       },
       "licenses": [
         "spdx:AGPL-3.0-or-later"
@@ -85,7 +85,7 @@
         "guid": "ios-port-unblock",
         "status": "active",
         "name": "iOS port hardware unblock",
-        "description": "Apple Silicon Mac (Mac mini M4) for iOS development on Kotlin Multiplatform. The iOS port is the single binding constraint preventing PHANTOM from being a true cross-platform alternative to centralized messengers. Donation-funded hardware unblock. The pre-seed round instead budgets $30,000 for an iOS MVP and expanded QA.",
+        "description": "Apple Silicon Mac (Mac mini M4) for iOS development on Kotlin Multiplatform. The iOS port is the single binding constraint preventing SHIFROM from being a true cross-platform alternative to centralized messengers. Donation-funded hardware unblock. The pre-seed round instead budgets $30,000 for an iOS MVP and expanded QA.",
         "amount": 2000,
         "currency": "USD",
         "frequency": "one-time",
@@ -112,7 +112,7 @@
         "guid": "12-month-maintainer-runway",
         "status": "active",
         "name": "12-month maintainer runway",
-        "description": "Solo maintainer compensation at below-market open-source rate for 12 months of full-time PHANTOM development. Covers iOS port completion, Beta release, group chat foundation, pluggable censorship-resistant transports, and external audit liaison. Donation-funded maintainer runway. The pre-seed round instead budgets $12,500 for founder compensation and $100,000 for contractors and tooling.",
+        "description": "Solo maintainer compensation at below-market open-source rate for 12 months of full-time SHIFROM development. Covers iOS port completion, Beta release, group chat foundation, pluggable censorship-resistant transports, and external audit liaison. Donation-funded maintainer runway. The pre-seed round instead budgets $12,500 for founder compensation and $100,000 for contractors and tooling.",
         "amount": 60000,
         "currency": "USD",
         "frequency": "yearly",

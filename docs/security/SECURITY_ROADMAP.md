@@ -1,4 +1,4 @@
-# PHANTOM Security Roadmap
+# SHIFROM Security Roadmap
 
 > **Living document.** Lists every security finding the project knows
 > about, what we have already closed, and what is scheduled. Read
@@ -6,7 +6,7 @@
 > (English exec summary at the top, formal model body in Russian
 > below) and the running development journal at [`docs/PROJECT_LOG.md`](../PROJECT_LOG.md).
 >
-> **Honest scope statement.** PHANTOM is in active Alpha. The
+> **Honest scope statement.** SHIFROM is in active Alpha. The
 > findings below are not surprises: they were surfaced by the
 > project's own internal audits (`docs/audit/*` on disk) and by the
 > design review that produced ADR-009 / ADR-016 / ADR-019 / ADR-023.

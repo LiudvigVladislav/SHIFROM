@@ -1,6 +1,6 @@
 # Public Spaces Moderation Model
 
-**Project:** PHANTOM Messenger  
+**Project:** SHIFROM Messenger
 **Version:** 0.1-draft  
 **Status:** Product and policy design draft  
 **Owner:** [fill in]  
@@ -8,9 +8,9 @@
 
 ## Purpose
 
-This document defines how PHANTOM moderates **public and semi-public product surfaces** without undermining the private encrypted messaging model.
+This document defines how SHIFROM moderates **public and semi-public product surfaces** without undermining the private encrypted messaging model.
 
-PHANTOM should treat public surfaces as a separate governance layer.
+SHIFROM should treat public surfaces as a separate governance layer.
 This is where the product can and should be stricter.
 
 ## What counts as a public or semi-public surface
@@ -29,7 +29,7 @@ This is where the product can and should be stricter.
 
 ## Governance goals
 
-1. Prevent PHANTOM from becoming a distribution hub for illegal or abusive communities.
+1. Prevent SHIFROM from becoming a distribution hub for illegal or abusive communities.
 2. Reduce abuse velocity on public surfaces.
 3. Make high-reach entities more accountable than ordinary private users.
 4. Maintain a review path for illegal or harmful content reports.
@@ -236,7 +236,7 @@ Non-emergency enforcement should support:
 
 Emergency cases involving terrorism, child safety, or imminent harm may justify immediate action before appeal.
 
-## Metrics PHANTOM should track
+## Metrics SHIFROM should track
 
 Not public engagement metrics only.
 Track safety metrics too:
