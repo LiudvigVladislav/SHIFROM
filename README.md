@@ -10,7 +10,7 @@ and configurations. These tests do not establish universal resistance to filteri
 [![Release: v0.1.0-alpha.2](https://img.shields.io/badge/release-v0.1.0--alpha.2-orange)](https://github.com/LiudvigVladislav/SHIFROM/releases/tag/v0.1.0-alpha.2)
 [![License: AGPL-3.0-or-later](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)](LICENSE)
 [![Platform: Android](https://img.shields.io/badge/platform-Android-3ddc84)](#building-from-source)
-[![Site: phntm.pro](https://img.shields.io/badge/site-phntm.pro-665cff)](https://phntm.pro)
+[![Site: shifrom.com](https://img.shields.io/badge/site-shifrom.com-665cff)](https://shifrom.com)
 [![Mirror: Codeberg](https://img.shields.io/badge/mirror-Codeberg-2185d0)](https://codeberg.org/VladislavLiudvig/Phantom)
 
 ## What is SHIFROM?
@@ -36,11 +36,12 @@ The messenger is now named **SHIFROM** following a trade-name conflict. This
 change does not mean that the new name has completed independent trademark
 clearance, or that the software has received a security audit.
 
-The existing website, email addresses, donation channels and Codeberg mirror
-remain operational during the transition. The new domain `shifrom.com` and
-replacement logo are not activated by this change. Historical release notes,
-technical identifiers and protocol/storage names remain unchanged where they
-are needed for attribution, compatibility and reproducible evidence.
+The public website is [shifrom.com](https://shifrom.com), and current contact
+addresses use `@shifrom.com`. The owner's supplied logo is included in this
+branch. Service endpoints, donation destinations and the Codeberg mirror remain
+unchanged. Historical release notes, installation identity and protocol/storage
+names are preserved for attribution, compatibility and reproducible evidence.
+This draft does not deploy the website or update installed applications.
 
 ## Status
 
@@ -255,7 +256,7 @@ funding goals. Repository Sponsor links are configured in
 [`.github/FUNDING.yml`](.github/FUNDING.yml).
 
 SHIFROM is open to mission-aligned grants and pre-seed investment. Investment
-inquiries: `hello@phntm.pro`. Payment-provider and cryptocurrency addresses in
+inquiries: `hello@shifrom.com`. Payment-provider and cryptocurrency addresses in
 `funding.json` are donation channels only and must not be used to purchase
 equity, tokens, revenue rights, or other investment interests.
 
@@ -270,17 +271,17 @@ SHIFROM is licensed under the
 
 AGPL network-source requirements help keep modified hosted relays auditable.
 A commercial dual-license is available for white-label or B2B deployments that
-cannot use the AGPL; contact `legal@phntm.pro`.
+cannot use the AGPL; contact `legal@shifrom.com`.
 
 ## Contact
 
-- Website: [phntm.pro](https://phntm.pro)
+- Website: [shifrom.com](https://shifrom.com)
 - Source: [GitHub](https://github.com/LiudvigVladislav/SHIFROM) ·
   [Codeberg mirror](https://codeberg.org/VladislavLiudvig/Phantom)
 - Bugs and feature requests: [GitHub Issues](https://github.com/LiudvigVladislav/SHIFROM/issues)
-- Security disclosures: `security@phntm.pro` — see [SECURITY.md](SECURITY.md)
-- General contact: `hello@phntm.pro`
-- Legal / licensing: `legal@phntm.pro`
+- Security disclosures: `security@shifrom.com` — see [SECURITY.md](SECURITY.md)
+- General contact: `hello@shifrom.com`
+- Legal / licensing: `legal@shifrom.com`
 
 ## Acknowledgments
 

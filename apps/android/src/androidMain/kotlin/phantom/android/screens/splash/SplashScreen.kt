@@ -62,10 +62,7 @@ fun PhantomSplashScreen() {
             .background(BgDeep),
         contentAlignment = Alignment.Center,
     ) {
-        // Uses R.drawable.phantom_splash (round-9 §P0 asset from
-        // icon-refresh integration). Unbounded transparent
-        // brandmark — no clip, no rounded corners; the source PNG
-        // has the intended border treatment baked in.
+        // Exact SHIFROM mark with transparency; retain the legacy resource ID.
         Image(
             painter = painterResource(R.drawable.phantom_splash),
             contentDescription = stringResource(R.string.splash_logo),

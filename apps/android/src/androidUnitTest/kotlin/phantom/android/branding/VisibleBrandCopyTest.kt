@@ -4,6 +4,7 @@
 package phantom.android.branding
 
 import android.app.Application
+import android.graphics.drawable.AdaptiveIconDrawable
 import java.io.File
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -45,10 +46,30 @@ class VisibleBrandCopyTest {
         assertFalse("phantom_qr.png" in source)
     }
 
+    @Test
+    @Config(sdk = [26, 35])
+    fun suppliedLauncherAndWelcomeArtworkResolve() {
+        val context = RuntimeEnvironment.getApplication()
+        listOf(R.mipmap.ic_launcher, R.mipmap.ic_launcher_round).forEach { id ->
+            val icon = context.getDrawable(id) as AdaptiveIconDrawable
+            assertTrue(icon.foreground.intrinsicWidth > 0)
+            assertTrue(icon.background.intrinsicWidth > 0)
+            if (android.os.Build.VERSION.SDK_INT >= 33) {
+                assertTrue(requireNotNull(icon.monochrome).intrinsicWidth > 0)
+            }
+        }
+        listOf(R.drawable.phantom_splash, R.drawable.dv2_logo_phantom, R.drawable.ic_dv2_phantom_premium).forEach { id ->
+            val mark = requireNotNull(context.getDrawable(id))
+            assertTrue(mark.intrinsicWidth > 0)
+            assertEquals(mark.intrinsicWidth, mark.intrinsicHeight)
+        }
+    }
+
     private fun assertVisibleBrand() {
         val context = RuntimeEnvironment.getApplication()
         assertEquals("SHIFROM", context.applicationInfo.loadLabel(context.packageManager).toString())
         assertEquals("SHIFROM PREMIUM", context.getString(R.string.pricing_sheet_title))
+        assertTrue(context.getString(R.string.terms_section_6_body).contains("abuse@shifrom.com"))
         brandResources.forEach { resource ->
             val name = context.resources.getResourceEntryName(resource)
             val copy = context.getString(resource)

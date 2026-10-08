@@ -1,0 +1,223 @@
+{
+  "brand": "SHIFROM",
+  "input": "Owner-supplied shifrom-brand-kit, 2026-10-08",
+  "method": "Byte-for-byte copies; legacy resource and web asset names retained for compatibility.",
+  "assets": [
+    {
+      "source": "app-icons/android/res/mipmap-mdpi/ic_launcher.png",
+      "target": "apps/android/src/androidMain/res/mipmap-mdpi/ic_launcher.png",
+      "sha256": "48e34d2d9401a3d5e428e9dcba1da78e7c6df8e9b5ccc80d30b1177335a770a9",
+      "bytes": 9312
+    },
+    {
+      "source": "app-icons/android/res/mipmap-mdpi/ic_launcher_round.png",
+      "target": "apps/android/src/androidMain/res/mipmap-mdpi/ic_launcher_round.png",
+      "sha256": "764a974fbe6d0a0ad252d28e09bd9a7733b629de3ce2a072f8d59d2c8871344a",
+      "bytes": 9371
+    },
+    {
+      "source": "app-icons/android/res/mipmap-mdpi/ic_launcher_background.png",
+      "target": "apps/android/src/androidMain/res/mipmap-mdpi/ic_launcher_background.png",
+      "sha256": "389383e4af4970edd4022fa8e6af4073443a725753dd5ce9cee6ea1fbb8b82c6",
+      "bytes": 11769
+    },
+    {
+      "source": "app-icons/android/res/mipmap-mdpi/ic_launcher_foreground.png",
+      "target": "apps/android/src/androidMain/res/mipmap-mdpi/ic_launcher_foreground.png",
+      "sha256": "7769f856211bc751a1920d4c477d28c81a8bea66b715c65d25ba35d942314dd8",
+      "bytes": 12324
+    },
+    {
+      "source": "app-icons/android/res/mipmap-mdpi/ic_launcher_monochrome.png",
+      "target": "apps/android/src/androidMain/res/mipmap-mdpi/ic_launcher_monochrome.png",
+      "sha256": "5013ca7e49184dcdda140aca75c0fb876fb315587f50a508a3089b6746e12e53",
+      "bytes": 8830
+    },
+    {
+      "source": "app-icons/android/res/mipmap-hdpi/ic_launcher.png",
+      "target": "apps/android/src/androidMain/res/mipmap-hdpi/ic_launcher.png",
+      "sha256": "ff8d6c200e0ab1a2265b967185960e97b2ab27168d5f7dc96aa38e7e0c4f2936",
+      "bytes": 12054
+    },
+    {
+      "source": "app-icons/android/res/mipmap-hdpi/ic_launcher_round.png",
+      "target": "apps/android/src/androidMain/res/mipmap-hdpi/ic_launcher_round.png",
+      "sha256": "4e47417f9aa5fe8d9c5c73e575a2d70f2dcce388f0dbd22212cdfb70ac296932",
+      "bytes": 12242
+    },
+    {
+      "source": "app-icons/android/res/mipmap-hdpi/ic_launcher_background.png",
+      "target": "apps/android/src/androidMain/res/mipmap-hdpi/ic_launcher_background.png",
+      "sha256": "d0e313fb0c6efc38f4c0ca3a6b852ec6368f7b0f009ea4a28d1363bb885472a0",
+      "bytes": 17116
+    },
+    {
+      "source": "app-icons/android/res/mipmap-hdpi/ic_launcher_foreground.png",
+      "target": "apps/android/src/androidMain/res/mipmap-hdpi/ic_launcher_foreground.png",
+      "sha256": "a72a27bc85f5afcd72f2451c7a60a983d29603a6bbd0c15dd1db0010fcad5ace",
+      "bytes": 17710
+    },
+    {
+      "source": "app-icons/android/res/mipmap-hdpi/ic_launcher_monochrome.png",
+      "target": "apps/android/src/androidMain/res/mipmap-hdpi/ic_launcher_monochrome.png",
+      "sha256": "ad4ea4afcd38e7765962faab54c99c7fa7ef9e08e2efd029c706c6a1309e8e66",
+      "bytes": 10459
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xhdpi/ic_launcher.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xhdpi/ic_launcher.png",
+      "sha256": "00c903c9587d9487859bd7d270aa395ca2e6bd42880720c047c62ee454e18291",
+      "bytes": 15996
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xhdpi/ic_launcher_round.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xhdpi/ic_launcher_round.png",
+      "sha256": "a0c5c6f1b3f07e472cfa9af825ca5b0e88fe575b6201e47b5c96816754c246b7",
+      "bytes": 16027
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xhdpi/ic_launcher_background.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xhdpi/ic_launcher_background.png",
+      "sha256": "f9eb46f2e18aa2b59c714d8432ac3e81922c061a052703d8204c29ab908b513e",
+      "bytes": 23739
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xhdpi/ic_launcher_foreground.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xhdpi/ic_launcher_foreground.png",
+      "sha256": "8feccae3545147933c01f9de537a1a04717d5f3b5e533d11b6366205fa0f5e9f",
+      "bytes": 24331
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xhdpi/ic_launcher_monochrome.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xhdpi/ic_launcher_monochrome.png",
+      "sha256": "6005c001961d8cf253f066a51f5d288e79166a92bbe4a24a1d5ed02c2e02626f",
+      "bytes": 12736
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xxhdpi/ic_launcher.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xxhdpi/ic_launcher.png",
+      "sha256": "bba807b86c42c520e378fb882d4f5785491c31d5cb7eb5f4e2f0ae1a96382199",
+      "bytes": 24455
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xxhdpi/ic_launcher_round.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xxhdpi/ic_launcher_round.png",
+      "sha256": "3c0f98c3adf536e0a9de156d8d5c7262a923e903949679509652d869845f9dfa",
+      "bytes": 24229
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xxhdpi/ic_launcher_background.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xxhdpi/ic_launcher_background.png",
+      "sha256": "1fbfeb0e12464910c092850d1ddd4a42bcc98e0deb29e1ef0058fce9a6260bc1",
+      "bytes": 40368
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xxhdpi/ic_launcher_foreground.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xxhdpi/ic_launcher_foreground.png",
+      "sha256": "28a2b2a919c5c329277fb7671b23c12109aa84231593ab18803765b0bf7ae7f7",
+      "bytes": 41341
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xxhdpi/ic_launcher_monochrome.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xxhdpi/ic_launcher_monochrome.png",
+      "sha256": "e21b7632240a2d50c747d489c5e2ada3cc059b6424b06852ca60659ada9e3d5a",
+      "bytes": 16425
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xxxhdpi/ic_launcher.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xxxhdpi/ic_launcher.png",
+      "sha256": "2d32afa9cb4577adaf7bc7294d6b7ee741a7761cc8a7dad75e03820cd00ab7c8",
+      "bytes": 35142
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xxxhdpi/ic_launcher_round.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xxxhdpi/ic_launcher_round.png",
+      "sha256": "1dd3decbf740ed64872d38207d17dfa49d632aa446ce16fab280c89d51b14687",
+      "bytes": 34466
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xxxhdpi/ic_launcher_background.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xxxhdpi/ic_launcher_background.png",
+      "sha256": "b06e76db3f283823bc9e5af1a331aad6a26c4dc36319f9ab89ad58b7085a5f1f",
+      "bytes": 58824
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+      "sha256": "a110189316481a236c8c4b16a876ff97074e94fd52c6f345c91ee9f1d1f2a762",
+      "bytes": 61835
+    },
+    {
+      "source": "app-icons/android/res/mipmap-xxxhdpi/ic_launcher_monochrome.png",
+      "target": "apps/android/src/androidMain/res/mipmap-xxxhdpi/ic_launcher_monochrome.png",
+      "sha256": "94202d36cdde9f40666526ec137c4302b6d9c62e0e234c31afbbeb752916a849",
+      "bytes": 22082
+    },
+    {
+      "source": "app-icons/android/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "target": "apps/android/src/androidMain/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "sha256": "3003196af2ea0bf160619bcc047002eb06fa674441ca1832b8d747d2c8b358a5",
+      "bytes": 338
+    },
+    {
+      "source": "app-icons/android/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+      "target": "apps/android/src/androidMain/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+      "sha256": "3003196af2ea0bf160619bcc047002eb06fa674441ca1832b8d747d2c8b358a5",
+      "bytes": 338
+    },
+    {
+      "source": "logo/mark/shifrom-mark-color-512.png",
+      "target": "apps/android/src/androidMain/res/drawable/phantom_splash.png",
+      "sha256": "819d69be878de3a77c0f90b040dec78b3f2bade36c5ba4a37ee8491395ce62bf",
+      "bytes": 181328
+    },
+    {
+      "source": "logo/mark/shifrom-mark-color-1024.png",
+      "target": "apps/android/src/androidMain/res/drawable-nodpi/dv2_logo_phantom.png",
+      "sha256": "bc5ceee925f2783e921d5001424d38294c168170894f717bc4203ca7822ab339",
+      "bytes": 610931
+    },
+    {
+      "source": "logo/mark/shifrom-mark-color-1024.png",
+      "target": "site/static/logo-mark.png",
+      "sha256": "bc5ceee925f2783e921d5001424d38294c168170894f717bc4203ca7822ab339",
+      "bytes": 610931
+    },
+    {
+      "source": "web/icon-192.png",
+      "target": "site/static/favicon.png",
+      "sha256": "b9180644e507bdaa8691f67b9cbdd29e0b694858ee27931bf65072189162fc72",
+      "bytes": 40212
+    },
+    {
+      "source": "web/og-image-1200x630.png",
+      "target": "site/static/og-image.png",
+      "sha256": "86249935326d835a7e9cc87cc8cd8ea800b80e85dc6e71580df443bd93f84d99",
+      "bytes": 126199
+    },
+    {
+      "source": "web/apple-touch-icon.png",
+      "target": "site/static/apple-touch-icon.png",
+      "sha256": "533eb4c461d7b80d007a1b18819408b6f2dc59b9a0c43a4c0ffea783e393908d",
+      "bytes": 29839
+    },
+    {
+      "source": "logo/mark/shifrom-mark-color-256.png",
+      "target": "legal/assets/phantom-logo.png",
+      "sha256": "4fa52f7a4f018481d213385f0d723a310f32c686fe1e05110fe608fd81ff9481",
+      "bytes": 59972
+    },
+    {
+      "source": "app-icons/android/play-store-icon-512.png",
+      "target": "apps/android/playstore-icon-512.png",
+      "sha256": "5bbd3d6667862843742713bff515801a34c8099ba2aac43502b5e173996b87f3",
+      "bytes": 138602
+    },
+    {
+      "source": "logo/mark/shifrom-mark-white-256.png",
+      "target": "apps/android/src/androidMain/res/drawable/ic_dv2_phantom_premium.png",
+      "sha256": "b37d2a4e790b2aae85496376be43c5d8b2e0cba4c7f60aa3a8b0d03d3c54c5d9",
+      "bytes": 20175
+    }
+  ]
+}

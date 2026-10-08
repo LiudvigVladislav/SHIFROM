@@ -5,11 +5,11 @@
     "type": "organisation",
     "role": "owner",
     "name": "Willen LLC",
-    "email": "legal@phntm.pro",
+    "email": "legal@shifrom.com",
     "phone": "",
     "description": "Willen LLC is a Wyoming, USA company that maintains SHIFROM, an AGPL-3.0-or-later end-to-end encrypted, censorship-resistant messenger. The company exists to develop and steward SHIFROM as public-interest software infrastructure.",
     "webpageUrl": {
-      "url": "https://phntm.pro"
+      "url": "https://shifrom.com"
     }
   },
   "projects": [
@@ -18,7 +18,7 @@
       "name": "SHIFROM",
       "description": "An open-source, Android-first end-to-end encrypted messenger in Alpha 2. Current development builds include 1:1 text messaging, encrypted voice notes, Direct WSS, VLESS+REALITY, a Tor text path, REST fallback, and a Rust relay. Founder-run field tests covered specific devices and configurations on Yota, T2, and MTS in Russia's Irkutsk Region; they do not establish universal resistance to filtering. The custom protocol composition has not received an independent third-party security audit. iOS and production web clients are planned, not shipped. These funding.json amounts are donation and grant milestones. They are a separate funding route from the $250,000 pre-seed round described in the investor materials, and the two are alternatives for the same work rather than additive budgets.",
       "webpageUrl": {
-        "url": "https://phntm.pro"
+        "url": "https://shifrom.com"
       },
       "repositoryUrl": {
         "url": "https://github.com/LiudvigVladislav/SHIFROM",
@@ -76,7 +76,7 @@
       {
         "guid": "bank-wire",
         "type": "bank",
-        "address": "Coordinate via legal@phntm.pro for grant disbursements and large donations.",
+        "address": "Coordinate via legal@shifrom.com for grant disbursements and large donations.",
         "description": "Direct bank wire to Willen LLC's USD operating account. Used for grant disbursements and large donations, where formal documentation and sanctions screening are coordinated in writing. Donation and grant channel only; not an investment payment method. Equity or other securities transactions require separate written agreements and compliance review."
       }
     ],

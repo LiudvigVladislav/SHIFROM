@@ -1,6 +1,6 @@
-# SHIFROM — phntm.pro site
+# SHIFROM — shifrom.com site
 
-Static site for **phntm.pro**. Four pages, mirrored in two languages
+Static site for **shifrom.com**. Six pages, mirrored in two languages
 (English at the tree root, Russian at `/ru/`), each page single-language,
 no build tooling — pure HTML/CSS/JS.
 
@@ -13,10 +13,11 @@ targeting effective for both Google and Yandex.
 
 Each `*.html` embeds its CSS and JS directly in the `<style>` and
 `<script>` blocks. The brand logo is served as a small image from
-`/static/favicon.png` (~57 KB, same-origin, cached across pages and
+`/static/favicon.png` (192×192, same-origin, cached across pages and
 reused for the browser tab icon — so the `<img>` reference costs zero
-new network requests). CDN fonts (Inter and JetBrains Mono via Google
-Fonts, Geist via jsdelivr) are the only external requests.
+new network requests). Fonts are self-hosted under `/static/fonts/`.
+The supplied logo, share preview and touch icon are bound by SHA-256 in
+`docs/branding/shifrom-assets.json`.
 
 Earlier revisions of these HTML files embedded the brand logo as a
 base64 data URI directly inside every `<img>` tag — six ~82 KB copies
@@ -25,7 +26,7 @@ bytes into the HTML that had to travel before first render. That was
 removed on 2026-06-02 (index / about ~83–89% smaller; roadmap / donate
 ~77% smaller). The logo is now fetched once and cached.
 
-**Source of truth: the eight `*.html` files themselves.** Edit them
+**Source of truth: the twelve `*.html` files themselves.** Edit them
 directly with any text editor and the change is live after the next
 deploy.
 
@@ -37,12 +38,12 @@ throwaway Python script at split time and both trees are hand-edited
 from that point on. Rationale: PR #377 already deleted a class of stale
 build tooling that had drifted from the HTML it was supposed to
 generate; a live generator would just re-introduce the same drift risk.
-Four pages × 2 languages is small enough to maintain by hand.
+Six pages × 2 languages is small enough to maintain by hand.
 
 Each EN/RU pair carries a reciprocal `hreflang` cluster
 (`en` / `ru` / `x-default`) plus a self-referencing `canonical`, so a
 search engine that crawls one variant discovers the other and
-associates them correctly. `sitemap.xml` lists all 8 URLs with the
+associates them correctly. `sitemap.xml` lists all 12 URLs with the
 same alternate annotations. Do not break the pairing: if a page is
 renamed, both files must be renamed and both hreflang blocks + the
 sitemap entry must be updated in the same commit.
@@ -76,13 +77,16 @@ site/
 │   ├── about.html          About — RU    (URL: /ru/about.html)
 │   ├── roadmap.html        Roadmap — RU  (URL: /ru/roadmap.html)
 │   └── donate.html         Support — RU  (URL: /ru/donate.html)
-├── sitemap.xml             SEO sitemap (8 URLs with xhtml:link alternate annotations)
+├── writeups/               Engineering index and article — EN
+├── ru/writeups/            Engineering index and article — RU
+├── sitemap.xml             SEO sitemap (12 URLs with xhtml:link alternate annotations)
 ├── robots.txt              Crawler rules (allow search + AI grounding, deny training)
 ├── styles.css              Reference copy of design tokens + layout (NOT executed at runtime)
 ├── site.js                 Reference copy of lang switcher + scroll-reveal (NOT executed at runtime)
 ├── static/
-│   ├── favicon.png         512×512, browser tab / bookmark / home-screen
-│   │                       / JSON-LD org logo / on-page brand logo (nav + hero)
+│   ├── favicon.png         192×192, browser tab / navigation / JSON-LD org logo
+│   ├── logo-mark.png       1024×1024, transparent hero / README mark
+│   ├── apple-touch-icon.png 180×180, home-screen icon
 │   └── og-image.png        1200×630, social share preview (og:image + twitter:image)
 └── README.md               This file
 ```
@@ -103,6 +107,11 @@ via a bind-mount: the Caddyfile's `phntm.pro` vhost serves files from
 maps `../site` (this directory) into `/srv/landing` read-only.
 
 ### Standard release deploy
+
+The commands below describe the legacy deployment layout, not proof of the
+new domain's configuration. This branding draft does not change Caddy, restart
+containers or deploy files. Recheck the actual host and mounts before any
+separately authorized publication to `shifrom.com`.
 
 ```bash
 # 1. Pull latest into the VPS-side checkout.
@@ -137,22 +146,22 @@ Four `curl` checks confirm the deploy landed cleanly:
 # 1. New site is served (not the old stub).
 #    Old stub had: <meta name="robots" content="noindex,nofollow">
 #    New pages have: <meta name="robots" content="index,follow">
-curl -sL https://phntm.pro/ | grep '<meta name="robots"'
+curl -sL https://shifrom.com/ | grep '<meta name="robots"'
 # Expect: <meta name="robots" content="index,follow">
 
 # 2. Old "noindex" must be GONE.
-curl -sL https://phntm.pro/ | grep -i 'noindex'
+curl -sL https://shifrom.com/ | grep -i 'noindex'
 # Expect: empty
 
 # 3. funding.json donation URLs are correct (PR #245 fix deployed).
-curl -s https://phntm.pro/funding.json | grep -E 'liberapay\.com|buymeacoffee\.com'
+curl -s https://shifrom.com/funding.json | grep -E 'liberapay\.com|buymeacoffee\.com'
 # Expect: https://liberapay.com/Phantom-messenger (CAPITAL P)
 #         https://www.buymeacoffee.com/phantompro  (NOT phantommessenger)
 
 # 4. Inner pages reachable (no .html-routing tricks needed; full path serves).
-curl -sI https://phntm.pro/about.html | head -1
-curl -sI https://phntm.pro/roadmap.html | head -1
-curl -sI https://phntm.pro/donate.html | head -1
+curl -sI https://shifrom.com/about.html | head -1
+curl -sI https://shifrom.com/roadmap.html | head -1
+curl -sI https://shifrom.com/donate.html | head -1
 # Expect: HTTP/2 200 on all three
 ```
 
@@ -191,7 +200,7 @@ When swapping web roots, these MUST be preserved:
 
 - `funding.json` at repo root — already separately bind-mounted at
   `../funding.json:/srv/funding/funding.json:ro` and served at
-  `https://phntm.pro/funding.json` by a dedicated Caddyfile `handle`.
+  `https://shifrom.com/funding.json` by a dedicated Caddyfile `handle`.
   NOT inside `site/`. Do not duplicate.
 - `.well-known/funding-manifest-urls` at repo root — exists for the
   FLOSS/fund wellKnown proof on GitHub

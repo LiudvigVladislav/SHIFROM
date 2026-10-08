@@ -157,4 +157,4 @@ None of this required knowing *who* was doing it or *why*. It required treating 
 
 ---
 
-*SHIFROM is open source (AGPL-3.0-or-later). Architecture decisions, threat model, and known issues are public. If you build transports for hostile networks, or want to poke holes in ours, the code and design docs are at [github.com/LiudvigVladislav/SHIFROM](https://github.com/LiudvigVladislav/SHIFROM) — and the project lives at [phntm.pro](https://phntm.pro).*
+*SHIFROM is open source (AGPL-3.0-or-later). Architecture decisions, threat model, and known issues are public. If you build transports for hostile networks, or want to poke holes in ours, the code and design docs are at [github.com/LiudvigVladislav/SHIFROM](https://github.com/LiudvigVladislav/SHIFROM) — and the project lives at [shifrom.com](https://shifrom.com).*

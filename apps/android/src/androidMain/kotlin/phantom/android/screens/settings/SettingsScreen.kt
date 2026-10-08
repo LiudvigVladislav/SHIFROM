@@ -346,7 +346,7 @@ fun SettingsScreen(
                         icon = { PhIconMessageCircle(color = CyanAccent, size = 16.dp) },
                         label = stringResource(R.string.settings_send_feedback),
                         onClick = {
-                            context.openMailto("support@phntm.pro", subject = context.getString(R.string.settings_feedback_subject))
+                            context.openMailto("support@shifrom.com", subject = context.getString(R.string.settings_feedback_subject))
                         },
                     )
                     HorizontalDivider(color = BorderSubtle, thickness = 1.dp)

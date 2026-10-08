@@ -38,7 +38,7 @@ SHIFROM is designed around the principle of **data minimization**. We do not col
 - **We do not log connection metadata** beyond what is technically necessary to route messages.
 - **We cannot disclose what we do not have.** If any third party — including law enforcement, governments, or private parties — requests user data, we will respond truthfully that the requested data does not exist in our systems.
 
-For full details, see our [Privacy Policy](https://phntm.pro/privacy).
+For full details, see our [Privacy Policy](https://shifrom.com/privacy).
 
 ## 5. Acceptable Use
 
@@ -89,11 +89,11 @@ We may update these Terms from time to time. Material changes will be communicat
 
 ## 12. Contact
 
-- **Legal matters:** legal@phntm.pro
-- **Security disclosure:** security@phntm.pro
-- **Privacy & data requests:** privacy@phntm.pro
-- **Abuse reports:** abuse@phntm.pro
-- **General support:** support@phntm.pro
-- **Press inquiries:** press@phntm.pro
+- **Legal matters:** legal@shifrom.com
+- **Security disclosure:** security@shifrom.com
+- **Privacy & data requests:** privacy@shifrom.com
+- **Abuse reports:** abuse@shifrom.com
+- **General support:** support@shifrom.com
+- **Press inquiries:** press@shifrom.com
 
 Willen LLC, Wyoming, United States.

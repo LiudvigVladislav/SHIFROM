@@ -911,7 +911,7 @@ private fun TermsScreen(onAccept: () -> Unit) {
             )
             TosSection(
                 title = "6. Use SHIFROM responsibly",
-                body = "We do not endorse illegal use of the service. Reports of abuse can be sent to abuse@phntm.pro.",
+                body = "We do not endorse illegal use of the service. Reports of abuse can be sent to abuse@shifrom.com.",
             )
             TosSection(
                 title = "7. SHIFROM is in Alpha",
@@ -939,7 +939,7 @@ private fun TermsScreen(onAccept: () -> Unit) {
                         linkContext.startActivity(
                             android.content.Intent(
                                 android.content.Intent.ACTION_VIEW,
-                                android.net.Uri.parse("https://phntm.pro/terms"),
+                                android.net.Uri.parse("https://shifrom.com/terms"),
                             ).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
                     },
@@ -954,7 +954,7 @@ private fun TermsScreen(onAccept: () -> Unit) {
                         linkContext.startActivity(
                             android.content.Intent(
                                 android.content.Intent.ACTION_VIEW,
-                                android.net.Uri.parse("https://phntm.pro/privacy"),
+                                android.net.Uri.parse("https://shifrom.com/privacy"),
                             ).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
                     },

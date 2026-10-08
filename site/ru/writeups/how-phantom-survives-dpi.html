@@ -6,18 +6,18 @@
 <title>Диагностика зависания потока на мобильном пути — Инженерные заметки SHIFROM</title>
 <meta name="description" content="Пять проверенных гипотез, два измерения в поле на российской сети и архитектура транспорта, которая из них выросла.">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://phntm.pro/ru/writeups/how-phantom-survives-dpi.html">
-<link rel="alternate" hreflang="en" href="https://phntm.pro/writeups/how-phantom-survives-dpi.html">
-<link rel="alternate" hreflang="ru" href="https://phntm.pro/ru/writeups/how-phantom-survives-dpi.html">
-<link rel="alternate" hreflang="x-default" href="https://phntm.pro/writeups/how-phantom-survives-dpi.html">
+<link rel="canonical" href="https://shifrom.com/ru/writeups/how-phantom-survives-dpi.html">
+<link rel="alternate" hreflang="en" href="https://shifrom.com/writeups/how-phantom-survives-dpi.html">
+<link rel="alternate" hreflang="ru" href="https://shifrom.com/ru/writeups/how-phantom-survives-dpi.html">
+<link rel="alternate" hreflang="x-default" href="https://shifrom.com/writeups/how-phantom-survives-dpi.html">
 <link rel="icon" type="image/png" href="/static/favicon.png">
-<link rel="apple-touch-icon" href="/static/favicon.png">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
 <meta name="theme-color" content="#08090C">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://phntm.pro/ru/writeups/how-phantom-survives-dpi.html">
+<meta property="og:url" content="https://shifrom.com/ru/writeups/how-phantom-survives-dpi.html">
 <meta property="og:title" content="Диагностика зависания потока на мобильном пути — Инженерные заметки SHIFROM">
 <meta property="og:description" content="Пять проверенных гипотез, два измерения в поле на российской сети и архитектура транспорта, которая из них выросла.">
-<meta property="og:image" content="https://phntm.pro/static/og-image.png">
+<meta property="og:image" content="https://shifrom.com/static/og-image.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -28,7 +28,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Диагностика зависания потока на мобильном пути — Инженерные заметки SHIFROM">
 <meta name="twitter:description" content="Пять проверенных гипотез, два измерения в поле на российской сети и архитектура транспорта, которая из них выросла.">
-<meta name="twitter:image" content="https://phntm.pro/static/og-image.png">
+<meta name="twitter:image" content="https://shifrom.com/static/og-image.png">
 <meta name="twitter:image:alt" content="SHIFROM — мессенджер с открытым кодом и сквозным шифрованием, устойчивый к слежке и сетевой цензуре">
 <style>
 /* self-hosted fonts (Phase 4 — no external font requests).
@@ -420,7 +420,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border-sub);margin
 
 <hr>
 
-<p class="writeup-outro"><em>SHIFROM — проект с открытым кодом (AGPL-3.0-or-later). Архитектурные решения, модель угроз и известные проблемы открыты публично. Если вы строите транспорты для враждебных сетей или хотите поискать слабые места в наших решениях — код и проектная документация доступны на <a href="https://github.com/LiudvigVladislav/SHIFROM">github.com/LiudvigVladislav/SHIFROM</a>, а сам проект живёт на <a href="https://phntm.pro">phntm.pro</a>.</em></p>
+<p class="writeup-outro"><em>SHIFROM — проект с открытым кодом (AGPL-3.0-or-later). Архитектурные решения, модель угроз и известные проблемы открыты публично. Если вы строите транспорты для враждебных сетей или хотите поискать слабые места в наших решениях — код и проектная документация доступны на <a href="https://github.com/LiudvigVladislav/SHIFROM">github.com/LiudvigVladislav/SHIFROM</a>, а сам проект живёт на <a href="https://shifrom.com">shifrom.com</a>.</em></p>
 </article>
 <footer>
   <div class="foot-inner">

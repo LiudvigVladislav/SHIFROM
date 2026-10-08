@@ -21,8 +21,8 @@ to handle the small Markdown subset our legal documents use:
 
 The output is committed alongside the Markdown so the repo carries both
 the source-of-truth (`.md`) and the public-facing rendered page
-(`.html`). Caddy serves the HTML at https://phntm.pro/terms and
-https://phntm.pro/privacy.
+(`.html`). Caddy serves the HTML at https://shifrom.com/terms and
+https://shifrom.com/privacy.
 
 Re-run this script whenever the Markdown is edited.
 """
@@ -118,7 +118,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="theme-color" content="#08090C">
 <meta name="description" content="SHIFROM — privacy-focused, end-to-end encrypted messenger. {description}">
 <link rel="icon" type="image/png" href="/assets/phantom-logo.png">
-<link rel="apple-touch-icon" href="/assets/phantom-logo.png">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
 <style>
   /* ─── Design tokens (Brief §03) ─────────────────────────────────────── */
   :root {{
@@ -404,8 +404,10 @@ TEMPLATE = """<!DOCTYPE html>
     article h1 {{ font-size: 26px; }}
     article h2 {{ font-size: 18px; margin-top: 36px; }}
     article .meta {{ margin-bottom: 36px; padding-bottom: 24px; }}
-    header .inner {{ padding: 14px 18px; gap: 12px; }}
-    header nav {{ gap: 16px; }}
+    header .inner {{ padding: 14px 18px; gap: 12px; flex-wrap: wrap; }}
+    header nav {{ gap: 12px 16px; flex-wrap: wrap; }}
+    article table {{ table-layout: fixed; }}
+    article th, article td {{ padding: 10px 8px; overflow-wrap: anywhere; }}
     footer nav {{ gap: 18px; }}
   }}
 
@@ -418,7 +420,7 @@ TEMPLATE = """<!DOCTYPE html>
 <body>
 <header>
   <div class="inner">
-    <a class="brand" href="https://phntm.pro/" aria-label="SHIFROM home">
+    <a class="brand" href="https://shifrom.com/" aria-label="SHIFROM home">
       <img src="/assets/phantom-logo.png" alt="" width="28" height="28">
       <span class="word">SHIFROM</span>
     </a>

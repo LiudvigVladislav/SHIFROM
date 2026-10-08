@@ -16,9 +16,9 @@ Quick read before you start:
 
 7. **SHIFROM is in Alpha.** Things may break. Bugs happen. Updates may change how the app works.
 
-8. **We collect the bare minimum** to route your messages — your public key and the IP you connect from. None of it is logged or stored long-term. See our [Privacy Policy](https://phntm.pro/privacy) for details.
+8. **We collect the bare minimum** to route your messages — your public key and the IP you connect from. None of it is logged or stored long-term. See our [Privacy Policy](https://shifrom.com/privacy) for details.
 
-By tapping **"I Agree"**, you accept these terms and our [full Terms of Service](https://phntm.pro/terms).
+By tapping **"I Agree"**, you accept these terms and our [full Terms of Service](https://shifrom.com/terms).
 
 ---
 

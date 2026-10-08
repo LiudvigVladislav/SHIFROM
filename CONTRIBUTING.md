@@ -134,11 +134,11 @@ the answer. Use email when an issue would not be appropriate:
 
 | Topic | Address |
 |---|---|
-| Security vulnerabilities (do **not** open a public issue) | `security@phntm.pro` |
-| Privacy / GDPR / data-handling questions | `privacy@phntm.pro` |
-| Legal correspondence, DMCA | `legal@phntm.pro` |
-| Code of Conduct reports | `abuse@phntm.pro` |
-| Anything else | `support@phntm.pro` |
+| Security vulnerabilities (do **not** open a public issue) | `security@shifrom.com` |
+| Privacy / GDPR / data-handling questions | `privacy@shifrom.com` |
+| Legal correspondence, DMCA | `legal@shifrom.com` |
+| Code of Conduct reports | `abuse@shifrom.com` |
+| Anything else | `support@shifrom.com` |
 
 See [SECURITY.md](SECURITY.md) for the full disclosure policy and
 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community-conduct

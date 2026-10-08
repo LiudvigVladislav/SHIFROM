@@ -125,7 +125,7 @@ not just by lack of time.
 - **Product and feature proposals:** open a GitHub issue describing the user
   problem, not only the desired implementation. Proposals that conflict with
   the doctrine may be closed with an explanation.
-- **Funding or collaboration:** write to `hello@phntm.pro`.
+- **Funding or collaboration:** write to `hello@shifrom.com`.
 - **Security priorities:** use the private reporting process in
   [SECURITY.md](SECURITY.md). Never disclose a suspected vulnerability in a
   public issue.

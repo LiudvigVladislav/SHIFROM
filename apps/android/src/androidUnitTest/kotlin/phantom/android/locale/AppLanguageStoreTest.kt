@@ -80,10 +80,10 @@ class AppLanguageStoreTest {
 
     @Test
     fun legalLinksFollowTheDisplayedLanguage() {
-        assertEquals("https://phntm.pro/terms/ru", legalDocumentUrl(LegalDocument.Terms, "ru"))
-        assertEquals("https://phntm.pro/privacy/ru", legalDocumentUrl(LegalDocument.Privacy, "ru"))
-        assertEquals("https://phntm.pro/terms", legalDocumentUrl(LegalDocument.Terms, "en"))
-        assertEquals("https://phntm.pro/privacy", legalDocumentUrl(LegalDocument.Privacy, "en"))
+        assertEquals("https://shifrom.com/terms/ru", legalDocumentUrl(LegalDocument.Terms, "ru"))
+        assertEquals("https://shifrom.com/privacy/ru", legalDocumentUrl(LegalDocument.Privacy, "ru"))
+        assertEquals("https://shifrom.com/terms", legalDocumentUrl(LegalDocument.Terms, "en"))
+        assertEquals("https://shifrom.com/privacy", legalDocumentUrl(LegalDocument.Privacy, "en"))
     }
 
     @Test

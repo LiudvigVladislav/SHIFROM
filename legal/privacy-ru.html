@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#08090C">
 <meta name="description" content="SHIFROM — privacy-focused, end-to-end encrypted messenger. политика конфиденциальности">
 <link rel="icon" type="image/png" href="/assets/phantom-logo.png">
-<link rel="apple-touch-icon" href="/assets/phantom-logo.png">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
 <style>
   /* ─── Design tokens (Brief §03) ─────────────────────────────────────── */
   :root {
@@ -293,8 +293,10 @@
     article h1 { font-size: 26px; }
     article h2 { font-size: 18px; margin-top: 36px; }
     article .meta { margin-bottom: 36px; padding-bottom: 24px; }
-    header .inner { padding: 14px 18px; gap: 12px; }
-    header nav { gap: 16px; }
+    header .inner { padding: 14px 18px; gap: 12px; flex-wrap: wrap; }
+    header nav { gap: 12px 16px; flex-wrap: wrap; }
+    article table { table-layout: fixed; }
+    article th, article td { padding: 10px 8px; overflow-wrap: anywhere; }
     footer nav { gap: 18px; }
   }
 
@@ -307,7 +309,7 @@
 <body>
 <header>
   <div class="inner">
-    <a class="brand" href="https://phntm.pro/" aria-label="SHIFROM home">
+    <a class="brand" href="https://shifrom.com/" aria-label="SHIFROM home">
       <img src="/assets/phantom-logo.png" alt="" width="28" height="28">
       <span class="word">SHIFROM</span>
     </a>
@@ -362,7 +364,7 @@
 <li><strong>Право на перенос:</strong> Твой аккаунт <em>и есть</em> твои криптографические ключи, хранящиеся на твоём устройстве. Они изначально портируемые.</li>
 <li><strong>Право на возражение:</strong> Прекрати использование Сервиса.</li>
 </ul>
-<p>Для запроса по вопросам конфиденциальности обращайся: privacy@phntm.pro.</p>
+<p>Для запроса по вопросам конфиденциальности обращайся: privacy@shifrom.com.</p>
 <h2>Конфиденциальность для детей</h2>
 <p>SHIFROM не предназначен для детей младше 16 лет, и мы сознательно не собираем данные о ком-либо младше 16.</p>
 <h2>Безопасность</h2>
@@ -380,9 +382,9 @@
 <p>Мы можем обновлять эту Политику конфиденциальности. Существенные изменения будут сообщены через приложение до их вступления в силу.</p>
 <h2>Контакты</h2>
 <ul>
-<li><strong>Вопросы и запросы по конфиденциальности:</strong> privacy@phntm.pro</li>
-<li><strong>Юридические вопросы:</strong> legal@phntm.pro</li>
-<li><strong>Раскрытие уязвимостей:</strong> security@phntm.pro</li>
+<li><strong>Вопросы и запросы по конфиденциальности:</strong> privacy@shifrom.com</li>
+<li><strong>Юридические вопросы:</strong> legal@shifrom.com</li>
+<li><strong>Раскрытие уязвимостей:</strong> security@shifrom.com</li>
 </ul>
 <p>Willen LLC, Вайоминг, США.</p>
   </article>

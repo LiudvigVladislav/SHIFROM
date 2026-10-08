@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#08090C">
 <meta name="description" content="SHIFROM — privacy-focused, end-to-end encrypted messenger. terms of service">
 <link rel="icon" type="image/png" href="/assets/phantom-logo.png">
-<link rel="apple-touch-icon" href="/assets/phantom-logo.png">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
 <style>
   /* ─── Design tokens (Brief §03) ─────────────────────────────────────── */
   :root {
@@ -293,8 +293,10 @@
     article h1 { font-size: 26px; }
     article h2 { font-size: 18px; margin-top: 36px; }
     article .meta { margin-bottom: 36px; padding-bottom: 24px; }
-    header .inner { padding: 14px 18px; gap: 12px; }
-    header nav { gap: 16px; }
+    header .inner { padding: 14px 18px; gap: 12px; flex-wrap: wrap; }
+    header nav { gap: 12px 16px; flex-wrap: wrap; }
+    article table { table-layout: fixed; }
+    article th, article td { padding: 10px 8px; overflow-wrap: anywhere; }
     footer nav { gap: 18px; }
   }
 
@@ -307,7 +309,7 @@
 <body>
 <header>
   <div class="inner">
-    <a class="brand" href="https://phntm.pro/" aria-label="SHIFROM home">
+    <a class="brand" href="https://shifrom.com/" aria-label="SHIFROM home">
       <img src="/assets/phantom-logo.png" alt="" width="28" height="28">
       <span class="word">SHIFROM</span>
     </a>
@@ -349,7 +351,7 @@
 <li><strong>We do not log connection metadata</strong> beyond what is technically necessary to route messages.</li>
 <li><strong>We cannot disclose what we do not have.</strong> If any third party — including law enforcement, governments, or private parties — requests user data, we will respond truthfully that the requested data does not exist in our systems.</li>
 </ul>
-<p>For full details, see our <a href="https://phntm.pro/privacy">Privacy Policy</a>.</p>
+<p>For full details, see our <a href="https://shifrom.com/privacy">Privacy Policy</a>.</p>
 <h2>5. Acceptable Use</h2>
 <p>You agree to use SHIFROM responsibly. You agree not to:</p>
 <ul>
@@ -383,12 +385,12 @@
 <p>We may update these Terms from time to time. Material changes will be communicated through the application before they take effect. Continued use of the Service after such changes constitutes acceptance of the updated Terms.</p>
 <h2>12. Contact</h2>
 <ul>
-<li><strong>Legal matters:</strong> legal@phntm.pro</li>
-<li><strong>Security disclosure:</strong> security@phntm.pro</li>
-<li><strong>Privacy &amp; data requests:</strong> privacy@phntm.pro</li>
-<li><strong>Abuse reports:</strong> abuse@phntm.pro</li>
-<li><strong>General support:</strong> support@phntm.pro</li>
-<li><strong>Press inquiries:</strong> press@phntm.pro</li>
+<li><strong>Legal matters:</strong> legal@shifrom.com</li>
+<li><strong>Security disclosure:</strong> security@shifrom.com</li>
+<li><strong>Privacy &amp; data requests:</strong> privacy@shifrom.com</li>
+<li><strong>Abuse reports:</strong> abuse@shifrom.com</li>
+<li><strong>General support:</strong> support@shifrom.com</li>
+<li><strong>Press inquiries:</strong> press@shifrom.com</li>
 </ul>
 <p>Willen LLC, Wyoming, United States.</p>
   </article>

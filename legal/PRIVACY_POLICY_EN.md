@@ -56,7 +56,7 @@ Because we minimize data collection by design, exercising these rights is largel
 - **Right to portability:** Your account *is* your cryptographic keys, stored on your device. They are inherently portable.
 - **Right to object:** Stop using the Service.
 
-To make any privacy request, contact privacy@phntm.pro.
+To make any privacy request, contact privacy@shifrom.com.
 
 ## Children's privacy
 
@@ -83,8 +83,8 @@ We may update this Privacy Policy. Material changes will be communicated through
 
 ## Contact
 
-- **Privacy questions or requests:** privacy@phntm.pro
-- **Legal matters:** legal@phntm.pro
-- **Security disclosure:** security@phntm.pro
+- **Privacy questions or requests:** privacy@shifrom.com
+- **Legal matters:** legal@shifrom.com
+- **Security disclosure:** security@shifrom.com
 
 Willen LLC, Wyoming, United States.

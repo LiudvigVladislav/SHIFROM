@@ -82,7 +82,7 @@ Three inputs feed this roadmap:
    captured in the ADR's Threat Model section and propagate here
    if they need follow-up implementation.
 3. **External review:** when an outside auditor, security researcher,
-   or contributor reports a finding through `security@phntm.pro` (see
+   or contributor reports a finding through `security@shifrom.com` (see
    [`SECURITY.md`](../../SECURITY.md)), it lands here with full
    credit and a public timeline.
 

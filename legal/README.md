@@ -32,9 +32,9 @@ does not need any build step on the VPS — Caddy bind-mounts
 ## Where these will live
 
 - **In the app (onboarding screen):** the SUMMARY versions.
-- **On phntm.pro:**
-  - `https://phntm.pro/terms` — full Terms of Service
-  - `https://phntm.pro/privacy` — full Privacy Policy
+- **On shifrom.com (legacy routes preserved):**
+  - `https://shifrom.com/terms` — full Terms of Service
+  - `https://shifrom.com/privacy` — full Privacy Policy
 - **In the GitHub repo:** under `Legal/` folder for transparency.
 
 ## Key design decisions
@@ -62,7 +62,7 @@ These are **drafts**. Before going live:
 - [ ] Final wording approval by Willen LLC ownership
 - [ ] Translation review for Russian version (legal terminology accuracy)
 - [ ] Implementation in the app (onboarding screen + Settings → Legal)
-- [ ] Hosting on phntm.pro at the URLs referenced in documents
+- [ ] Verify publication of this revision on shifrom.com; HTTP 200 alone does not prove current branding
 - [ ] Update version dates if changes are made before publication
 
 ## License clause TBD

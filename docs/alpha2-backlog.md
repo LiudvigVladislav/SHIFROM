@@ -26,7 +26,7 @@ The current Terms of Use shown on the first onboarding screen
 written during the Alpha 1 sprint and never reviewed against the
 project's actual policies. It mentions abuse reporting but does not
 mention the email-routing addresses that now exist
-(`security@`, `support@`, `legal@`, `abuse@`, `privacy@`, `press@phntm.pro`),
+(`security@`, `support@`, `legal@`, `abuse@`, `privacy@`, `press@shifrom.com`),
 and it does not reflect the GDPR / data-handling posture documented
 in `docs/threat-model/Threat_Model_v0.md`.
 
