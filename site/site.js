@@ -18,10 +18,26 @@
     var mb = document.querySelector('.menu-btn');
     var links = document.querySelector('.nav-links');
     if(mb && links){
-      mb.addEventListener('click', function(){ links.classList.toggle('open'); });
+      var mobile = window.matchMedia('(max-width: 820px)');
+      function setMenu(open){
+        links.classList.toggle('open', open);
+        mb.setAttribute('aria-expanded', String(open));
+        links.inert = mobile.matches && !open;
+      }
+      setMenu(false);
+      mb.addEventListener('click', function(){ setMenu(!links.classList.contains('open')); });
       links.querySelectorAll('a').forEach(function(a){
-        a.addEventListener('click', function(){ links.classList.remove('open'); });
+        a.addEventListener('click', function(){ setMenu(false); });
       });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && mobile.matches && links.classList.contains('open')){
+          setMenu(false); mb.focus();
+        }
+      });
+      document.addEventListener('click', function(e){
+        if(mobile.matches && !e.target.closest('nav')) setMenu(false);
+      });
+      mobile.addEventListener('change', function(){ setMenu(false); });
     }
 
     // scroll reveal — respects reduced-motion
@@ -61,17 +77,23 @@
             btn.textContent = original;
           }, 1600);
         };
+        var failed = function(){
+          btn.textContent = (lang === 'ru') ? 'Не удалось скопировать' : 'Copy failed';
+          setTimeout(function(){ btn.textContent = original; }, 1600);
+        };
         if(navigator.clipboard && navigator.clipboard.writeText){
-          navigator.clipboard.writeText(val).then(done).catch(function(){ fallbackCopy(val, done); });
-        } else { fallbackCopy(val, done); }
+          navigator.clipboard.writeText(val).then(done).catch(function(){ fallbackCopy(val, done, failed); });
+        } else { fallbackCopy(val, done, failed); }
       });
     });
-    function fallbackCopy(text, cb){
+    function fallbackCopy(text, done, failed){
       var ta = document.createElement('textarea');
       ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
       document.body.appendChild(ta); ta.select();
-      try{ document.execCommand('copy'); }catch(e){}
-      document.body.removeChild(ta); if(cb) cb();
+      var copied = false;
+      try{ copied = document.execCommand('copy'); }catch(e){}
+      document.body.removeChild(ta);
+      if(copied) done(); else failed();
     }
   });
 })();
