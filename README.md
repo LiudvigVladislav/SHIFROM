@@ -247,8 +247,8 @@ required ADR can be agreed before implementation.
 
 SHIFROM is maintained by Willen LLC and accepts support through:
 
-- [Liberapay](https://liberapay.com/Phantom-messenger)
-- [Buy Me a Coffee](https://www.buymeacoffee.com/phantompro)
+- [Liberapay](https://liberapay.com/SHIFROM/)
+- [Buy Me a Coffee](https://buymeacoffee.com/shifrom)
 - BTC, XMR, and ETH addresses published in [`funding.json`](funding.json)
 
 The machine-readable funding file also documents current budgets and project
