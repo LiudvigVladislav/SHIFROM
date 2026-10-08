@@ -11,7 +11,7 @@ and configurations. These tests do not establish universal resistance to filteri
 [![License: AGPL-3.0-or-later](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)](LICENSE)
 [![Platform: Android](https://img.shields.io/badge/platform-Android-3ddc84)](#building-from-source)
 [![Site: shifrom.com](https://img.shields.io/badge/site-shifrom.com-665cff)](https://shifrom.com)
-[![Mirror: Codeberg](https://img.shields.io/badge/mirror-Codeberg-2185d0)](https://codeberg.org/VladislavLiudvig/Phantom)
+[![Mirror: Codeberg](https://img.shields.io/badge/mirror-Codeberg-2185d0)](https://codeberg.org/VladislavLiudvig/SHIFROM)
 
 ## What is SHIFROM?
 
@@ -37,11 +37,18 @@ change does not mean that the new name has completed independent trademark
 clearance, or that the software has received a security audit.
 
 The public website is [shifrom.com](https://shifrom.com), and current contact
-addresses use `@shifrom.com`. The owner's supplied logo is included in this
-branch. Service endpoints, donation destinations and the Codeberg mirror remain
-unchanged. Historical release notes, installation identity and protocol/storage
-names are preserved for attribution, compatibility and reproducible evidence.
-This draft does not deploy the website or update installed applications.
+addresses use `@shifrom.com`. The approved SHIFROM logo and Android display
+name are on `master`. The bilingual website and donation links are published;
+the [Buy Me a Coffee](https://buymeacoffee.com/shifrom) and
+[Liberapay](https://liberapay.com/SHIFROM/) profiles use the current branding.
+The [Codeberg mirror](https://codeberg.org/VladislavLiudvig/SHIFROM) is also
+named SHIFROM; its former repository URL redirects to the new one.
+
+Working service endpoints and published cryptocurrency addresses remain
+unchanged. Historical release notes, installation identity, signing continuity
+and protocol/storage names are preserved for compatibility and reproducible
+evidence. Source branding does not mean that an installed app has been updated:
+the renamed signed APK still needs its device upgrade and user-flow checks.
 
 ## Status
 
@@ -277,7 +284,7 @@ cannot use the AGPL; contact `legal@shifrom.com`.
 
 - Website: [shifrom.com](https://shifrom.com)
 - Source: [GitHub](https://github.com/LiudvigVladislav/SHIFROM) ·
-  [Codeberg mirror](https://codeberg.org/VladislavLiudvig/Phantom)
+  [Codeberg mirror](https://codeberg.org/VladislavLiudvig/SHIFROM)
 - Bugs and feature requests: [GitHub Issues](https://github.com/LiudvigVladislav/SHIFROM/issues)
 - Security disclosures: `security@shifrom.com` — see [SECURITY.md](SECURITY.md)
 - General contact: `hello@shifrom.com`
