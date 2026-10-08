@@ -13,9 +13,8 @@ repository's public entry points, issue templates, active documentation,
 site sources, and legal/funding display names. The GitHub repository has
 been renamed without changing its owner or repository identity.
 
-I am preparing this change as a draft PR. I will not merge or deploy it
-without separate approval. No new release or installed-device update is
-part of this draft.
+I am preparing this change as a draft PR. No website deployment, new release
+or installed-device update is part of this draft.
 
 ## Compatibility boundaries
 
@@ -32,9 +31,11 @@ resource IDs and article slugs remain where links or build/deployment instructio
 depend on them.
 
 I am preserving historical releases, append-only journal entries, dated
-audits and verification evidence. I am not modifying accepted design
-goldens, crypto, transport, persistence, server configuration or payment
-terms as a side effect of rebranding.
+audits and verification evidence. I am updating only the 42 current screenshot
+goldens whose failed assertions were independently traced to the agreed
+branding changes. The other 56 goldens and historical design accounting remain
+byte-identical. Crypto, transport, persistence, server configuration and
+payment terms are unchanged.
 
 ## Acceptance
 
@@ -43,7 +44,8 @@ terms as a side effect of rebranding.
 - Artwork is copied byte for byte from the supplied brand kit; bindings are
   recorded in `docs/branding/shifrom-assets.json`.
 - The patch contains branding and public-contact substitutions, focused brand
-  regression tests and this documented transition.
+  regression tests, the bounded branding screenshot update and this documented
+  transition. Test tolerances and snapshot test code remain unchanged.
 - Installation, protocol, persistence and service-address invariants
   remain unchanged.
 - The publication stays a draft; no merge, deployment or device operation
@@ -66,8 +68,12 @@ still contained PHANTOM, old canonical links and old artwork. Domain
 reachability is therefore verified; full publication of the new branding is
 not. These source changes require a separately approved deployment.
 
-Accepted visual goldens remain untouched. I am not presenting host resource
-tests as approval of new screenshots or an installed in-place upgrade.
+The original source/artwork checkpoint left accepted screenshots untouched.
+The subsequent screenshot acceptance on 2026-10-08 adds a separate, bounded
+rebaseline: 42 images change, no images are added or removed, and all other
+tracked source files remain unchanged except this transition note. I am not
+presenting snapshot or host resource tests as proof of an installed in-place
+upgrade.
 
 ## Donation-channel follow-up
 
