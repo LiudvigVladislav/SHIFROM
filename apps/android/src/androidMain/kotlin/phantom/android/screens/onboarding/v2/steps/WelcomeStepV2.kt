@@ -113,24 +113,8 @@ fun WelcomeStepV2(onContinueClick: () -> Unit) {
     ) {
         Spacer(Modifier.height(48.dp))
 
-        // Logo inside radial-glow ring, phBreathe pulse.
-        //
-        // Uses `R.drawable.dv2_logo_phantom` — the authoritative DesignV2
-        // brand-mark PNG imported from the handoff at
-        //   design_handoff_phantom_messenger/assets/logo-phantom.png
-        // (1254×1254 RGBA, SHA-256 199051555efc6f7b42040be6ec599c178d688c50
-        //  6227f306d870603b362be8b9, verified byte-identical on import).
-        // NOT `R.drawable.phantom_logo` — that is the legacy Alpha-1
-        // launcher-adjacent asset used by the old
-        // `phantom.android.screens.onboarding.OnboardingScreen`; V2 must not
-        // share it (redline 2026-08-01).
-        //
-        // Placed in `drawable-nodpi` so AGP does not scale-bucket a 1254 px
-        // brand asset — the composable does the physical scaling to 126 dp
-        // via Modifier.size(). ContentScale.Fit preserves the alpha channel
-        // and the square aspect ratio; the source has generous transparent
-        // padding around the ghost mark so Fit under a square 126 dp box
-        // yields the intended visual (no need for Crop or Inside).
+        // Exact owner-supplied SHIFROM mark; the legacy resource ID is retained.
+        // nodpi and Fit preserve its alpha channel and square aspect ratio.
         Box(
             modifier = Modifier
                 .size(132.dp)
@@ -145,8 +129,8 @@ fun WelcomeStepV2(onContinueClick: () -> Unit) {
                 ),
             contentAlignment = Alignment.Center,
         ) {
-            // Decorative (P2-5 REDLINE): the visible "PHANTOM" wordmark
-            // below announces the brand — a separate "PHANTOM logo"
+            // Decorative (P2-5 REDLINE): the visible "SHIFROM" wordmark
+            // below announces the brand — a separate "SHIFROM logo"
             // contentDescription here would duplicate the announcement
             // for screen readers.
             Image(
@@ -169,7 +153,7 @@ fun WelcomeStepV2(onContinueClick: () -> Unit) {
 
         // Wordmark — Geist SemiBold 31 sp, .14 em letter-spacing ≈ 4.34 sp at 31.
         Text(
-            text = "PHANTOM",
+            text = "SHIFROM",
             color = DesignV2Tokens.Colors.TextPrimary,
             style = TextStyle(
                 fontFamily = DesignV2FontDisplay,

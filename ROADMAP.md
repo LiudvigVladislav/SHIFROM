@@ -1,4 +1,4 @@
-# PHANTOM Roadmap
+# SHIFROM Roadmap
 
 This is the public roadmap. The [README](README.md) is the source of truth for
 what works today; this file describes direction, not commitments. Horizons do
@@ -105,7 +105,7 @@ These are research directions, not promised features:
 
 - BLE and Wi-Fi Direct local mesh transport.
 - Kademlia-style DHT discovery.
-- Federation between independently operated PHANTOM deployments.
+- Federation between independently operated SHIFROM deployments.
 - Post-quantum migration paths for identity and session establishment.
 
 ## Explicit non-goals
@@ -125,7 +125,7 @@ not just by lack of time.
 - **Product and feature proposals:** open a GitHub issue describing the user
   problem, not only the desired implementation. Proposals that conflict with
   the doctrine may be closed with an explanation.
-- **Funding or collaboration:** write to `hello@phntm.pro`.
+- **Funding or collaboration:** write to `hello@shifrom.com`.
 - **Security priorities:** use the private reporting process in
   [SECURITY.md](SECURITY.md). Never disclose a suspected vulnerability in a
   public issue.

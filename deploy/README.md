@@ -1,6 +1,6 @@
-# PHANTOM Deployment
+# SHIFROM Deployment
 
-Production deployment for the PHANTOM relay and landing page.
+Production deployment for the SHIFROM relay and landing page.
 
 - **Target host:** `phantom-relay-01` (Hetzner Helsinki, CPX22, Ubuntu 24.04, 65.108.154.152)
 - **SSH:** `phantom@relay.phntm.pro` (ed25519 key)

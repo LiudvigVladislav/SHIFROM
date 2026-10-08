@@ -126,7 +126,7 @@ class OnboardingV2PrivacyDialSemanticsTest {
         composeTestRule.onNode(
             SemanticsMatcher("Has click action + Ghost lock label") { node ->
                 val label = node.config.getOrNull(SemanticsActions.OnClick)?.label
-                label == "Ghost Mode requires Phantom Pro"
+                label == "Ghost Mode requires SHIFROM Pro"
             },
         ).performClick()
         composeTestRule.waitForIdle()
@@ -159,7 +159,7 @@ class OnboardingV2PrivacyDialSemanticsTest {
             )
         }
         composeTestRule.waitForIdle()
-        composeTestRule.onAllNodesWithText("Preview Phantom Pro").assertCountEquals(0)
+        composeTestRule.onAllNodesWithText("Preview SHIFROM Pro").assertCountEquals(0)
     }
 
     @Test
@@ -191,7 +191,7 @@ class OnboardingV2PrivacyDialSemanticsTest {
         // Pixel-5 viewport (411 × 891 dp) misses the click, but the
         // OnClick semantic is present and works fine when invoked
         // directly.
-        composeTestRule.onNodeWithText("Preview Phantom Pro")
+        composeTestRule.onNodeWithText("Preview SHIFROM Pro")
             .performSemanticsAction(SemanticsActions.OnClick)
         composeTestRule.waitForIdle()
         assert(ghostLockCount == 1) {
@@ -229,7 +229,7 @@ class OnboardingV2PrivacyDialSemanticsTest {
             hasTabRole() and hasContentDescriptionExact("PRIVATE"),
         ).assertExists()
         composeTestRule.onNode(
-            hasTabRole() and hasContentDescriptionExact("GHOST, Phantom Pro required"),
+            hasTabRole() and hasContentDescriptionExact("GHOST, SHIFROM Pro required"),
         ).assertExists()
 
         // Selected-state reflects `privacyMode = Private` — Private
@@ -238,7 +238,7 @@ class OnboardingV2PrivacyDialSemanticsTest {
             .assert(hasSelectedState(true))
         composeTestRule.onNode(hasContentDescriptionExact("STANDARD"))
             .assert(hasSelectedState(false))
-        composeTestRule.onNode(hasContentDescriptionExact("GHOST, Phantom Pro required"))
+        composeTestRule.onNode(hasContentDescriptionExact("GHOST, SHIFROM Pro required"))
             .assert(hasSelectedState(false))
     }
 

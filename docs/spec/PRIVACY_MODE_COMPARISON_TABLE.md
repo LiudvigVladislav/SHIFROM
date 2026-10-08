@@ -26,7 +26,7 @@ The "current placeholder" column lists the Lucide icon used until Vladislav expo
 Icon usage rules:
 - **In-app onboarding cards:** custom asset at 32 dp alongside the mode title. **Never emoji.**
 - **In-app Settings → Privacy Mode summary row:** custom asset at 24 dp next to current mode label. **Never emoji.**
-- **Foreground notification (Android shade):** the small icon stays the PHANTOM mark — no per-mode icon. The notification text alone conveys mode.
+- **Foreground notification (Android shade):** the small icon stays the SHIFROM mark — no per-mode icon. The notification text alone conveys mode.
 - **Marketing site / app store / grant-application markdown:** emoji acceptable (web rendering, cross-platform consistency). When the marketing site moves to a CMS-managed image set, prefer the custom assets exported as web SVG.
 
 ---
@@ -163,7 +163,7 @@ Comprehensive matrix: every mode-sensitive subsystem, with the exact behaviour. 
 Used as helper copy on the onboarding selection screen, in the Settings → Privacy Mode chooser, and in marketing site comparison block.
 
 ### Standard 🌐
-> **Choose Standard if you want PHANTOM to feel like a normal messenger.**
+> **Choose Standard if you want SHIFROM to feel like a normal messenger.**
 > You can be found by username, your contacts can see when you are online, and calls work as you would expect. Every message is end-to-end encrypted by default — that does not change in any mode.
 
 ### Private 🔒
@@ -172,11 +172,11 @@ Used as helper copy on the onboarding selection screen, in the Settings → Priv
 
 ### Ghost 👻 (PRO)
 > **Choose Ghost when anonymity matters more than features.**
-> You disappear from PHANTOM's social layer. Your messages self-destruct after 24 hours by default. All your traffic is routed through Tor with bridges — slower, but invisible to your network provider.
+> You disappear from SHIFROM's social layer. Your messages self-destruct after 24 hours by default. All your traffic is routed through Tor with bridges — slower, but invisible to your network provider.
 >
 > The trade-off: voice and video calls are unavailable in Ghost mode, and group chats are not supported. This is by design — calls and groups would expose information that contradicts the anonymity promise.
 >
-> Ghost is part of PHANTOM PRO.
+> Ghost is part of SHIFROM PRO.
 
 ---
 
@@ -204,11 +204,11 @@ The PRO upsell exists because Ghost mode imposes ongoing operational costs (Tor 
 
 ## F. External-positioning differentiation language
 
-For the "What makes PHANTOM different" sections of public write-ups, project comparisons, and external proposals:
+For the "What makes SHIFROM different" sections of public write-ups, project comparisons, and external proposals:
 
-> PHANTOM is one of very few messengers that ship a **layered privacy model** — three coherent privacy contracts (Standard, Private, Ghost) that map to four orthogonal subsystems (discovery, presence, push, transport) through a single user choice. Each mode is a complete product promise, not a setting toggle. The strongest tier (Ghost) provides anonymity guarantees comparable to Briar or Cwtch — running over Tor with bridges, no third-party push, no group surface — while the everyday tier (Standard) provides a normal messenger UX at no privacy cost beyond what Signal-grade E2EE already provides.
+> SHIFROM is one of very few messengers that ship a **layered privacy model** — three coherent privacy contracts (Standard, Private, Ghost) that map to four orthogonal subsystems (discovery, presence, push, transport) through a single user choice. Each mode is a complete product promise, not a setting toggle. The strongest tier (Ghost) provides anonymity guarantees comparable to Briar or Cwtch — running over Tor with bridges, no third-party push, no group surface — while the everyday tier (Standard) provides a normal messenger UX at no privacy cost beyond what Signal-grade E2EE already provides.
 >
-> The architectural decision to embed Tor + Lyrebird pluggable transports (Snowflake / WebTunnel / obfs4 / meek) inside the application itself, rather than relying on a separate Tor app such as Orbot, means PHANTOM works for users in censored networks without requiring them to discover, install and configure a second tool. This is critical for users in Russia, Iran, China and similarly restricted environments where multi-app onboarding is itself a privacy hazard.
+> The architectural decision to embed Tor + Lyrebird pluggable transports (Snowflake / WebTunnel / obfs4 / meek) inside the application itself, rather than relying on a separate Tor app such as Orbot, means SHIFROM works for users in censored networks without requiring them to discover, install and configure a second tool. This is critical for users in Russia, Iran, China and similarly restricted environments where multi-app onboarding is itself a privacy hazard.
 
 ---
 

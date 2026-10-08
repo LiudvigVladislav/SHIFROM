@@ -1,4 +1,4 @@
-# PHANTOM — https://phntm.pro
+# SHIFROM — https://shifrom.com
 # Open-source encrypted messenger by Willen LLC
 
 # Default: allow all conventional search engines
@@ -32,7 +32,7 @@ User-agent: anthropic-ai
 Allow: /
 
 # Sitemap
-Sitemap: https://phntm.pro/sitemap.xml
+Sitemap: https://shifrom.com/sitemap.xml
 
 # Content-Signal: opt-out of training corpora, allow search/grounding.
 # See https://contentsignal.org for spec.

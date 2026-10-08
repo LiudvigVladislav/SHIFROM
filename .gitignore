@@ -30,7 +30,7 @@ local.properties
 apps/android/local.properties
 *.apk
 *.aab
-# Firebase config — defensive ignore. PHANTOM does not use Firebase
+# Firebase config — defensive ignore. SHIFROM does not use Firebase
 # (FCM was removed 2026-05-14 to align the code with the "no Big Tech
 # metadata" stance documented in KNOWN_ISSUES § ISSUE-001 and ADR-001).
 # This entry prevents accidental commit of credentials if anyone ever

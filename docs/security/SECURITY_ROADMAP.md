@@ -1,4 +1,4 @@
-# PHANTOM Security Roadmap
+# SHIFROM Security Roadmap
 
 > **Living document.** Lists every security finding the project knows
 > about, what we have already closed, and what is scheduled. Read
@@ -6,7 +6,7 @@
 > (English exec summary at the top, formal model body in Russian
 > below) and the running development journal at [`docs/PROJECT_LOG.md`](../PROJECT_LOG.md).
 >
-> **Honest scope statement.** PHANTOM is in active Alpha. The
+> **Honest scope statement.** SHIFROM is in active Alpha. The
 > findings below are not surprises: they were surfaced by the
 > project's own internal audits (`docs/audit/*` on disk) and by the
 > design review that produced ADR-009 / ADR-016 / ADR-019 / ADR-023.
@@ -82,7 +82,7 @@ Three inputs feed this roadmap:
    captured in the ADR's Threat Model section and propagate here
    if they need follow-up implementation.
 3. **External review:** when an outside auditor, security researcher,
-   or contributor reports a finding through `security@phntm.pro` (see
+   or contributor reports a finding through `security@shifrom.com` (see
    [`SECURITY.md`](../../SECURITY.md)), it lands here with full
    credit and a public timeline.
 

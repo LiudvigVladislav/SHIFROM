@@ -142,7 +142,7 @@ fun ChatListScreen(
             // / "Nearby") so users always know where they are.
             PhantomTopBar(
                 userName = userName,
-                title = "PHANTOM",
+                title = "SHIFROM",
                 centerTitle = true,
                 onProfile = onProfile,
                 onAddContact = { showAddDialog = true },

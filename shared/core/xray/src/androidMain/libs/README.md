@@ -3,7 +3,7 @@
 `libXray.jar` here, plus `libgojni.so` under `../jniLibs/<abi>/`, are the
 unpacked contents of the `libXray.aar` produced by
 `.github/workflows/build-libxray.yml`. They are vendored (committed) rather
-than fetched at build time so a clean clone of PHANTOM compiles without an
+than fetched at build time so a clean clone of SHIFROM compiles without an
 out-of-band download.
 
 ## Why split, not a single .aar

@@ -84,8 +84,8 @@ class ProfileQrKeyCardSimplifiedTest {
         }
         composeTestRule.waitForIdle()
 
-        composeTestRule.onNodeWithText("My Phantom QR").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Share my Phantom contact")
+        composeTestRule.onNodeWithText("My SHIFROM QR").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Share my SHIFROM contact")
             .performScrollTo().assertIsDisplayed()
 
         // Advanced toggle present but collapsed → no raw key text visible.
@@ -160,7 +160,7 @@ class ProfileQrKeyCardSimplifiedTest {
         // assertion pins the FULL string verbatim so any drift
         // fails-red.
         composeTestRule.onNodeWithText(
-            "These public keys identify your Phantom account and " +
+            "These public keys identify your SHIFROM account and " +
                 "may be shared for verification. They cannot unlock it. " +
                 "Never share a private key or recovery backup.",
         ).performScrollTo().assertIsDisplayed()
@@ -183,7 +183,7 @@ class ProfileQrKeyCardSimplifiedTest {
         }
         composeTestRule.waitForIdle()
 
-        composeTestRule.onNodeWithText("Share my Phantom contact")
+        composeTestRule.onNodeWithText("Share my SHIFROM contact")
             .performScrollTo().performClick()
         composeTestRule.waitForIdle()
 

@@ -1,21 +1,21 @@
 <p align="center"><img src="site/static/logo-mark.png" width="220"></p>
 
-# PHANTOM
+# SHIFROM
 
 End-to-end encrypted Android messaging with censorship-resistant transports,
 field-tested against carrier-grade DPI (TSPU) on specific Russian mobile networks
 and configurations. These tests do not establish universal resistance to filtering.
 
 [![Status: Alpha 2](https://img.shields.io/badge/status-alpha%202-orange)](#status)
-[![Release: v0.1.0-alpha.2](https://img.shields.io/badge/release-v0.1.0--alpha.2-orange)](https://github.com/LiudvigVladislav/Phantom/releases/tag/v0.1.0-alpha.2)
+[![Release: v0.1.0-alpha.2](https://img.shields.io/badge/release-v0.1.0--alpha.2-orange)](https://github.com/LiudvigVladislav/SHIFROM/releases/tag/v0.1.0-alpha.2)
 [![License: AGPL-3.0-or-later](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)](LICENSE)
 [![Platform: Android](https://img.shields.io/badge/platform-Android-3ddc84)](#building-from-source)
-[![Site: phntm.pro](https://img.shields.io/badge/site-phntm.pro-665cff)](https://phntm.pro)
+[![Site: shifrom.com](https://img.shields.io/badge/site-shifrom.com-665cff)](https://shifrom.com)
 [![Mirror: Codeberg](https://img.shields.io/badge/mirror-Codeberg-2185d0)](https://codeberg.org/VladislavLiudvig/Phantom)
 
-## What is PHANTOM?
+## What is SHIFROM?
 
-PHANTOM is an open-source messenger for people who cannot assume their network is
+SHIFROM is an open-source messenger for people who cannot assume their network is
 neutral or trustworthy: journalists, activists, dissidents, and anyone who believes private communication is a human right.
 
 The project combines a familiar modern messenger experience with explicit
@@ -26,17 +26,30 @@ security and censorship-resistance boundaries:
 - an untrusted store-and-forward relay that handles ciphertext and necessary routing metadata, not message plaintext;
 - public architecture decisions, threat modeling, known issues, and development history.
 
-PHANTOM implements X3DH, Double Ratchet, and Sealed Sender-inspired protocol layers
+SHIFROM implements X3DH, Double Ratchet, and Sealed Sender-inspired protocol layers
 over libsodium primitives. This is custom protocol code, not `libsignal-client`,
 and it has not received an independent third-party cryptographic audit.
+
+### Naming transition
+
+The messenger is now named **SHIFROM** following a trade-name conflict. This
+change does not mean that the new name has completed independent trademark
+clearance, or that the software has received a security audit.
+
+The public website is [shifrom.com](https://shifrom.com), and current contact
+addresses use `@shifrom.com`. The owner's supplied logo is included in this
+branch. Service endpoints, donation destinations and the Codeberg mirror remain
+unchanged. Historical release notes, installation identity and protocol/storage
+names are preserved for attribution, compatibility and reproducible evidence.
+This draft does not deploy the website or update installed applications.
 
 ## Status
 
 **Current stage:** Alpha 2, active development on `master`.
 
-**Latest tagged pre-release:** [`v0.1.0-alpha.2`](https://github.com/LiudvigVladislav/Phantom/releases/tag/v0.1.0-alpha.2).
+**Latest tagged pre-release:** [`v0.1.0-alpha.2`](https://github.com/LiudvigVladislav/SHIFROM/releases/tag/v0.1.0-alpha.2).
 The tag is a historical snapshot from 2026-04-30; development on `master` has moved
-substantially beyond it. Both Alpha releases remain on the [Releases page](https://github.com/LiudvigVladislav/Phantom/releases).
+substantially beyond it. Both Alpha releases remain on the [Releases page](https://github.com/LiudvigVladislav/SHIFROM/releases).
 
 **Production relay:** [`relay.phntm.pro`](https://relay.phntm.pro), a Rust/Axum
 service that stores and forwards encrypted envelopes. It can still observe timing,
@@ -140,7 +153,7 @@ walkthrough. Architectural decisions are indexed in
 
 ## Threat model
 
-PHANTOM is designed around an untrusted network and an untrusted relay. The
+SHIFROM is designed around an untrusted network and an untrusted relay. The
 formal model is in
 [docs/threat-model/Threat_Model_v0.md](docs/threat-model/Threat_Model_v0.md).
 
@@ -181,8 +194,8 @@ on Alpha software for a high-risk use case.
 ### Clone and select a baseline
 
 ```bash
-git clone https://github.com/LiudvigVladislav/Phantom.git
-cd Phantom
+git clone https://github.com/LiudvigVladislav/SHIFROM.git
+cd SHIFROM
 
 # Stay on master for the current development state, or use the release snapshot:
 git checkout v0.1.0-alpha.2
@@ -212,7 +225,7 @@ workflow.
 
 ## Deploy your own relay
 
-The repository contains the operator deployment used for PHANTOM's relay,
+The repository contains the operator deployment used for SHIFROM's relay,
 including Caddy, Axum, Tor, Xray/REALITY, and supporting services. It is an
 Alpha-stage reference deployment, not yet the supported v1 self-hosting kit.
 
@@ -232,7 +245,7 @@ required ADR can be agreed before implementation.
 
 ## Funding
 
-PHANTOM is maintained by Willen LLC and accepts support through:
+SHIFROM is maintained by Willen LLC and accepts support through:
 
 - [Liberapay](https://liberapay.com/Phantom-messenger)
 - [Buy Me a Coffee](https://www.buymeacoffee.com/phantompro)
@@ -242,8 +255,8 @@ The machine-readable funding file also documents current budgets and project
 funding goals. Repository Sponsor links are configured in
 [`.github/FUNDING.yml`](.github/FUNDING.yml).
 
-PHANTOM is open to mission-aligned grants and pre-seed investment. Investment
-inquiries: `hello@phntm.pro`. Payment-provider and cryptocurrency addresses in
+SHIFROM is open to mission-aligned grants and pre-seed investment. Investment
+inquiries: `hello@shifrom.com`. Payment-provider and cryptocurrency addresses in
 `funding.json` are donation channels only and must not be used to purchase
 equity, tokens, revenue rights, or other investment interests.
 
@@ -252,27 +265,27 @@ and no independent security audit as of September 2026.
 
 ## License
 
-PHANTOM is licensed under the
+SHIFROM is licensed under the
 **GNU Affero General Public License v3.0 or later** (`AGPL-3.0-or-later`). See
 [LICENSE](LICENSE) and [NOTICE](NOTICE).
 
 AGPL network-source requirements help keep modified hosted relays auditable.
 A commercial dual-license is available for white-label or B2B deployments that
-cannot use the AGPL; contact `legal@phntm.pro`.
+cannot use the AGPL; contact `legal@shifrom.com`.
 
 ## Contact
 
-- Website: [phntm.pro](https://phntm.pro)
-- Source: [GitHub](https://github.com/LiudvigVladislav/Phantom) ·
+- Website: [shifrom.com](https://shifrom.com)
+- Source: [GitHub](https://github.com/LiudvigVladislav/SHIFROM) ·
   [Codeberg mirror](https://codeberg.org/VladislavLiudvig/Phantom)
-- Bugs and feature requests: [GitHub Issues](https://github.com/LiudvigVladislav/Phantom/issues)
-- Security disclosures: `security@phntm.pro` — see [SECURITY.md](SECURITY.md)
-- General contact: `hello@phntm.pro`
-- Legal / licensing: `legal@phntm.pro`
+- Bugs and feature requests: [GitHub Issues](https://github.com/LiudvigVladislav/SHIFROM/issues)
+- Security disclosures: `security@shifrom.com` — see [SECURITY.md](SECURITY.md)
+- General contact: `hello@shifrom.com`
+- Legal / licensing: `legal@shifrom.com`
 
 ## Acknowledgments
 
-PHANTOM builds on the work of the Signal protocol designers, libsodium, the Tor
+SHIFROM builds on the work of the Signal protocol designers, libsodium, the Tor
 Project, XTLS/Xray-core, Briar and its Android Tor packaging, Kotlin
 Multiplatform, Rust, Axum, Caddy, and the wider open-source privacy-tech
 community. See [NOTICE](NOTICE) for third-party attributions.

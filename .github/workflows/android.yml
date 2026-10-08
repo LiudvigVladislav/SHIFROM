@@ -163,6 +163,7 @@ jobs:
         run: |
           ./gradlew :apps:android:testDebugUnitTest -PphantomHostTestEngine=regular \
             --tests "phantom.android.MainActivityStartupCopyTest" \
+            --tests "phantom.android.branding.VisibleBrandCopyTest" \
             --tests "phantom.android.calls.CallIceServerSpecTest" \
             --tests "phantom.android.calls.CallLaunchCoordinatorTest" \
             --tests "phantom.android.calls.CallManagerGuardTest" \
@@ -451,6 +452,7 @@ jobs:
           #   - PAPARAZZI  -> android-paparazzi.steps (--tests list)
           MANIFEST = """
           phantom.android.MainActivityStartupCopyTest
+          phantom.android.branding.VisibleBrandCopyTest
           phantom.android.notifications.NotificationChannelCopyTest
           phantom.android.notifications.CallNotificationsTest
           phantom.android.premium.SubscriptionAccessTest

@@ -124,7 +124,7 @@ fun TermsScreenV2(
         Spacer(Modifier.height(40.dp))
 
         Text(
-            text = "PHANTOM",
+            text = "SHIFROM",
             color = CyanAccent.copy(alpha = 0.55f),
             fontSize = 10.sp,
             letterSpacing = 5.sp,

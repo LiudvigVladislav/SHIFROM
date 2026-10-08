@@ -154,7 +154,7 @@ java.lang.NullPointerException: Cannot invoke "java.net.URL.getFile()" because "
 
 ### Bug J — Asymmetric outbound packet loss on Tecno-class OEMs [PROTOCOL/INFRA GAP]
 
-**Symptom:** Tecno Spark 2023 (HiOS) running PHANTOM with the foreground service active, both `WIFI_MODE_FULL_HIGH_PERF` and `PARTIAL` wake locks held, and Battery → Unrestricted set, still loses its outbound channel to the relay within ~30–70 s of each reconnect. Inbound continues to work — incoming text envelopes from the relay arrive normally — but outbound `RelayMessage.Ping` frames stop reaching the relay (no `Pong` round-trips) and any envelope dispatched in that window (notably voice messages, ~70 KB) never gets an ack.
+**Symptom:** Tecno Spark 2023 (HiOS) running SHIFROM with the foreground service active, both `WIFI_MODE_FULL_HIGH_PERF` and `PARTIAL` wake locks held, and Battery → Unrestricted set, still loses its outbound channel to the relay within ~30–70 s of each reconnect. Inbound continues to work — incoming text envelopes from the relay arrive normally — but outbound `RelayMessage.Ping` frames stop reaching the relay (no `Pong` round-trips) and any envelope dispatched in that window (notably voice messages, ~70 KB) never gets an ack.
 
 **Diagnosis (2026-04-28):** End-to-end log capture on Tecno-Spark ↔ relay ↔ Pixel-emulator. Same code path on emulator-to-emulator delivers a 75 KB voice envelope in ~1 s; same code path on Tecno never gets a 70 KB envelope through. Both client-side timeout bumps (`OkHttp pingInterval(0)`, `PONG_TIMEOUT_MS = 60 s`, `ACK_TIMEOUT_MS = 60 s`) confirm this is **not** the previous transport-ping bug — extending the timeout window does not help, because the radio is genuinely silent for ≥ 60 s.
 

@@ -1,4 +1,4 @@
-# PHANTOM Design System
+# SHIFROM Design System
 
 **Status:** Phase A foundation in place (2026-04-29). Tokens, typography, and
 Material3 ColorScheme wired. Component reskin (Phase B) and animations

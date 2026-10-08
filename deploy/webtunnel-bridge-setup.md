@@ -5,7 +5,7 @@ Copyright (c) 2026 Willen LLC
 
 # WebTunnel bridge — operator setup guide
 
-This document walks the operator through bringing up the operator-controlled WebTunnel bridge that PHANTOM clients fall back to when public Snowflake brokers are blocked. Companion to:
+This document walks the operator through bringing up the operator-controlled WebTunnel bridge that SHIFROM clients fall back to when public Snowflake brokers are blocked. Companion to:
 
 - [`docs/adr/ADR-016-tor-unified-push-hybrid-transport.md`](../docs/adr/ADR-016-tor-unified-push-hybrid-transport.md) — Tor + UnifiedPush hybrid architecture (operator-controlled bridge is part of Stage 5C)
 - [`docs/operations/TOR_STACK_MAINTENANCE.md`](../docs/operations/TOR_STACK_MAINTENANCE.md) — release-monitoring protocol
@@ -20,13 +20,13 @@ This document walks the operator through bringing up the operator-controlled Web
 - The Hetzner VPS already running `deploy/docker-compose.yml` with relay + caddy + tor + ntfy.
 - SSH access to the VPS as a user who can run `docker compose`.
 - ~150 MB additional disk (the `thetorproject/webtunnel-bridge` image plus state volume).
-- ~50–500 MB/month outbound bandwidth (depends on user load — bridge relays only PHANTOM client traffic, not arbitrary Tor users).
+- ~50–500 MB/month outbound bandwidth (depends on user load — bridge relays only SHIFROM client traffic, not arbitrary Tor users).
 
 ---
 
 ## 2. Generate the secret path
 
-The "secret path" is the URL fragment after `bridge.phntm.pro/` that PHANTOM clients send when initiating a WebTunnel connection. Anyone hitting any other path on the domain sees the placeholder landing — making the bridge look like a small static site to scanners.
+The "secret path" is the URL fragment after `bridge.phntm.pro/` that SHIFROM clients send when initiating a WebTunnel connection. Anyone hitting any other path on the domain sees the placeholder landing — making the bridge look like a small static site to scanners.
 
 On the VPS (or anywhere with `openssl`):
 
@@ -102,7 +102,7 @@ Wait ~30 seconds for the bridge to register itself with the Tor network.
 
 ## 7. Extract the bridge line
 
-The PHANTOM Android client needs the bridge fingerprint to recognise this bridge. Get the canonical bridge line:
+The SHIFROM Android client needs the bridge fingerprint to recognise this bridge. Get the canonical bridge line:
 
 ```sh
 docker compose -f deploy/docker-compose.yml exec webtunnel-bridge get-bridge-line.sh
@@ -114,7 +114,7 @@ Output looks like:
 webtunnel <IPv4>:443 <FINGERPRINT> url=https://bridge.phntm.pro/<secret-path> ver=0.0.1
 ```
 
-Copy this entire line. Open the PHANTOM Android repo on the dev machine and edit:
+Copy this entire line. Open the SHIFROM Android repo on the dev machine and edit:
 
 ```
 shared/core/transport/src/androidMain/kotlin/phantom/core/transport/OperatorBridges.kt
@@ -147,11 +147,11 @@ curl -sI -H "Connection: Upgrade" -H "Upgrade: websocket" \
 # → HTTP/1.1 101 Switching Protocols   (plus WebSocket headers)
 ```
 
-**8.3 PHANTOM client bootstrap through the bridge**
+**8.3 SHIFROM client bootstrap through the bridge**
 
 On the test device (Tecno без VPN на МТС):
 1. Install the freshly-built APK with the new bridge line in `OperatorBridges.kt`.
-2. Open PHANTOM, watch the foreground notification text.
+2. Open SHIFROM, watch the foreground notification text.
 3. Expected: `Tor: bootstrapping 5%` → `25%` → `75%` → `100%` → `Tor: ready (SOCKS 39050)` within ~60–90 seconds.
 4. Send a test message. Should deliver.
 
@@ -163,7 +163,7 @@ If 8.3 fails (bootstrap stalls below 25%): the bridge is reachable but the bridg
 
 ## 9. Backups
 
-The bridge identity (Tor relay key) lives in the named volume `webtunnel-tor-state`. Losing this volume rotates the bridge fingerprint — every PHANTOM client with the old fingerprint hardcoded silently stops connecting. **Back this volume up alongside `phantom-tor-data`** using the same procedure documented in `deploy/tor-onion-setup.md` § "Backing up the onion key".
+The bridge identity (Tor relay key) lives in the named volume `webtunnel-tor-state`. Losing this volume rotates the bridge fingerprint — every SHIFROM client with the old fingerprint hardcoded silently stops connecting. **Back this volume up alongside `phantom-tor-data`** using the same procedure documented in `deploy/tor-onion-setup.md` § "Backing up the onion key".
 
 ```sh
 # Same pattern as the onion key backup, swap volume name.

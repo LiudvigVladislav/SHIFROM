@@ -260,7 +260,7 @@ fun ProfileScreen(
                             showShareDialog = false
                             scope.launch(Dispatchers.IO) {
                                 val qrBitmap = generateQrBitmap(shareIdentityString, sizePx = 512)
-                                val file = File(context.cacheDir, "phantom_qr.png")
+                                val file = File(context.cacheDir, "shifrom_qr.png")
                                 file.outputStream().use { qrBitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
                                 val uri = FileProvider.getUriForFile(
                                     context,

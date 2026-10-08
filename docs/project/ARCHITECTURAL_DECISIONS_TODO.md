@@ -1,4 +1,4 @@
-# PHANTOM — Architectural Decisions TODO
+# SHIFROM — Architectural Decisions TODO
 
 **Дата:** 28 апреля 2026
 **Период написания:** Phase 1, Week 1-3 (May 2026)
@@ -126,7 +126,7 @@ Brief description. Why we did NOT choose this.
 
 ### Context
 
-PHANTOM Alpha 1 currently has no enforcement of @username uniqueness. Two users can register the same @vasya — relay distinguishes them only by public key. This creates a critical UX problem: users cannot reliably refer to each other by username, contact discovery is impossible, and Premium tier features promising "custom @username" have no foundation.
+SHIFROM Alpha 1 currently has no enforcement of @username uniqueness. Two users can register the same @vasya — relay distinguishes them only by public key. This creates a critical UX problem: users cannot reliably refer to each other by username, contact discovery is impossible, and Premium tier features promising "custom @username" have no foundation.
 
 We have committed to single-relay architecture (no federation). This means we control the namespace.
 
@@ -305,7 +305,7 @@ Rejected: doesn't solve impersonation problem. Mass-market users won't compare 3
 
 ### Context
 
-Inventory report 2026-04-28 identifies F13/F14/F15 as the most critical architectural issue: PHANTOM Alpha 1 reuses the X25519 identity key as the Double Ratchet DH key. If ratchet state is compromised (malware, device seizure, side channel), an adversary gains permanent impersonation capability for that user.
+Inventory report 2026-04-28 identifies F13/F14/F15 as the most critical architectural issue: SHIFROM Alpha 1 reuses the X25519 identity key as the Double Ratchet DH key. If ratchet state is compromised (malware, device seizure, side channel), an adversary gains permanent impersonation capability for that user.
 
 This violates Signal Protocol's core security property of separating long-term identity from short-term ratchet state. The fix is mandatory before public adoption / Kickstarter / paid users.
 
@@ -368,7 +368,7 @@ Initiator wants to message Recipient (recipient pubkey known via QR/directory):
   - If no → forced regeneration of identity (new keypair) + upload prekeys
   - Existing conversations marked as "needs re-handshake"
   - Next time peer comes online, automatic re-X3DH with new architecture
-- User-facing message: "Phantom upgraded its security. Re-verify your contacts." (one-time onboarding addendum)
+- User-facing message: "SHIFROM upgraded its security. Re-verify your contacts." (one-time onboarding addendum)
 
 ### Consequences
 
@@ -508,7 +508,7 @@ Considered. Rejected: doesn't scale beyond ~50 members; each message duplicated 
 
 ### Context
 
-PHANTOM Premium tiers (Plus, Pro, Lifetime, Business) need server-validated feature gating. Cannot trust client-side flags alone — patched APK could enable any feature. But not every feature needs server roundtrip on every use (e.g., custom theme color is fine to be client-side).
+SHIFROM Premium tiers (Plus, Pro, Lifetime, Business) need server-validated feature gating. Cannot trust client-side flags alone — patched APK could enable any feature. But not every feature needs server roundtrip on every use (e.g., custom theme color is fine to be client-side).
 
 ### Decision
 
@@ -885,7 +885,7 @@ Rejected: would mean reimplementing all crypto, messaging, transport. ~10x effor
 
 ### Context
 
-Phase-3 censorship-resistance deliverable: pluggable transports. PHANTOM in censored regions (Russia, China, Iran, Belarus) needs to circumvent DPI / SNI inspection / connection blocking.
+Phase-3 censorship-resistance deliverable: pluggable transports. SHIFROM in censored regions (Russia, China, Iran, Belarus) needs to circumvent DPI / SNI inspection / connection blocking.
 
 ### Decision
 

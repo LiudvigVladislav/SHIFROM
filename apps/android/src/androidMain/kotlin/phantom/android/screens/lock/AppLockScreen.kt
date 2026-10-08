@@ -80,7 +80,7 @@ fun AppLockScreen(onUnlocked: () -> Unit) {
             // PHANTOM wordmark — Geist 24sp medium, negative tracking.
             // Matches the brand-mark treatment used everywhere else.
             Text(
-                text = "PHANTOM",
+                text = "SHIFROM",
                 color = TextPrimary,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
@@ -226,7 +226,7 @@ internal fun showBiometricPrompt(
 
     val prompt = BiometricPrompt(activity, executor, callback)
     val infoBuilder = BiometricPrompt.PromptInfo.Builder()
-        .setTitle("PHANTOM")
+        .setTitle("SHIFROM")
         .setSubtitle(context.getString(R.string.lock_verify_identity))
         .setAllowedAuthenticators(authenticators)
     if (strongOnly) infoBuilder.setNegativeButtonText(context.getString(R.string.lock_cancel))

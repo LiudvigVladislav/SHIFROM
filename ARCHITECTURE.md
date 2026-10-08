@@ -1,4 +1,4 @@
-# PHANTOM Architecture (overview)
+# SHIFROM Architecture (overview)
 
 This document is the 400-word entry point. For depth, follow the
 links — every claim here is backed by a specific Architecture
@@ -6,7 +6,7 @@ Decision Record (ADR) or threat-model section.
 
 ## High-level layers
 
-PHANTOM is a three-layer system:
+SHIFROM is a three-layer system:
 
 - **Client** — Kotlin Multiplatform shared core (`shared/core/*`)
   with an Android-first UI shell (`apps/android/`). The shared core

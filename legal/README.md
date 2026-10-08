@@ -1,6 +1,6 @@
-# PHANTOM Legal Documents — Draft v1
+# SHIFROM Legal Documents — Draft v1
 
-This folder contains the initial legal/privacy documentation drafts for PHANTOM Alpha 1.
+This folder contains the initial legal/privacy documentation drafts for SHIFROM Alpha 1.
 
 ## Files
 
@@ -32,14 +32,14 @@ does not need any build step on the VPS — Caddy bind-mounts
 ## Where these will live
 
 - **In the app (onboarding screen):** the SUMMARY versions.
-- **On phntm.pro:**
-  - `https://phntm.pro/terms` — full Terms of Service
-  - `https://phntm.pro/privacy` — full Privacy Policy
+- **On shifrom.com (legacy routes preserved):**
+  - `https://shifrom.com/terms` — full Terms of Service
+  - `https://shifrom.com/privacy` — full Privacy Policy
 - **In the GitHub repo:** under `Legal/` folder for transparency.
 
 ## Key design decisions
 
-1. **"We cannot disclose what we do not have"** — central legal/marketing principle. PHANTOM is technically architected to retain the absolute minimum of data. This protects against subpoenas the way Telegram cannot.
+1. **"We cannot disclose what we do not have"** — central legal/marketing principle. SHIFROM is technically architected to retain the absolute minimum of data. This protects against subpoenas the way Telegram cannot.
 
 2. **Data minimization explicitly listed.** Privacy Policy includes a clear "What we do NOT collect" section with phone numbers, emails, contacts, location, analytics, etc. — making the privacy posture concrete.
 
@@ -62,12 +62,12 @@ These are **drafts**. Before going live:
 - [ ] Final wording approval by Willen LLC ownership
 - [ ] Translation review for Russian version (legal terminology accuracy)
 - [ ] Implementation in the app (onboarding screen + Settings → Legal)
-- [ ] Hosting on phntm.pro at the URLs referenced in documents
+- [ ] Verify publication of this revision on shifrom.com; HTTP 200 alone does not prove current branding
 - [ ] Update version dates if changes are made before publication
 
 ## License clause TBD
 
-The Terms of Service references "the license specified in our public repository." Confirm which license PHANTOM uses (AGPL-3.0? MIT? GPL-3.0?) and ensure the repo `LICENSE` file matches before publishing.
+The Terms of Service references "the license specified in our public repository." Confirm which license SHIFROM uses (AGPL-3.0? MIT? GPL-3.0?) and ensure the repo `LICENSE` file matches before publishing.
 
 ## Contact for questions
 

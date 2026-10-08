@@ -8,7 +8,7 @@ Binding on every architectural and product decision
 
 ## English summary
 
-PHANTOM follows seven product invariants, each binding on every
+SHIFROM follows seven product invariants, each binding on every
 architectural and product decision in this repository: (1)
 end-to-end encryption is non-negotiable — private chats and
 small private groups are an inviolable encrypted zone; (2)
@@ -30,7 +30,7 @@ The full doctrine in Russian follows below.
 
 ## 1. Миссия
 
-PHANTOM — это приватный и устойчивый мессенджер для повседневного использования,
+SHIFROM — это приватный и устойчивый мессенджер для повседневного использования,
 который не зависит от одной точки отказа и не требует компромисса между удобством и безопасностью.
 
 ## 2. Главные продуктовые инварианты
@@ -59,7 +59,7 @@ PHANTOM — это приватный и устойчивый мессендже
 - reputation / verification / anti-spam.
 
 ### 2.4 No custom cryptography
-PHANTOM не пишет собственную криптографию. Допускаются только:
+SHIFROM не пишет собственную криптографию. Допускаются только:
 - аудированные библиотеки;
 - общеизвестные и проверенные primitives;
 - узкие адаптеры вокруг таких библиотек.
@@ -82,7 +82,7 @@ PHANTOM не пишет собственную криптографию. Доп�
 - verified surfaces;
 - restricted reach for new accounts.
 
-## 3. Чего PHANTOM не делает на старте
+## 3. Чего SHIFROM не делает на старте
 
 На MVP проект не пытается быть:
 - супер-приложением;

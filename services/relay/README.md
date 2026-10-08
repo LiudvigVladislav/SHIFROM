@@ -1,6 +1,6 @@
-# PHANTOM Relay
+# SHIFROM Relay
 
-Store-and-forward relay for encrypted PHANTOM envelopes.
+Store-and-forward relay for encrypted SHIFROM envelopes.
 The relay stores ciphertext only — it has no access to message content,
 sender identity beyond a public key prefix, or any plaintext.
 See ADR-004 for the full trust model.
@@ -129,7 +129,7 @@ Both reports and blocklist entries are persisted to disk so they survive restart
 
 ```ini
 [Unit]
-Description=PHANTOM Relay
+Description=SHIFROM Relay
 After=network.target
 
 [Service]

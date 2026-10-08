@@ -1,11 +1,11 @@
-# PHANTOM — Architecture Overview
+# SHIFROM — Architecture Overview
 
 **Status:** current `master` snapshot (2026-07-19) · **Audience:** external
 reviewers, security auditors, and new contributors. Architectural decisions
 live in the [ADR catalogue](adr/README.md); the shorter entry point is the
 [root architecture overview](../ARCHITECTURE.md).
 
-PHANTOM is an Android-first, end-to-end encrypted messenger built as a Kotlin
+SHIFROM is an Android-first, end-to-end encrypted messenger built as a Kotlin
 Multiplatform client plus a Rust relay. Its protocol layer implements X3DH,
 Double Ratchet, Sealed Sender, and media encryption over libsodium primitives.
 It does **not** integrate `libsignal-client`, and its cryptographic protocol
@@ -50,7 +50,7 @@ code boundary and known limitations.
 ┌─────────────────────────────────────────────────────────────────────┐
 │  Layer 1 — Cryptographic Core                                       │
 │  X3DH · Double Ratchet · Sealed Sender · encrypted media            │
-│  PHANTOM protocol code over libsodium primitives                    │
+│  SHIFROM protocol code over libsodium primitives                    │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -67,13 +67,13 @@ by Tor), and the destination needed for delivery. See
 
 ## 2. Module layout
 
-PHANTOM is a Kotlin Multiplatform monorepo with an Android app shell and a
+SHIFROM is a Kotlin Multiplatform monorepo with an Android app shell and a
 separate Rust service:
 
 | Module | Current responsibility |
 |---|---|
 | `shared/core/identity` | Local identity keys, signing keys, and identity persistence |
-| `shared/core/crypto` | PHANTOM's X3DH, Double Ratchet, Sealed Sender, Sender Keys, Safety Numbers, and media crypto |
+| `shared/core/crypto` | SHIFROM's X3DH, Double Ratchet, Sealed Sender, Sender Keys, Safety Numbers, and media crypto |
 | `shared/core/storage` | SQLDelight repositories; SQLCipher-backed storage on Android |
 | `shared/core/transport` | Transport interfaces, relay client, selection state, and REST fallback protocol |
 | `shared/core/xray` | Embedded libXray lifecycle and VLESS+REALITY configuration |
@@ -92,7 +92,7 @@ coordinated by `shared/core/messaging`. Module intent is recorded in
 
 ## 3. Cryptographic boundary
 
-PHANTOM currently uses libsodium-backed primitives through Kotlin
+SHIFROM currently uses libsodium-backed primitives through Kotlin
 Multiplatform bindings:
 
 - X25519 for identity, ephemeral, signed-prekey, and ratchet DH operations;
@@ -101,7 +101,7 @@ Multiplatform bindings:
 - XChaCha20-Poly1305-IETF for voice/media blobs;
 - SHA-256/BLAKE2-family hashing where specified by the protocol code.
 
-PHANTOM implements the protocol composition around those primitives. Audited
+SHIFROM implements the protocol composition around those primitives. Audited
 primitives do not make the composition audited: the custom X3DH/Double Ratchet
 implementation, session lifecycle, storage transactions, envelope framing,
 and media pipeline remain project code. The repository therefore makes no

@@ -1,6 +1,6 @@
 # Tor onion service operational notes
 
-For the PHANTOM relay onion service deployed as part of ADR-016
+For the SHIFROM relay onion service deployed as part of ADR-016
 (Tor + UnifiedPush hybrid transport).
 
 ## Architecture quick recap
@@ -8,7 +8,7 @@ For the PHANTOM relay onion service deployed as part of ADR-016
 The `tor` Docker service runs an Alpine-based tor 0.4.8.16 daemon
 configured as a hidden service host only. It does not act as a SOCKS
 proxy and does not contribute bandwidth to the Tor network. Its sole
-job is to publish a v3 onion service descriptor for the PHANTOM relay
+job is to publish a v3 onion service descriptor for the SHIFROM relay
 and proxy incoming circuits to the relay's internal port 8080.
 
 Network path:
@@ -21,7 +21,7 @@ Network path:
         │
         │  via Tor circuit (3-hop, on the service side)
         ▼
-   tor daemon container (PHANTOM operator-controlled)
+   tor daemon container (SHIFROM operator-controlled)
         │
         │  plaintext HTTP/WS over the docker bridge network
         ▼
@@ -56,7 +56,7 @@ authentication property without adding security.
    ```
    Output is the v3 onion address, e.g.
    `abcdefghijklmnopqrstuvwxyz234567abcdefghijklmnopqrstuvwxyz23.onion`.
-   This is the value PHANTOM clients will use as the relay endpoint
+   This is the value SHIFROM clients will use as the relay endpoint
    when in Tor mode.
 
 4. Commit the onion address to the appropriate place:
@@ -153,7 +153,7 @@ itself logs nothing distinguishing for onion-arrived requests
 ## Next stages
 
 This stage (Stage 1 server infrastructure) only sets up the onion
-service to receive connections. The PHANTOM Android client cannot yet
+service to receive connections. The SHIFROM Android client cannot yet
 connect over Tor — that requires kmp-tor integration in Stage 2 of
 ADR-016. After Stage 1 deploy, only direct WSS clients reach the
 relay; onion service is silently waiting for clients that route there.

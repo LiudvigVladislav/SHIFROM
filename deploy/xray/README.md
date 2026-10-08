@@ -5,7 +5,7 @@ Copyright (c) 2026 Willen LLC
 
 # Stage 5E.A — Xray VLESS+REALITY server (Hetzner)
 
-Operator deployment guide for the Xray-core daemon that PHANTOM clients use as the **outer transport** when on censored networks (Russia / Iran / China). REALITY reshapes the TLS handshake so that it aims to resemble one to `www.microsoft.com`. In founder-run tests on specific networks and dates, TSPU's "16-kilobyte curtain" classifier did not throttle the resulting flow. That is an observation from those tests, not a guarantee of indistinguishability, of freedom from throttling, or of bypassing any particular DPI policy. Recorded runs are in [`docs/field-tests/TEST_MATRIX.md`](../../docs/field-tests/TEST_MATRIX.md).
+Operator deployment guide for the Xray-core daemon that SHIFROM clients use as the **outer transport** when on censored networks (Russia / Iran / China). REALITY reshapes the TLS handshake so that it aims to resemble one to `www.microsoft.com`. In founder-run tests on specific networks and dates, TSPU's "16-kilobyte curtain" classifier did not throttle the resulting flow. That is an observation from those tests, not a guarantee of indistinguishability, of freedom from throttling, or of bypassing any particular DPI policy. Recorded runs are in [`docs/field-tests/TEST_MATRIX.md`](../../docs/field-tests/TEST_MATRIX.md).
 
 This is **server-only**. Stage 5E.B brings the matching libXray Android library; Stage 5E.A exists to validate the wire format with a desktop NekoBox client before any Kotlin work.
 
@@ -62,7 +62,7 @@ openssl rand -hex 8
 #   3a4b5c6d7e8f9a0b
 ```
 
-Save **all four values**. The private key, UUID, and shortId go into `.env` here on the server. The public key, UUID, and shortId go into PHANTOM's `OperatorXrayConfig.kt` (Stage 5E.B).
+Save **all four values**. The private key, UUID, and shortId go into `.env` here on the server. The public key, UUID, and shortId go into SHIFROM's `OperatorXrayConfig.kt` (Stage 5E.B).
 
 ### 2.3 Create `deploy/xray/.env`
 
@@ -129,7 +129,7 @@ Stage 5E.A's whole point: prove REALITY actually flows through TSPU before inves
 The standard VLESS share-link format:
 
 ```
-vless://<UUID>@<server-ip>:8443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.microsoft.com&fp=chrome&pbk=<PUBLIC_KEY>&sid=<SHORT_ID>&type=tcp#PHANTOM-test
+vless://<UUID>@<server-ip>:8443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.microsoft.com&fp=chrome&pbk=<PUBLIC_KEY>&sid=<SHORT_ID>&type=tcp#SHIFROM-test
 ```
 
 Substitute:
@@ -141,7 +141,7 @@ Substitute:
 Example (placeholders only):
 
 ```
-vless://c1e9f3a2-3b4d-4e5f-9a8b-7c6d5e4f3a2b@65.108.154.152:8443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.microsoft.com&fp=chrome&pbk=K3aQ...4-w&sid=3a4b5c6d7e8f9a0b&type=tcp#PHANTOM-test
+vless://c1e9f3a2-3b4d-4e5f-9a8b-7c6d5e4f3a2b@65.108.154.152:8443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.microsoft.com&fp=chrome&pbk=K3aQ...4-w&sid=3a4b5c6d7e8f9a0b&type=tcp#SHIFROM-test
 ```
 
 ### 4.2 Test from a non-RU vantage first (sanity check)

@@ -130,7 +130,7 @@ class OnboardingV2PermissionsSemanticsTest {
         }
         composeTestRule.waitForIdle()
         composeTestRule.onNodeWithText(
-            "Phantom never uploads contacts,\nlocation, or usage analytics.",
+            "SHIFROM never uploads contacts,\nlocation, or usage analytics.",
         ).assertExists()
         composeTestRule.onNodeWithText("Done, let's go").assertExists()
     }

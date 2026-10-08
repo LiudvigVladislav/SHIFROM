@@ -10,5 +10,5 @@ internal enum class LegalDocument(val path: String) {
 
 internal fun legalDocumentUrl(document: LegalDocument, language: String): String {
     val suffix = if (language.equals("ru", ignoreCase = true)) "/ru" else ""
-    return "https://phntm.pro/${document.path}$suffix"
+    return "https://shifrom.com/${document.path}$suffix"
 }

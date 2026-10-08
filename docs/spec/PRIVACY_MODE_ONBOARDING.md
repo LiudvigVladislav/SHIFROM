@@ -19,7 +19,7 @@ Copyright (c) 2026 Willen LLC
 
 ### 1.1 Position in the flow
 
-This screen is **Step 3** of onboarding, after username creation (Step 1) and identity-key generation (Step 2). The user has already chosen their `@username` and PHANTOM has minted their identity. Privacy Mode is the last decision before entering the app.
+This screen is **Step 3** of onboarding, after username creation (Step 1) and identity-key generation (Step 2). The user has already chosen their `@username` and SHIFROM has minted their identity. Privacy Mode is the last decision before entering the app.
 
 Screen ID: `OnboardingPrivacyModeScreen`
 Component path (planned): `apps/android/.../onboarding/PrivacyModeStep.kt`
@@ -33,7 +33,7 @@ The `[icon]` placeholder in each card represents the custom-designed asset for t
 │  ←                                            [step 3 / 3]  │
 │                                                             │
 │  Choose your privacy mode                                   │
-│  Control how visible you are to others on PHANTOM.          │
+│  Control how visible you are to others on SHIFROM.          │
 │                                                             │
 │  ┌───────────────────────────────────────────────────────┐  │
 │  │ [icon: standard]  Standard                    ◉       │  │
@@ -65,7 +65,7 @@ The `[icon]` placeholder in each card represents the custom-designed asset for t
 │                                                             │
 │                                                             │
 │              ┌───────────────────────────────┐              │
-│              │       Enter PHANTOM           │              │
+│              │       Enter SHIFROM           │              │
 │              └───────────────────────────────┘              │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -101,7 +101,7 @@ Per `Design/PHANTOM_FULL_COMPOSE.md` §10:
 
 A secondary action below the cards. On tap, opens a modal sheet with the comparison table (§5 below). Sheet has a back button; closing returns to the selection without changing the user's pick.
 
-This link gives PHANTOM-curious users — particularly journalists, security researchers, and other technically-savvy reviewers exploring the app — a path to the full feature matrix without forcing them to leave onboarding.
+This link gives SHIFROM-curious users — particularly journalists, security researchers, and other technically-savvy reviewers exploring the app — a path to the full feature matrix without forcing them to leave onboarding.
 
 ---
 
@@ -127,7 +127,7 @@ The current mode is shown with its custom icon (24 dp) and name. Tapping the row
 Same wireframe as onboarding §1.2, with these differences:
 - Title: "Privacy Mode" (not "Choose your privacy mode")
 - No step indicator (not part of onboarding)
-- Bottom action button reads "Save" (not "Enter PHANTOM")
+- Bottom action button reads "Save" (not "Enter SHIFROM")
 - If user picks the same mode they already had → Save button is disabled / greyed.
 - If user picks a different mode → Save button is enabled. Tapping initiates the transition flow per `GHOST_MODE_TRANSITIONS.md`.
 - "Compare modes in detail →" link is also present.
@@ -170,7 +170,7 @@ The hero glyph at the top is the **custom Ghost icon** (`ic_privacy_mode_ghost`)
 │                                                 │
 │  • Voice and video calls are disabled.          │
 │                                                 │
-│  • You are invisible to other PHANTOM users —   │
+│  • You are invisible to other SHIFROM users —   │
 │    username search will not find you.           │
 │                                                 │
 │  • Group chats are unavailable.                 │
@@ -179,7 +179,7 @@ The hero glyph at the top is the **custom Ghost icon** (`ic_privacy_mode_ghost`)
 │    bridges — connections are slower but your    │
 │    network identity is hidden.                  │
 │                                                 │
-│  Note: PHANTOM cannot prevent screenshots,      │
+│  Note: SHIFROM cannot prevent screenshots,      │
 │  exports outside the app, or someone            │
 │  photographing your screen.                     │
 │                                                 │
@@ -220,7 +220,7 @@ The hero glyph at the top is the **custom Ghost icon** (`ic_privacy_mode_ghost`)
 │  • Аудио- и видеозвонки недоступны.             │
 │                                                 │
 │  • Вы невидимы для других пользователей         │
-│    PHANTOM — поиск по имени не находит вас.     │
+│    SHIFROM — поиск по имени не находит вас.     │
 │                                                 │
 │  • Групповые чаты недоступны.                   │
 │                                                 │
@@ -228,7 +228,7 @@ The hero glyph at the top is the **custom Ghost icon** (`ic_privacy_mode_ghost`)
 │    соединение медленнее, но ваш сетевой         │
 │    провайдер не видит вашу активность.          │
 │                                                 │
-│  Замечание: PHANTOM не контролирует             │
+│  Замечание: SHIFROM не контролирует             │
 │  скриншоты, экспорт за пределы приложения       │
 │  или фото экрана.                               │
 │                                                 │
@@ -257,7 +257,7 @@ The hero glyph at the top is the custom Ghost icon at 48 dp. **Not emoji.**
 │            [icon: ghost · 48dp]             │
 │                                             │
 │          Ghost Mode is part of              │
-│              PHANTOM PRO                    │
+│              SHIFROM PRO                    │
 │                                             │
 │  Ghost gives you anonymity guarantees       │
 │  comparable to dedicated tools like Briar   │
@@ -335,7 +335,7 @@ Reproduced here from `PRIVACY_MODE_BEHAVIOR.md` §8 because the UX spec needs to
 | Ghost | Tor onion connected | `Ghost mode active (Tor bridges)` |
 | Ghost | Tor failed | `Ghost: connection failed — open app` |
 
-Notification title is always `PHANTOM`. The small icon stays the system placeholder (Beta will replace with a dedicated 24 dp monochrome status-bar icon — see `PhantomMessagingService.kt` comment).
+Notification title is always `SHIFROM`. The small icon stays the system placeholder (Beta will replace with a dedicated 24 dp monochrome status-bar icon — see `PhantomMessagingService.kt` comment).
 
 ---
 

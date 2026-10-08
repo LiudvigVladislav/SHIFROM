@@ -6,7 +6,7 @@ Copyright (c) 2026 Willen LLC
 # Tor Stack Maintenance — Operational Guide
 
 **Status:** Approved 2026-05-05 by Vladislav (founder)
-**Scope:** How PHANTOM keeps its bundled Tor + pluggable transports current. Security advisories on the Tor network move fast; circumvention transports (Snowflake / WebTunnel) are an active arms race against TSPU and similar systems. Falling behind by even one or two releases is a real risk to users in censored networks.
+**Scope:** How SHIFROM keeps its bundled Tor + pluggable transports current. Security advisories on the Tor network move fast; circumvention transports (Snowflake / WebTunnel) are an active arms race against TSPU and similar systems. Falling behind by even one or two releases is a real risk to users in censored networks.
 
 **Companion docs:**
 - [`docs/adr/ADR-016-tor-unified-push-hybrid-transport.md`](../adr/ADR-016-tor-unified-push-hybrid-transport.md) — Tor + UnifiedPush architecture, including the §"Why kmp-tor 2.6.0" rationale for choosing Briar's Tor stack over kmp-tor and the `no-go-checks/01-kmp-tor-arm32.md` research note
@@ -62,7 +62,7 @@ Each layer has its own release cadence and its own monitoring channel. Stay awar
 
 **Email:** GitHub emails the reviewer automatically when watching is enabled. Configure once at https://github.com/settings/notifications:
 - "Pull requests": Email checked
-- "Watching" → for repo `LiudvigVladislav/Phantom`: enable "Releases" + "Pull requests"
+- "Watching" → for repo `LiudvigVladislav/SHIFROM`: enable "Releases" + "Pull requests"
 
 This is the **routine** path. Most updates flow through here without you having to do anything except review the PR.
 

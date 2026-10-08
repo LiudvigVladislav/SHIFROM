@@ -1,4 +1,4 @@
-# PHANTOM — Project Log
+# SHIFROM — Project Log
 
 > Internal development journal. Captures **state, decisions, and history**
 > in one place so any contributor — or any future Claude session that
@@ -23,6 +23,25 @@
 > [`docs/field-tests/TEST_MATRIX.md`](field-tests/TEST_MATRIX.md).
 
 ---
+
+### 2026-10-08 · SHIFROM naming transition (draft)
+
+- **Decision:** I am changing the messenger's public name following a
+  trade-name conflict. This is not a trademark-clearance or infringement
+  determination.
+- **Repository:** I renamed the GitHub repository to SHIFROM, preserving
+  its owner, identity and history.
+- **Draft scope:** I am updating current Android and public source copy
+  from a clean master-based branch, without including accumulated unrelated
+  development changes. I am retaining installation, signing, protocol,
+  persistence and operating-address compatibility.
+- **Pending:** replacement logo and activation of `shifrom.com`, including
+  corporate email migration. I have not merged, deployed or updated a
+  device as part of this draft.
+- **Checkpoint:** development and call validation remain paused; historical
+  journal entries below are unchanged.
+
+See [the naming-transition scope](tracks/shifrom-brand-transition.md).
 
 ### 2026-09-21 · Residual N1 and Android release-readiness baseline
 

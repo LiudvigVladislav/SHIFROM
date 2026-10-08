@@ -225,7 +225,7 @@ private fun WelcomeStep(onContinue: () -> Unit) {
             // — but this file still compiles so the reference must be
             // valid.
             painter = painterResource(R.drawable.phantom_splash),
-            contentDescription = "PHANTOM",
+            contentDescription = "SHIFROM",
             modifier = Modifier.height(60.dp),
         )
 
@@ -233,7 +233,7 @@ private fun WelcomeStep(onContinue: () -> Unit) {
 
         // Wordmark — Geist 32px Medium, tight tracking.
         Text(
-            text = "PHANTOM",
+            text = "SHIFROM",
             color = TextPrimary,
             fontSize = 32.sp,
             fontWeight = FontWeight.Medium,
@@ -322,7 +322,7 @@ private fun IdentityKeyStep(
         Spacer(Modifier.height(8.dp))
 
         Text(
-            text = "Generated on your device and never transmitted. This key is your cryptographic identity on PHANTOM.",
+            text = "Generated on your device and never transmitted. This key is your cryptographic identity on SHIFROM.",
             color = PhantomTokens.Colors.TextTertiary,
             fontSize = 13.sp,
             lineHeight = 19.sp,
@@ -404,7 +404,7 @@ private fun IdentityKeyStep(
                             as android.content.ClipboardManager
                         clip.setPrimaryClip(
                             android.content.ClipData.newPlainText(
-                                "PHANTOM identity key",
+                                "SHIFROM identity key",
                                 sampleFingerprint.replace("  ", " "),
                             ),
                         )
@@ -620,7 +620,7 @@ private fun PrivacyModeStep(
         Spacer(Modifier.height(28.dp))
 
         IntroCta(
-            label = if (isLoading) "Entering…" else "Enter PHANTOM",
+            label = if (isLoading) "Entering…" else "Enter SHIFROM",
             onClick = onEnter,
             enabled = canEnter && !isLoading,
             showLoader = isLoading,
@@ -833,7 +833,7 @@ private fun TermsScreen(onAccept: () -> Unit) {
         Spacer(Modifier.height(40.dp))
 
         Text(
-            text = "PHANTOM",
+            text = "SHIFROM",
             color = CyanAccent.copy(alpha = 0.55f),
             fontSize = 10.sp,
             letterSpacing = 5.sp,
@@ -876,7 +876,7 @@ private fun TermsScreen(onAccept: () -> Unit) {
                 .padding(horizontal = 20.dp, vertical = 22.dp),
         ) {
             Text(
-                text = "Welcome to PHANTOM",
+                text = "Welcome to SHIFROM",
                 color = TextPrimary,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
@@ -895,7 +895,7 @@ private fun TermsScreen(onAccept: () -> Unit) {
             )
             TosSection(
                 title = "2. We cannot give away what we do not have",
-                body = "PHANTOM is designed so that we have no access to your messages, contacts, or activity. If anyone — including authorities — asks us for your data, we have nothing to provide.",
+                body = "SHIFROM is designed so that we have no access to your messages, contacts, or activity. If anyone — including authorities — asks us for your data, we have nothing to provide.",
             )
             TosSection(
                 title = "3. You must be 16 or older",
@@ -910,11 +910,11 @@ private fun TermsScreen(onAccept: () -> Unit) {
                 body = "Pick a username and you are in. We do not link your account to any other identifier.",
             )
             TosSection(
-                title = "6. Use PHANTOM responsibly",
-                body = "We do not endorse illegal use of the service. Reports of abuse can be sent to abuse@phntm.pro.",
+                title = "6. Use SHIFROM responsibly",
+                body = "We do not endorse illegal use of the service. Reports of abuse can be sent to abuse@shifrom.com.",
             )
             TosSection(
-                title = "7. PHANTOM is in Alpha",
+                title = "7. SHIFROM is in Alpha",
                 body = "Things may break. Bugs happen. Updates may change how the app works.",
             )
             TosSection(
@@ -939,7 +939,7 @@ private fun TermsScreen(onAccept: () -> Unit) {
                         linkContext.startActivity(
                             android.content.Intent(
                                 android.content.Intent.ACTION_VIEW,
-                                android.net.Uri.parse("https://phntm.pro/terms"),
+                                android.net.Uri.parse("https://shifrom.com/terms"),
                             ).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
                     },
@@ -954,7 +954,7 @@ private fun TermsScreen(onAccept: () -> Unit) {
                         linkContext.startActivity(
                             android.content.Intent(
                                 android.content.Intent.ACTION_VIEW,
-                                android.net.Uri.parse("https://phntm.pro/privacy"),
+                                android.net.Uri.parse("https://shifrom.com/privacy"),
                             ).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
                     },

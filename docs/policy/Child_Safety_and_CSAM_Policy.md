@@ -1,6 +1,6 @@
 # Child Safety and CSAM Policy
 
-**Project:** PHANTOM Messenger  
+**Project:** SHIFROM Messenger
 **Version:** 0.1-draft  
 **Status:** Mandatory policy for prototype-to-launch path  
 **Owner:** [fill in]  
@@ -9,11 +9,11 @@
 ## Important note
 
 This document is a product and operational policy draft. It is not legal advice.
-Before public launch, it must be reviewed by counsel in the jurisdictions where PHANTOM is distributed or offered.
+Before public launch, it must be reviewed by counsel in the jurisdictions where SHIFROM is distributed or offered.
 
 ## Zero-tolerance statement
 
-PHANTOM prohibits:
+SHIFROM prohibits:
 - child sexual abuse material (CSAM)
 - child sexual exploitation and abuse (CSEA / CSAE)
 - child grooming
@@ -22,7 +22,7 @@ PHANTOM prohibits:
 - sexualized depictions of minors
 - communities, accounts, or infrastructure used to facilitate any of the above
 
-Any confirmed or strongly substantiated use of PHANTOM for these purposes is grounds for immediate enforcement and emergency escalation.
+Any confirmed or strongly substantiated use of SHIFROM for these purposes is grounds for immediate enforcement and emergency escalation.
 
 ## Scope
 
@@ -39,17 +39,17 @@ This policy applies to:
 ## Product doctrine for child safety
 
 1. **No tolerance**
-   - PHANTOM does not permit child sexual abuse or exploitation in any product surface.
+   - SHIFROM does not permit child sexual abuse or exploitation in any product surface.
 
 2. **Safety without broad surveillance**
-   - PHANTOM should not depend on general inspection of private encrypted chats as its default model.
-   - PHANTOM must still maintain an emergency workflow for actionable abuse knowledge, public-surface moderation, and legally required reporting.
+   - SHIFROM should not depend on general inspection of private encrypted chats as its default model.
+   - SHIFROM must still maintain an emergency workflow for actionable abuse knowledge, public-surface moderation, and legally required reporting.
 
 3. **Public surfaces get stronger controls**
    - Public channels, large groups, discoverable profiles, and searchable media require stronger review and enforcement hooks than private 1:1 communications.
 
 4. **Actual knowledge triggers action**
-   - Once PHANTOM obtains actual knowledge through reports, public moderation review, trusted notices, or formal legal process, action must be prompt and documented.
+   - Once SHIFROM obtains actual knowledge through reports, public moderation review, trusted notices, or formal legal process, action must be prompt and documented.
 
 5. **Safety beats feature growth**
    - If a product surface creates disproportionate child-safety risk, that surface should be restricted, delayed, or removed.
@@ -62,8 +62,8 @@ The following are prohibited and non-negotiable:
 - grooming behavior directed at minors
 - sexual extortion involving minors
 - trading, cataloging, or indexing exploitative material
-- using PHANTOM to recruit minors for offline exploitation
-- using PHANTOM to evade prior child-safety enforcement
+- using SHIFROM to recruit minors for offline exploitation
+- using SHIFROM to evade prior child-safety enforcement
 - creating groups or channels centered on minors in sexualized contexts
 - sexualized roleplay or simulated exploitation involving minors
 - accounts impersonating minors for predatory purposes
@@ -72,7 +72,7 @@ The following are prohibited and non-negotiable:
 
 ### A. Reporting
 
-PHANTOM must provide:
+SHIFROM must provide:
 - report user
 - report message
 - report media
@@ -89,7 +89,7 @@ Report categories must explicitly include:
 
 ### B. Blocking and contact controls
 
-PHANTOM must include:
+SHIFROM must include:
 - user blocking
 - message requests for non-contacts
 - limits on cold outreach
@@ -107,7 +107,7 @@ Recommended defaults:
 
 ### D. Child-safety point of contact
 
-PHANTOM must designate a named operational role and monitored mailbox for child-safety issues:
+SHIFROM must designate a named operational role and monitored mailbox for child-safety issues:
 - receives notices
 - coordinates internal review
 - escalates urgent cases
@@ -169,11 +169,11 @@ Depending on certainty and severity:
 - preserve evidence package
 - escalate to competent authorities / designated reporting body where required
 
-For severe child-safety cases, PHANTOM should prefer **containment first, then appeal later**.
+For severe child-safety cases, SHIFROM should prefer **containment first, then appeal later**.
 
 ## Evidence handling
 
-When PHANTOM receives a child-safety report or formal notice:
+When SHIFROM receives a child-safety report or formal notice:
 - create case ID
 - preserve timestamp, reporter context, reported object ID, relevant service-side metadata lawfully available
 - preserve moderation actions taken
@@ -185,7 +185,7 @@ Retention windows and storage locations must be defined by legal and security re
 
 ## Public surfaces and minors
 
-PHANTOM should avoid product patterns that create unnecessary child-safety risk:
+SHIFROM should avoid product patterns that create unnecessary child-safety risk:
 - no default random chat
 - no anonymous match-making with minors
 - no recommendation engine that pushes sexual content
@@ -210,7 +210,7 @@ Anyone handling child-safety cases must have:
 
 ## Required public policy language
 
-Before release, PHANTOM should publish:
+Before release, SHIFROM should publish:
 - Terms / Community Rules prohibiting CSAE
 - child safety standards page
 - reporting instructions
@@ -238,7 +238,7 @@ Suggested model enums:
 
 ## Launch gate
 
-PHANTOM should not publicly launch until all below are true:
+SHIFROM should not publicly launch until all below are true:
 - [ ] public child safety standards are published
 - [ ] in-app reporting exists
 - [ ] child safety point of contact exists

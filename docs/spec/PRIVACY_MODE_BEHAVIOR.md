@@ -21,7 +21,7 @@ Copyright (c) 2026 Willen LLC
 
 Privacy Mode is **the single user-facing knob** that controls four orthogonal subsystems through one product decision:
 
-1. **Discovery** — how (and whether) other people can find you on PHANTOM.
+1. **Discovery** — how (and whether) other people can find you on SHIFROM.
 2. **Presence** — what your contacts can observe about your activity (online dot, last seen, typing, read receipts).
 3. **Push wakeup** — whether the relay can wake your device through an external channel (UnifiedPush) or only over our own WebSocket keepalive.
 4. **Transport** — how your traffic egresses to the relay (direct WSS vs Tor onion via embedded bridges).
@@ -36,7 +36,7 @@ The three modes form a **monotonic privacy ladder**: Ghost ⊃ Private ⊃ Stand
 
 ### 2.1 Standard (free, default)
 
-**Product promise:** "PHANTOM is a normal messenger — fast, friendly, and end-to-end encrypted by default. Your conversations are private; your presence is normal."
+**Product promise:** "SHIFROM is a normal messenger — fast, friendly, and end-to-end encrypted by default. Your conversations are private; your presence is normal."
 
 | Subsystem | Behavior |
 |---|---|
@@ -86,7 +86,7 @@ The three modes form a **monotonic privacy ladder**: Ghost ⊃ Private ⊃ Stand
 
 ### 2.3 Ghost (PRO)
 
-**Product promise:** "You disappear from PHANTOM's social layer entirely. The system cannot find you, your contacts cannot see when you are online, and every message you send self-destructs in 24 hours by default. The trade-off is that voice and video calls are unavailable in this mode."
+**Product promise:** "You disappear from SHIFROM's social layer entirely. The system cannot find you, your contacts cannot see when you are online, and every message you send self-destructs in 24 hours by default. The trade-off is that voice and video calls are unavailable in this mode."
 
 | Subsystem | Behavior |
 |---|---|
@@ -240,7 +240,7 @@ In the chat header the call buttons are visible but dim/disabled with a tooltip 
 
 The peer initiates a WebRTC offer through the messaging channel.
 - The Ghost user has no push registered, so no immediate wakeup.
-- When the Ghost user next opens PHANTOM, the foreground service drains pending envelopes, including the call offer.
+- When the Ghost user next opens SHIFROM, the foreground service drains pending envelopes, including the call offer.
 - Because Ghost has calls disabled, the offer is **dropped** (not auto-answered, not auto-rejected with a signaling response — just dropped).
 - The chat shows a `Missed call from <peer>` system message with the timestamp.
 - The Ghost user cannot return the call without changing mode.
@@ -296,7 +296,7 @@ If the user has additional registered devices (Beta scope) when switching to Gho
 │  ○  Desktop (MacBook Pro)                   │
 │                                             │
 │  All other devices will be removed from     │
-│  your account and prompted to wipe PHANTOM  │
+│  your account and prompted to wipe SHIFROM  │
 │  data on next app launch.                   │
 │                                             │
 │  [ Cancel ]    [ Continue ]                 │
@@ -307,7 +307,7 @@ On confirm:
 1. Issue `DEVICE_REVOKE` envelopes to all other devices.
 2. Each revoked device, on next app launch, sees a system-wide screen:
    ```
-   This device has been removed from your PHANTOM account.
+   This device has been removed from your SHIFROM account.
    All local data will be wiped. Tap to continue.
    ```
 3. After acknowledgment, the device wipes the SQLCipher DB, identity keys, and all caches.
@@ -344,7 +344,7 @@ The first time a user enters Ghost mode (from any source — onboarding selectio
 │                                             │
 │  • Voice and video calls are disabled.      │
 │                                             │
-│  • You are invisible to other PHANTOM users │
+│  • You are invisible to other SHIFROM users │
 │    — username search will not find you.     │
 │                                             │
 │  • Group chats are unavailable.             │
@@ -353,7 +353,7 @@ The first time a user enters Ghost mode (from any source — onboarding selectio
 │    bridges — connections are slower but     │
 │    your network identity is hidden.         │
 │                                             │
-│  Note: PHANTOM cannot prevent screenshots,  │
+│  Note: SHIFROM cannot prevent screenshots,  │
 │  exports outside the app, or someone        │
 │  photographing your screen.                 │
 │                                             │

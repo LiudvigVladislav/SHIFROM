@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Render PHANTOM legal Markdown documents to themed HTML.
+Render SHIFROM legal Markdown documents to themed HTML.
 
 Usage:
     python3 legal/render.py
 
 Reads every `*_EN.md` (and `*_RU.md` later) under `legal/` and emits a
-matching `*.html` next to it, wrapped in a PHANTOM-branded HTML
+matching `*.html` next to it, wrapped in a SHIFROM-branded HTML
 template. The template colours and typography track
 PHANTOM_Design_Brief_v2.pdf §03 / §04 (Surface Deep, Cyan Accent,
 Inter-fallback). No external dependencies — uses Python's stdlib `re`
@@ -21,8 +21,8 @@ to handle the small Markdown subset our legal documents use:
 
 The output is committed alongside the Markdown so the repo carries both
 the source-of-truth (`.md`) and the public-facing rendered page
-(`.html`). Caddy serves the HTML at https://phntm.pro/terms and
-https://phntm.pro/privacy.
+(`.html`). Caddy serves the HTML at https://shifrom.com/terms and
+https://shifrom.com/privacy.
 
 Re-run this script whenever the Markdown is edited.
 """
@@ -46,28 +46,28 @@ TARGETS = [
     {
         "src":    "TERMS_OF_SERVICE_EN.md",
         "out":    "terms.html",
-        "title":  "Terms of Service — PHANTOM",
+        "title":  "Terms of Service — SHIFROM",
         "locale": "en",
         "page":   "terms",
     },
     {
         "src":    "TERMS_OF_SERVICE_RU.md",
         "out":    "terms-ru.html",
-        "title":  "Условия использования — PHANTOM",
+        "title":  "Условия использования — SHIFROM",
         "locale": "ru",
         "page":   "terms",
     },
     {
         "src":    "PRIVACY_POLICY_EN.md",
         "out":    "privacy.html",
-        "title":  "Privacy Policy — PHANTOM",
+        "title":  "Privacy Policy — SHIFROM",
         "locale": "en",
         "page":   "privacy",
     },
     {
         "src":    "PRIVACY_POLICY_RU.md",
         "out":    "privacy-ru.html",
-        "title":  "Политика конфиденциальности — PHANTOM",
+        "title":  "Политика конфиденциальности — SHIFROM",
         "locale": "ru",
         "page":   "privacy",
     },
@@ -116,9 +116,9 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title}</title>
 <meta name="theme-color" content="#08090C">
-<meta name="description" content="PHANTOM — privacy-focused, end-to-end encrypted messenger. {description}">
+<meta name="description" content="SHIFROM — privacy-focused, end-to-end encrypted messenger. {description}">
 <link rel="icon" type="image/png" href="/assets/phantom-logo.png">
-<link rel="apple-touch-icon" href="/assets/phantom-logo.png">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
 <style>
   /* ─── Design tokens (Brief §03) ─────────────────────────────────────── */
   :root {{
@@ -404,8 +404,10 @@ TEMPLATE = """<!DOCTYPE html>
     article h1 {{ font-size: 26px; }}
     article h2 {{ font-size: 18px; margin-top: 36px; }}
     article .meta {{ margin-bottom: 36px; padding-bottom: 24px; }}
-    header .inner {{ padding: 14px 18px; gap: 12px; }}
-    header nav {{ gap: 16px; }}
+    header .inner {{ padding: 14px 18px; gap: 12px; flex-wrap: wrap; }}
+    header nav {{ gap: 12px 16px; flex-wrap: wrap; }}
+    article table {{ table-layout: fixed; }}
+    article th, article td {{ padding: 10px 8px; overflow-wrap: anywhere; }}
     footer nav {{ gap: 18px; }}
   }}
 
@@ -418,9 +420,9 @@ TEMPLATE = """<!DOCTYPE html>
 <body>
 <header>
   <div class="inner">
-    <a class="brand" href="https://phntm.pro/" aria-label="PHANTOM home">
+    <a class="brand" href="https://shifrom.com/" aria-label="SHIFROM home">
       <img src="/assets/phantom-logo.png" alt="" width="28" height="28">
-      <span class="word">PHANTOM</span>
+      <span class="word">SHIFROM</span>
     </a>
     <nav aria-label="Legal navigation">
       <a href="{nav_terms_url}"{terms_current}>{nav_terms_label}</a>
@@ -441,12 +443,12 @@ TEMPLATE = """<!DOCTYPE html>
   <div class="inner">
     <div class="brand-mark">
       <img src="/assets/phantom-logo.png" alt="" width="24" height="24">
-      <span class="word">PHANTOM</span>
+      <span class="word">SHIFROM</span>
     </div>
     <nav aria-label="Footer navigation">
       <a href="{nav_terms_url}">{footer_terms_label}</a>
       <a href="{nav_privacy_url}">{footer_privacy_label}</a>
-      <a href="https://github.com/LiudvigVladislav/Phantom">{footer_github_label}</a>
+      <a href="https://github.com/LiudvigVladislav/SHIFROM">{footer_github_label}</a>
     </nav>
     <div class="legal">{footer_legal}</div>
   </div>
