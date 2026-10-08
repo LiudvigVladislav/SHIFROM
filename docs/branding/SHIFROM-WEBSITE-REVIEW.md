@@ -8,7 +8,7 @@ The homepage keeps the former centered composition with the approved SHIFROM mar
 
 | Desktop | Mobile |
 | --- | --- |
-| ![Russian homepage at 1440 x 960](site-shifrom-home-desktop.png) | ![Russian homepage at 390 x 844](site-shifrom-home-mobile.png) |
+| ![English homepage at 1440 x 960](site-shifrom-home-desktop.png) | ![English homepage at 390 x 844](site-shifrom-home-mobile.png) |
 
 I checked both homepages at 1440 x 960, 1366 x 768, 1920 x 1080, 390 x 844 and 320 x 740. Fonts and artwork load; hero content stays within the viewport, and the next section remains visible. These are responsive reference checks, not pixel-identical reproduction of an old screenshot with unknown browser zoom.
 
