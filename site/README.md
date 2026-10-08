@@ -1,248 +1,113 @@
-# SHIFROM — shifrom.com site
+# SHIFROM Website
 
-Static site for **shifrom.com**. Six pages, mirrored in two languages
-(English at the tree root, Russian at `/ru/`), each page single-language,
-no build tooling — pure HTML/CSS/JS.
+Static HTML/CSS/JS for `https://shifrom.com/`, with six pages in English
+and six corresponding Russian pages under `/ru/`. There is no build step.
 
-Language switching is done by real `<a>` links between the two trees
-(see `.lang` in the nav). There is no JavaScript language auto-detect,
-no `localStorage` toggle, no client-side content swap — a page has
-exactly one language and its URL declares which. This structure was
-introduced on 2026-07-15 in the Phase 3 SEO work to make hreflang
-targeting effective for both Google and Yandex.
+## Source Of Truth
 
-Each `*.html` embeds its CSS and JS directly in the `<style>` and
-`<script>` blocks. The brand logo is served as a small image from
-`/static/favicon.png` (192×192, same-origin, cached across pages and
-reused for the browser tab icon — so the `<img>` reference costs zero
-new network requests). Fonts are self-hosted under `/static/fonts/`.
-The supplied logo, share preview and touch icon are bound by SHA-256 in
-`docs/branding/shifrom-assets.json`.
+Edit the twelve HTML files directly. Each embeds its styles and interactions.
+Apply shared changes to all twelve pages and content changes to both languages.
+`styles.css` and `site.js` are reference copies, not runtime dependencies.
+The main eight pages use the full interaction script; the four engineering
+pages use only its navigation portion.
 
-Earlier revisions of these HTML files embedded the brand logo as a
-base64 data URI directly inside every `<img>` tag — six ~82 KB copies
-of the same JPEG across the four pages, pushing ~660 KB of duplicated
-bytes into the HTML that had to travel before first render. That was
-removed on 2026-06-02 (index / about ~83–89% smaller; roadmap / donate
-~77% smaller). The logo is now fetched once and cached.
+| Page | English | Russian |
+| --- | --- | --- |
+| Home | `/` | `/ru/` |
+| About | `/about.html` | `/ru/about.html` |
+| Roadmap | `/roadmap.html` | `/ru/roadmap.html` |
+| Support | `/donate.html` | `/ru/donate.html` |
+| Engineering | `/writeups/` | `/ru/writeups/` |
+| Field report | `/writeups/how-phantom-survives-dpi.html` | `/ru/writeups/how-phantom-survives-dpi.html` |
 
-**Source of truth: the twelve `*.html` files themselves.** Edit them
-directly with any text editor and the change is live after the next
-deploy.
+The existing article slug is retained so previously shared links keep working.
+It is not the current product name.
 
-**Two-tree maintenance model.** The EN tree (`site/*.html`) and the RU
-tree (`site/ru/*.html`) are maintained independently — a content edit
-that should appear in both languages must be applied to both files.
-There is no generator; the initial RU tree was produced once by a
-throwaway Python script at split time and both trees are hand-edited
-from that point on. Rationale: PR #377 already deleted a class of stale
-build tooling that had drifted from the HTML it was supposed to
-generate; a live generator would just re-introduce the same drift risk.
-Six pages × 2 languages is small enough to maintain by hand.
+## Branding And Assets
 
-Each EN/RU pair carries a reciprocal `hreflang` cluster
-(`en` / `ru` / `x-default`) plus a self-referencing `canonical`, so a
-search engine that crawls one variant discovers the other and
-associates them correctly. `sitemap.xml` lists all 12 URLs with the
-same alternate annotations. Do not break the pairing: if a page is
-renamed, both files must be renamed and both hreflang blocks + the
-sitemap entry must be updated in the same commit.
+The approved SHIFROM artwork is copied without redrawing or recompression.
+`docs/branding/shifrom-assets.json` binds the supplied files by SHA-256.
 
-The old Python generator scripts under `.build/build_*.py` were
-removed on 2026-06-02 because their template had drifted about two
-months behind the actual HTML (missing `<link rel="canonical">`,
-Open Graph tags, Twitter Card tags, JSON-LD structured data, and
-the inline `<style>` / `<script>` blocks) and their output path was
-hardcoded to a Claude Desktop sandbox directory (`/home/claude/site_build/`).
-They were never wired into any build or deploy pipeline, and
-re-running them would have produced broken HTML that also broke
-the SEO markup landed in PR-SEO-PASS-1 (#267).
+- `/static/favicon.png`: navigation and browser icon, 192 x 192.
+- `/static/logo-mark.png`: home-page mark, 1024 x 1024.
+- `/static/shifrom-wordmark-white.png`: supplied white wordmark, 781 x 119.
+- `/static/apple-touch-icon.png`: Apple touch icon, 180 x 180.
+- `/static/shifrom-social-132f0f6a.png`: owner-supplied social image with text,
+  1774 x 887. Every page uses this URL in Open Graph and Twitter metadata.
+- `/static/og-image.png`: earlier 1200 x 630 image retained for compatibility.
 
-The standalone `styles.css` and `site.js` files at the root of this
-directory are retained as readable reference copies of the current
-design system — useful as a workspace when developing larger visual
-changes. They are NOT executed at runtime — production reads only
-the inlined copies in each HTML page.
+The new social image has a distinct URL to avoid reusing an old cached preview.
+Logo/icon URLs carry a content-hash version query for the same reason. Existing
+asset paths remain available. Fonts are self-hosted under `/static/fonts/`:
+Inter and JetBrains Mono include Latin and Cyrillic; Geist falls back to Inter
+for Cyrillic. There are no Google Fonts or other font-CDN requests.
 
-## Layout
+Use `/static/` for website assets. `/assets/` is reserved for legal-page assets
+by the existing Caddy routing.
 
-```
-site/
-├── index.html              Home — EN     (URL: /)
-├── about.html              About — EN    (URL: /about.html)
-├── roadmap.html            Roadmap — EN  (URL: /roadmap.html)
-├── donate.html             Support — EN  (URL: /donate.html)
-├── ru/
-│   ├── index.html          Home — RU     (URL: /ru/)
-│   ├── about.html          About — RU    (URL: /ru/about.html)
-│   ├── roadmap.html        Roadmap — RU  (URL: /ru/roadmap.html)
-│   └── donate.html         Support — RU  (URL: /ru/donate.html)
-├── writeups/               Engineering index and article — EN
-├── ru/writeups/            Engineering index and article — RU
-├── sitemap.xml             SEO sitemap (12 URLs with xhtml:link alternate annotations)
-├── robots.txt              Crawler rules (allow search + AI grounding, deny training)
-├── styles.css              Reference copy of design tokens + layout (NOT executed at runtime)
-├── site.js                 Reference copy of lang switcher + scroll-reveal (NOT executed at runtime)
-├── static/
-│   ├── favicon.png         192×192, browser tab / navigation / JSON-LD org logo
-│   ├── logo-mark.png       1024×1024, transparent hero / README mark
-│   ├── apple-touch-icon.png 180×180, home-screen icon
-│   └── og-image.png        1200×630, social share preview (og:image + twitter:image)
-└── README.md               This file
+## Languages And Navigation
+
+EN/RU switching uses real links between corresponding pages, not JavaScript,
+browser-language detection, local storage, or inline content swapping.
+Each page has a self-canonical URL and reciprocal `en`, `ru`, and `x-default`
+hreflang links. `sitemap.xml` lists the same twelve URLs and alternate pairs.
+
+The mobile menu declares its expanded state, excludes collapsed links from
+keyboard focus, closes on Escape or outside activation, and adapts on resize.
+Navigation and page content remain available when JavaScript is disabled.
+
+## Local Preview
+
+From the repository root, with Node.js installed:
+
+```sh
+node site/tools/preview.mjs
 ```
 
-### Why `static/` and not `assets/`
+Open `http://127.0.0.1:4176/` or `http://127.0.0.1:4176/ru/`.
+Set `PORT` to choose another port. The preview binds only to localhost, disables
+caching, and mirrors the existing legal, funding, and Android-link routes.
+It is a development tool, not a production server.
 
-Caddy on phntm.pro has a dedicated route `handle_path /assets/*` that
-proxies to `/srv/legal/assets/` (for the legal pages `/terms` and
-`/privacy`). If this site used `assets/` for its own files, any
-`<img src="assets/...">` reference would silently 404 because Caddy
-would intercept it. `static/` avoids that namespace collision.
+Run the preview's dependency-free HTTP regression checks with:
 
-## Deploy
-
-The site is served by the `caddy` container in `/home/phantom/Phantom/deploy/`
-via a bind-mount: the Caddyfile's `phntm.pro` vhost serves files from
-`/srv/landing/` inside the container, and `deploy/docker-compose.yml`
-maps `../site` (this directory) into `/srv/landing` read-only.
-
-### Standard release deploy
-
-The commands below describe the legacy deployment layout, not proof of the
-new domain's configuration. This branding draft does not change Caddy, restart
-containers or deploy files. Recheck the actual host and mounts before any
-separately authorized publication to `shifrom.com`.
-
-```bash
-# 1. Pull latest into the VPS-side checkout.
-cd /home/phantom/Phantom && git pull
-
-# 2. Force-recreate caddy.
-#
-#    `--force-recreate` is REQUIRED. Caddy's bind-mount for funding.json
-#    is a single-file mount, which means the container holds the original
-#    inode at start-time; `git pull` overwrites the file on disk but the
-#    running container still serves the old inode. Without
-#    `--force-recreate`, requests serve stale content.
-#
-#    The site/ directory bind-mount (`../site:/srv/landing:ro`) is less
-#    fragile because it maps a whole directory, not a single file —
-#    but recreating caddy is still the simplest single-command sweep
-#    that covers both.
-cd deploy && docker compose up -d --force-recreate caddy
-
-# 3. Cloudflare Dashboard → phntm.pro → Caching → Configuration →
-#    Purge Everything.
-#    (Required because phntm.pro is Proxied through Cloudflare with a
-#     1-hour cache header on funding.json and default caching on the
-#     HTML pages.)
+```sh
+node --test site/tools/preview.test.mjs
 ```
 
-### Post-deploy verification
+The tests use an ephemeral localhost port and stop their own preview process.
 
-Four `curl` checks confirm the deploy landed cleanly:
+Before publication, check all twelve pages at desktop and mobile widths,
+navigation with keyboard and without JavaScript, image/font loading, and
+donation copying on both successful and denied clipboard operations.
 
-```bash
-# 1. New site is served (not the old stub).
-#    Old stub had: <meta name="robots" content="noindex,nofollow">
-#    New pages have: <meta name="robots" content="index,follow">
-curl -sL https://shifrom.com/ | grep '<meta name="robots"'
-# Expect: <meta name="robots" content="index,follow">
+## Publication Boundary
 
-# 2. Old "noindex" must be GONE.
-curl -sL https://shifrom.com/ | grep -i 'noindex'
-# Expect: empty
+Repository changes do not publish the website. Verify the actual production
+vhost, mounted paths, file versions, and Cloudflare cache policy first.
+The checked-in deployment still contains legacy host/path names; do not infer
+the live `shifrom.com` setup from it, replace relay hostnames, pull unrelated
+application changes into production, or recreate containers just to publish
+static pages. Deployment requires a separately approved, bounded operation.
 
-# 3. funding.json donation URLs are correct (PR #245 fix deployed).
-curl -s https://shifrom.com/funding.json | grep -E 'liberapay\.com|buymeacoffee\.com'
-# Expect: https://liberapay.com/Phantom-messenger (CAPITAL P)
-#         https://www.buymeacoffee.com/phantompro  (NOT phantommessenger)
+The legacy installation used `/home/phantom/Phantom/site` mounted read-only
+as `/srv/landing`. Its root `funding.json` and well-known files were separate
+single-file bind mounts; replacing their inode does not necessarily update
+the container view. A static-site publication must preserve these boundaries.
 
-# 4. Inner pages reachable (no .html-routing tricks needed; full path serves).
-curl -sI https://shifrom.com/about.html | head -1
-curl -sI https://shifrom.com/roadmap.html | head -1
-curl -sI https://shifrom.com/donate.html | head -1
-# Expect: HTTP/2 200 on all three
-```
+Preserve the following separately served resources and verify them after any
+approved deployment:
 
-### Rollback
+- `/funding.json` and `/.well-known/funding-manifest-urls`.
+- `/.well-known/assetlinks.json`, including Android signing fingerprints.
+- `/terms`, `/terms/ru`, `/privacy`, `/privacy/ru`, and `/assets/*`.
+- ACME challenge handling and existing certificates.
+- Relay, push, bridge, TURN, and onion endpoints and their running containers.
 
-The old stub landing is preserved at `deploy/landing/` (no longer
-bind-mounted but kept in git history). To roll back, revert the
-docker-compose line and `--force-recreate caddy`:
+The legacy Liberapay and Buy Me a Coffee URLs and existing cryptocurrency
+addresses remain unchanged until verified replacements are supplied.
+Renaming the product is not authorization to create wallets or move funds.
 
-```yaml
-# In deploy/docker-compose.yml, revert:
-- ../site:/srv/landing:ro
-# back to:
-- ./landing:/srv/landing:ro
-```
-
-Then `cd /home/phantom/Phantom/deploy && docker compose up -d --force-recreate caddy`
-+ Cloudflare purge.
-
-## Editing the site
-
-Each page is self-contained, so you can edit `index.html` / `about.html`
-/ `roadmap.html` / `donate.html` directly with any text editor and the
-change is live after the next deploy. This is the whole workflow —
-there is no build step and no code generator.
-
-For larger visual changes you may prefer to iterate first on the reference
-`styles.css` / `site.js` files (they are cleaner to edit than the inlined
-copies), then copy the updated content back into each HTML page's
-`<style>` and `<script>` blocks. Take care to keep all four HTML pages in
-sync when doing this — there is no automation.
-
-## What NOT to lose on the next deploy
-
-When swapping web roots, these MUST be preserved:
-
-- `funding.json` at repo root — already separately bind-mounted at
-  `../funding.json:/srv/funding/funding.json:ro` and served at
-  `https://shifrom.com/funding.json` by a dedicated Caddyfile `handle`.
-  NOT inside `site/`. Do not duplicate.
-- `.well-known/funding-manifest-urls` at repo root — exists for the
-  FLOSS/fund wellKnown proof on GitHub
-  (`https://github.com/LiudvigVladislav/SHIFROM/blob/master/.well-known/funding-manifest-urls`).
-  NOT served via phntm.pro and NOT needed inside `site/`.
-- `deploy/well-known/assetlinks.json` — Android App Links manifest,
-  separately bind-mounted to `/srv/well-known` and served via
-  `handle_path /.well-known/*`. NOT inside `site/`.
-- Caddy's auto-managed `.well-known/acme-challenge/` — never put a
-  file there. Caddy creates it transiently for HTTP-01 challenges.
-
-The `caddy:2.8-alpine` image and `caddy_data` named volume hold
-issued certificates; those are also untouched by site/ replacement.
-
-## Bilingual content (`data-lang-en` / `data-lang-ru`)
-
-Both languages live inline in every HTML page and are toggled by a
-CSS rule on `<html data-lang="…">`. `site.js`:
-
-1. Picks language: `localStorage` saved choice > browser language > `en`.
-2. Sets `<html data-lang="…">` and `<html lang="…">`.
-3. Updates `<title>` from `data-en` / `data-ru` attributes.
-4. Wires the EN / RU buttons in the top nav.
-
-If you add new content, put both languages side-by-side:
-
-```html
-<h2 data-lang-en>Built assuming the network is hostile.</h2>
-<h2 data-lang-ru>Построен из допущения, что сеть враждебна.</h2>
-```
-
-The CSS in `styles.css` (and inlined in each HTML) controls which
-language is visible.
-
-## CDN dependencies (intentional)
-
-- `https://fonts.googleapis.com/css2?family=Inter…&family=JetBrains+Mono…` — Google Fonts.
-- `https://cdn.jsdelivr.net/npm/geist@1/dist/fonts/geist-sans/style.css` — Geist (jsdelivr).
-
-The site renders without these (fallback fonts inside the family
-stack: `'Geist','Inter',sans-serif` etc.), but the typography is
-intentional. To bundle the fonts locally for a fully self-hosted
-deploy, download the WOFF2 files, add them to `static/fonts/`,
-and replace the two `@import` lines in `styles.css` with `@font-face`
-declarations.
+The dated [website review and donation-link audit](../docs/branding/SHIFROM-WEBSITE-REVIEW.md)
+records which destinations still need account-level rebranding. Buy Me a Coffee
+documents changing an existing page URL; do not assume a new account is needed.

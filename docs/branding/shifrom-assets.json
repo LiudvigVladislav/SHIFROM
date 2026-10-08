@@ -218,6 +218,21 @@
       "target": "apps/android/src/androidMain/res/drawable/ic_dv2_phantom_premium.png",
       "sha256": "b37d2a4e790b2aae85496376be43c5d8b2e0cba4c7f60aa3a8b0d03d3c54c5d9",
       "bytes": 20175
+    },
+    {
+      "source": "../og-image.png",
+      "target": "site/static/shifrom-social-132f0f6a.png",
+      "sha256": "132f0f6a1c91bd7790df9d428be804ce8fbf08b1a1e7a27e65d9ab2069b38210",
+      "bytes": 1374593,
+      "width": 1774,
+      "height": 887,
+      "supplied": "Owner-supplied social image, 2026-10-08"
+    },
+    {
+      "source": "logo/wordmark/shifrom-wordmark-white.png",
+      "target": "site/static/shifrom-wordmark-white.png",
+      "sha256": "9150aa4f19861e7b9812923789481084620de1f03305aa01cd54ede71b3ddf8f",
+      "bytes": 19753
     }
   ]
 }
