@@ -111,9 +111,11 @@ test('HEAD preserves headers without returning a body', async () => {
   assert.equal((await response.arrayBuffer()).byteLength, 0);
 });
 
-test('rejects traversal and development source access', async () => {
-  for (const route of ['/assets/..%2F..%2FREADME.md', '/tools/preview.mjs', '/tools/preview.test.mjs']) {
-    assert.equal((await fetch(base + route)).status, 403, route);
+test('rejects traversal and serves no development files', async () => {
+  assert.equal((await fetch(base + '/assets/..%2F..%2FREADME.md')).status, 403);
+  // site/ holds only published files: documentation and tooling live outside it.
+  for (const route of ['/README.md', '/tools/preview.mjs', '/tools/preview.test.mjs']) {
+    assert.equal((await fetch(base + route)).status, 404, route);
   }
 });
 
