@@ -1,0 +1,363 @@
+/* SHIFROM About page only. Loads after base.css; uses its tokens, type and buttons.
+   1 entrance (dark, the particle mark over a horizon of light that floods the page on scroll)
+   2 mission (one statement, lit word by word) · 3 how it is built (+ the four points)
+   4 who builds it · 5 where next. */
+
+/* without JavaScript the nav cannot change theme, so it scrolls away with the dark entrance */
+html:not(.js) .nav { position: absolute; }
+
+/* ======================================================================
+   1. ENTRANCE (dark)
+   ====================================================================== */
+.ab-hero {
+  position: relative; overflow: hidden; isolation: isolate;
+  height: var(--vh); min-height: 600px;
+  background: var(--night); color: var(--d-ink);
+  /* the horizon of light: an ellipse whose solid core ends at 70% of its radius (see the gradient).
+     Desktop: its crest stands under the mark at 64% across and 80% down; the bottom corners are always inside it. */
+  --dome-l: -84.6%; --dome-t: 56.2%; --dome-w: 297.2%; --dome-h: 158.9%;
+}
+.ab-hero ::selection { background: #6d4cff; color: #fff; }
+.ab-hero :focus-visible { outline-color: var(--d-focus); }
+
+.ab-stage { position: absolute; inset: 0; z-index: 0; will-change: transform; }
+.ab-stage canvas, .ab-still, .ab-still img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ab-still img { object-fit: cover; object-position: 64% 40%; }
+.ab-gl { opacity: 0; transition: opacity 1.1s var(--ease-out); }
+.ab-hero.is-live .ab-gl { opacity: 1; }
+.gl .ab-still { display: none; }   /* the live entrance starts from the cloud; the still is the gathered mark */
+.ab-scrim {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(5, 5, 10, 0.72) 0, rgba(5, 5, 10, 0) 150px),
+    radial-gradient(64% 54% at 4% 74%, rgba(5, 5, 10, 0.62) 0, rgba(5, 5, 10, 0) 100%);
+}
+
+.ab-intro {
+  position: absolute; z-index: 2; left: var(--gutter); right: var(--gutter); bottom: 27%;
+}
+.ab-hero h1 {
+  font-weight: var(--w-dark);
+  font-size: clamp(2.6rem, 6.6vw, 6rem); line-height: 1; letter-spacing: -0.038em;
+}
+.ab-tag {
+  margin-top: clamp(16px, 2.6vh, 26px);
+  font: var(--w-dark) clamp(1.2rem, 2.05vw, 1.95rem)/1.2 var(--display); letter-spacing: -0.025em;
+  color: var(--d-ink-2); max-width: 24em; text-wrap: balance;
+}
+/* the one authored entrance on first paint, as on the homepage */
+.js .ab-intro > * { animation: ab-rise 1.2s var(--ease-out) both; }
+.js .ab-intro > :nth-child(2) { animation-delay: 110ms; }
+@keyframes ab-rise { from { opacity: 0; transform: translateY(0.4em); filter: blur(10px); } }
+
+.ab-dome { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.ab-disc {
+  position: absolute; left: var(--dome-l); top: var(--dome-t); width: var(--dome-w); height: var(--dome-h);
+  border-radius: 50%;
+  background: radial-gradient(closest-side,
+    var(--ground) 0, var(--ground) 70%, #f7f3ff 71%, #e3d6ff 72.3%, #b49cff 73.9%,
+    rgba(126, 92, 255, 0.5) 76.6%, rgba(88, 54, 216, 0.16) 84%, rgba(40, 20, 120, 0) 94%);
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+/* ======================================================================
+   2. MISSION (light): one statement
+   ====================================================================== */
+.ab-mission { padding: clamp(8px, 2vh, 24px) var(--gutter) var(--section-y); }
+.ms { max-width: 1320px; margin: 0 auto; }
+.ms-lead {
+  font-family: var(--display); font-weight: 420;
+  font-size: clamp(1.4rem, 2.6vw, 2.5rem); line-height: 1.18; letter-spacing: -0.03em;
+  color: var(--ink); max-width: 26em; text-wrap: pretty;
+}
+.ms-lead + .ms-lead { margin-top: 0.55em; }
+.ms-claim {
+  margin-top: clamp(44px, 8vh, 88px);
+  font-family: var(--display); font-weight: var(--w-light);
+  font-size: clamp(2.3rem, 6.4vw, 6rem); line-height: 0.98; letter-spacing: -0.042em;
+  color: var(--ink); max-width: 12.5em; text-wrap: balance;
+}
+.ms .w { transition: opacity 120ms linear; }
+
+/* ======================================================================
+   3. HOW IT IS BUILT (light)
+   ====================================================================== */
+.ab-hostile { max-width: 1320px; margin: 0 auto; box-sizing: content-box; padding: calc(var(--section-y) * 0.7) var(--gutter) var(--section-y); }
+.ho-title {
+  font-weight: var(--w-light);
+  font-size: clamp(2.5rem, 6.4vw, 6rem); line-height: 0.98; letter-spacing: -0.042em;
+  max-width: 11.5em;
+}
+.ho-body {
+  margin-top: clamp(44px, 7vh, 80px);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(28px, 3.6vw, 64px); row-gap: 28px;
+  align-items: start;
+}
+.ho-body p { font-size: clamp(17px, 1.3vw, 19px); line-height: 1.62; color: var(--ink-2); max-width: 46ch; text-wrap: pretty; }
+.ho-tm p { line-height: 1.5; }
+.tm-link {
+  display: inline-flex; align-items: center; gap: 12px; margin-top: 10px; padding: 6px 0;
+  font: 560 clamp(1.25rem, 1.72vw, 1.55rem)/1.15 var(--display); letter-spacing: -0.025em;
+  color: var(--blue); text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) left 100% / 0 2px no-repeat;
+  transition: background-size 260ms var(--ease-out), color 160ms ease;
+}
+.tm-link svg { flex: none; transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .tm-link:hover { color: var(--blue-press); background-size: 100% 2px; }
+  .tm-link:hover svg { transform: translate(3px, -3px); }
+}
+
+/* the four points: a typographic index; a dotted route leads from each point to its note */
+.pts { list-style: none; margin: clamp(104px, 18vh, 176px) 0 0; padding: 0; display: grid; gap: clamp(30px, 5vh, 52px); }
+.pt {
+  display: grid; grid-template-columns: auto minmax(40px, 1fr) minmax(0, 17rem);
+  align-items: baseline; column-gap: clamp(18px, 1.8vw, 26px);
+}
+/* one line each on wide screens, sized so the longest (Reduced metadata exposure) still leaves room for its route */
+.pt-t {
+  margin: 0; font-family: var(--display); font-weight: var(--w-light);
+  font-size: min(3.8vw, 3.55rem); line-height: 1.02; letter-spacing: -0.04em; color: var(--ink);
+  white-space: nowrap;
+}
+.pt-lead {
+  display: block; height: 6px; margin-bottom: 0.12em;
+  background: radial-gradient(circle at 50% 50%, var(--blue) 0 2.3px, transparent 2.9px) left center / 14px 6px repeat-x;
+}
+.pt-d { font-size: clamp(16px, 1.3vw, 19px); line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+/* Routes around blocks: the route lifts over a block */
+.pt-route .pt-lead { display: flex; align-items: flex-end; background: none; }
+.pt-run { flex: 1 1 0; height: 6px; background: radial-gradient(circle at 50% 50%, var(--blue) 0 2.3px, transparent 2.9px) left center / 14px 6px repeat-x; }
+.pt-detour { flex: none; width: 132px; height: 64px; margin-top: -58px; overflow: visible; display: block; }   /* lifts above the line without making the row taller */
+.pt-block { fill: url(#pt-slab); }
+.pt-arc { fill: none; stroke: var(--blue); stroke-width: 4.6; stroke-linecap: round; stroke-dasharray: 0 14; }
+
+/* ======================================================================
+   4. WHO BUILDS IT (light)
+   ====================================================================== */
+.ab-who {
+  max-width: 1320px; margin: 0 auto; box-sizing: content-box;
+  padding: calc(var(--section-y) * 0.5) var(--gutter) var(--section-y);
+  display: grid; grid-template-columns: minmax(0, 4.4fr) minmax(0, 7.6fr); column-gap: clamp(32px, 5.5vw, 104px); align-items: start;
+}
+.who-title {
+  grid-column: 1 / -1;
+  font-weight: var(--w-light);
+  font-size: clamp(2.3rem, 4.6vw, 4.4rem); line-height: 1; letter-spacing: -0.04em;
+}
+.who-text {
+  margin-top: clamp(40px, 7vh, 80px);
+  font-size: clamp(17px, 1.3vw, 19px); line-height: 1.62; color: var(--ink-2); max-width: 42ch; text-wrap: pretty;
+}
+.who-pledge {
+  margin-top: clamp(40px, 7vh, 80px);
+  display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: clamp(18px, 2.2vw, 32px); align-items: start;
+}
+.who-mark { width: clamp(52px, 4.6vw, 72px); height: auto; margin-top: 0.15em; filter: drop-shadow(0 16px 22px rgba(70, 40, 190, 0.26)); }
+.who-pledge p {
+  font-family: var(--display); font-weight: 420;
+  font-size: clamp(1.4rem, 2.6vw, 2.5rem); line-height: 1.18; letter-spacing: -0.03em;
+  color: var(--ink); max-width: 21em; text-wrap: balance;
+}
+
+/* ======================================================================
+   5. WHERE NEXT (light): two large actions
+   ====================================================================== */
+.ab-next {
+  position: relative;
+  padding: clamp(24px, 4vh, 48px) var(--gutter) calc(var(--section-y) * 0.9);
+  display: grid; justify-items: stretch;
+  background:
+    radial-gradient(34% 42% at 16% 58%, rgba(242, 196, 255, 0.55), rgba(242, 196, 255, 0) 100%),
+    radial-gradient(36% 46% at 84% 46%, rgba(196, 206, 255, 0.66), rgba(196, 206, 255, 0) 100%),
+    var(--ground);
+}
+.nx {
+  width: 100%; max-width: 1320px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: clamp(14px, 2.4vh, 26px) 0;
+  font: var(--w-light) clamp(2.1rem, 6.4vw, 6rem)/1 var(--display); letter-spacing: -0.042em;
+  color: var(--ink); text-decoration: none;
+}
+.nx span {
+  padding-bottom: 0.06em;
+  background: linear-gradient(currentColor, currentColor) left 100% / 0 0.06em no-repeat;
+  transition: background-size 320ms var(--ease-out);
+}
+.nx svg { flex: none; width: clamp(34px, 4.6vw, 68px); height: auto; transition: transform 240ms var(--ease-out); }
+.nx-support { color: var(--blue); }
+@media (hover: hover) and (pointer: fine) {
+  .nx:hover span { background-size: 100% 0.06em; }
+  .nx:hover svg { transform: translateX(12px); }
+  .nx-support:hover { color: var(--blue-press); }
+}
+.nx:active svg { transform: translateX(6px) scale(0.96); }
+
+/* ======================================================================
+   ENTRANCES: set up by js/pages/about.js (class .reveal), so nothing stays hidden if the script fails
+   ====================================================================== */
+.reveal [data-rise] { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
+.reveal [data-rise].in { opacity: 1; transform: none; }
+.reveal .pt .pt-t { opacity: 0; transform: translateY(30px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
+.reveal .pt .pt-lead { clip-path: inset(-72px 100% -72px 0); transition: clip-path 1s var(--ease-out) 0.2s; }
+.reveal .pt .pt-d { opacity: 0; transform: translateY(12px); transition: opacity 0.8s var(--ease-out) 0.55s, transform 0.8s var(--ease-out) 0.55s; }
+.reveal .pt.in .pt-t, .reveal .pt.in .pt-d { opacity: 1; transform: none; }
+.reveal .pt.in .pt-lead { clip-path: inset(-72px 0 -72px 0); }
+
+/* big headings arrive word by word, with the same rise and focus pull as the entrance title */
+.reveal [data-words] .wd { display: inline-block; opacity: 0; transform: translateY(0.42em); filter: blur(8px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out), filter 0.9s var(--ease-out); transition-delay: calc(var(--k) * 55ms); }
+.reveal [data-words].in .wd { opacity: 1; transform: none; filter: blur(0); }
+
+/* ======================================================================
+   NARROWER SCREENS
+   ====================================================================== */
+@media (max-width: 1239px) {
+  .pt { grid-template-columns: minmax(0, 1fr); row-gap: 12px; }
+  .pt-t { white-space: normal; font-size: clamp(2.1rem, 5.6vw, 4rem); text-wrap: balance; }
+  .pt-lead, .pt-route .pt-lead { display: none; }
+  .pt-d { max-width: 40ch; }
+}
+@media (max-width: 1100px) {
+  .ho-body { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ho-tm { grid-column: 1 / -1; }
+  .ms-lead, .ms-claim, .ho-title { max-width: none; }
+  .who-text { max-width: 60ch; }
+}
+@media (max-width: 900px) {
+  .ho-body { grid-template-columns: minmax(0, 1fr); }
+  .ab-who { grid-template-columns: minmax(0, 1fr); }
+  .who-pledge { margin-top: 48px; }
+}
+
+/* ======================================================================
+   PHONE (360-430 portrait): its own composition
+   ====================================================================== */
+@media (max-width: 700px) {
+  /* the mark stands in the upper third; the title sits on two large lines under it; the horizon is lower and narrower */
+  .ab-hero { --dome-l: -60%; --dome-t: 76.9%; --dome-w: 220%; --dome-h: 54.3%; }
+  .ab-still img { object-position: 50% 30%; }
+  .ab-scrim {
+    background:
+      linear-gradient(to bottom, rgba(5, 5, 10, 0.6) 0, rgba(5, 5, 10, 0) 96px),
+      linear-gradient(to top, rgba(5, 5, 10, 0) 20%, rgba(5, 5, 10, 0.5) 34%, rgba(5, 5, 10, 0) 56%);
+  }
+  .ab-intro { bottom: 22.5%; }
+  .ab-hero h1 { font-size: clamp(2.6rem, 14.6vw, 4rem); line-height: 0.98; letter-spacing: -0.045em; }
+  .ab-hero h1 .ab-l { display: block; }
+  .ab-tag { font-size: clamp(1.1rem, 5.3vw, 1.4rem); line-height: 1.22; margin-top: 14px; max-width: 15em; }
+
+  .ab-mission { padding-top: 16px; }
+  .ms-lead { font-size: clamp(1.3rem, 5.8vw, 1.6rem); line-height: 1.22; }
+  .ms-claim { font-size: clamp(2rem, 9.4vw, 2.6rem); line-height: 1.02; margin-top: 44px; text-wrap: pretty; }
+
+  .ho-title { font-size: clamp(2.2rem, 10.6vw, 2.9rem); line-height: 1.02; letter-spacing: -0.042em; }
+  .ho-body { margin-top: 36px; row-gap: 20px; }
+  .ho-body p { font-size: 16.5px; line-height: 1.6; }
+  .ho-tm { margin-top: 8px; }
+  .tm-link { font-size: clamp(1.2rem, 5.6vw, 1.4rem); min-height: 48px; margin-top: 4px; }
+  .tm-link svg { width: 22px; height: 22px; }
+
+  /* the four points become stops on one route that runs down the column; it lifts around a block after the third */
+  .pts { margin-top: 84px; gap: 40px; padding-left: 36px; }
+  .pt { position: relative; row-gap: 10px; }
+  .pt::before {
+    content: ""; position: absolute; left: -36px; top: 9px; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--ground); box-shadow: inset 0 0 0 3.5px var(--blue);
+  }
+  .pt-t { font-size: clamp(1.75rem, 8vw, 2.2rem); line-height: 1.04; letter-spacing: -0.04em; }
+  .pt-d { font-size: 16.5px; max-width: 34ch; }
+  .pt .pt-lead {
+    display: block; position: absolute; left: -36px; width: 14px; top: 27px; bottom: -40px; height: auto; margin: 0;
+    background: radial-gradient(circle at 50% 50%, var(--blue) 0 2.3px, transparent 2.9px) center top / 14px 12px repeat-y;
+  }
+  .pt:last-child .pt-lead { bottom: 4px; }
+  .pt-route { margin-bottom: 48px; }
+  .pt-route .pt-lead { display: flex; flex-direction: column; align-items: center; background: none; bottom: -88px; }
+  .pt-run { flex: 1 1 0; width: 14px; height: auto; background: radial-gradient(circle at 50% 50%, var(--blue) 0 2.3px, transparent 2.9px) center top / 14px 12px repeat-y; }
+  .pt-route .pt-run:last-child { flex: 0 0 10px; }
+  .pt-detour { margin: 9px 0; transform: translateX(18px) rotate(90deg) scale(0.62); }
+  .reveal .pt .pt-lead { clip-path: inset(0 -64px 100% -64px); transition: clip-path 1.1s var(--ease-out) 0.15s; }
+  .reveal .pt.in .pt-lead { clip-path: inset(0 -64px -12px -64px); }
+  .reveal .pt::before { opacity: 0; transform: scale(0.6); transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out); }
+  .reveal .pt.in::before { opacity: 1; transform: none; }
+
+  .who-title { font-size: clamp(1.9rem, 8.4vw, 2.4rem); line-height: 1.04; text-wrap: balance; }
+  .who-text { margin-top: 28px; font-size: 16.5px; }
+  .who-pledge { margin-top: 48px; grid-template-columns: minmax(0, 1fr); row-gap: 18px; }
+  .who-mark { width: 52px; margin-top: 0; }
+  .who-pledge p { font-size: clamp(1.35rem, 6.4vw, 1.7rem); line-height: 1.2; max-width: none; }
+
+  .ab-next { padding-top: 8px; padding-bottom: 72px; }
+  .nx { font-size: clamp(2rem, 9.6vw, 2.6rem); line-height: 1.02; gap: 16px; padding: 18px 0; min-height: 64px; }
+  .nx svg { width: 32px; }
+  .ab-next { background:
+    radial-gradient(60% 34% at 20% 66%, rgba(242, 196, 255, 0.55), rgba(242, 196, 255, 0) 100%),
+    radial-gradient(64% 36% at 82% 38%, rgba(196, 206, 255, 0.66), rgba(196, 206, 255, 0) 100%),
+    var(--ground); }
+}
+/* phones held sideways: the full-height band stays; the title takes the left, the mark stands on the right */
+@media (max-width: 960px) and (max-height: 500px) and (orientation: landscape) {
+  .ab-hero { min-height: 320px; --dome-l: -84.6%; --dome-t: 56.2%; --dome-w: 297.2%; --dome-h: 158.9%; }
+  .ab-hero .ab-intro { bottom: 27%; right: 52%; }
+  .ab-hero h1 { font-size: clamp(2rem, 6.4vw, 2.8rem); line-height: 0.98; }
+  .ab-hero h1 .ab-l { display: block; }
+  .ab-tag { font-size: clamp(0.95rem, 2.6vw, 1.15rem); margin-top: 10px; max-width: 16em; }
+  .ab-still img { object-position: 70% 40%; }
+}
+
+/* RUSSIAN: longer words and titles. The index keeps one line per point on wide screens (a narrower note column,
+   a smaller title: «Меньше раскрываемых метаданных» is the longest); phone display sizes step down a little. */
+:lang(ru) .pt { grid-template-columns: auto minmax(40px, 1fr) minmax(0, 15rem); }
+:lang(ru) .pt-t { font-size: min(2.95vw, 2.8rem); }
+:lang(ru) .ms-lead { max-width: 25em; }
+:lang(ru) .who-title { hyphens: manual; }
+:lang(ru) .ab-tag { text-wrap: wrap; max-width: 30em; }
+:lang(ru) .ms-claim { font-size: clamp(2.3rem, 5.2vw, 4.8rem); max-width: 15em; }
+.nb { white-space: nowrap; }   /* hyphenated words that must not break at the hyphen (RU: «чьего-либо», «авто-переключение») */
+@media (max-width: 1239px) {
+  :lang(ru) .pt { grid-template-columns: minmax(0, 1fr); }
+  :lang(ru) .pt-t { font-size: clamp(1.9rem, 4.6vw, 3.2rem); }
+}
+@media (max-width: 700px) {
+  :lang(ru) .ab-hero h1 { font-size: clamp(2.4rem, 13.4vw, 3.6rem); }
+  :lang(ru) .ms-lead { font-size: clamp(1.2rem, 5.4vw, 1.5rem); }
+  :lang(ru) .ms-claim { font-size: clamp(1.75rem, 8.2vw, 2.3rem); }
+  :lang(ru) .ho-title { font-size: clamp(1.9rem, 9.2vw, 2.5rem); }
+  :lang(ru) .pt-t { font-size: clamp(1.55rem, 7.2vw, 2rem); }
+  :lang(ru) .who-title { font-size: clamp(1.7rem, 7.6vw, 2.2rem); }
+  :lang(ru) .who-pledge p { font-size: clamp(1.25rem, 5.8vw, 1.55rem); }
+  :lang(ru) .nx { font-size: clamp(1.8rem, 8.8vw, 2.4rem); }
+}
+
+/* touch screens: nothing follows the scroll; the mission lights word by word on a timer as each paragraph enters */
+.lit-timer .ms .w { opacity: 0.2; transition: opacity 0.6s var(--ease-out); transition-delay: calc(var(--i) * 42ms); }
+.lit-timer .ms p.in .w { opacity: 1; }
+.touch-ui .ab-stage, .touch-ui .ab-disc { will-change: auto; }
+
+/* touch: immediate, quiet press feedback in place of hover */
+.nx, .tm-link { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+@media (hover: none) {
+  .nx span, .tm-link { transition: opacity 120ms var(--ease-out); }
+  .nx:active span, .tm-link:active { opacity: 0.62; }
+}
+
+/* safe areas: phones held sideways keep text clear of the notch */
+.ab-mission, .ab-hostile, .ab-who, .ab-next {
+  padding-left: max(var(--gutter), env(safe-area-inset-left));
+  padding-right: max(var(--gutter), env(safe-area-inset-right));
+}
+.ab-intro { left: max(var(--gutter), env(safe-area-inset-left)); right: max(var(--gutter), env(safe-area-inset-right)); }
+
+/* ======================================================================
+   REDUCED MOTION: the designed still, no flood travel; fades stay, travel goes
+   ====================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .js .ab-intro > * { animation: ab-fade 0.5s ease both; }
+  @keyframes ab-fade { from { opacity: 0; } }
+  .reveal [data-rise], .reveal .pt .pt-t, .reveal .pt .pt-d { transform: none; transition: opacity 0.4s ease; }
+  .reveal [data-words] .wd { transform: none; filter: none; transition: opacity 0.4s ease; transition-delay: 0ms; }
+  .reveal .pt .pt-lead { clip-path: none; transition: none; }
+  .ab-stage, .ab-disc { will-change: auto; }
+  .tm-link, .tm-link svg, .nx span, .nx svg { transition: none; }
+}

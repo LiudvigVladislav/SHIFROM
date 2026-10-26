@@ -1,0 +1,594 @@
+/* SHIFROM homepage only: the Particles entrance, the Phone film, the Bubbles scenes,
+   privacy modes, status and support. Loads after base.css. */
+
+/* without JavaScript the nav cannot change theme, so it scrolls away with the dark hero */
+html:not(.js) .nav { position: absolute; }
+/* on the dark entrance the bar is transparent: a soft night fade keeps scrolling copy from colliding with it */
+.nav::before {
+  content: ""; position: absolute; inset: 0 0 -28px; z-index: -1; pointer-events: none;
+  background: linear-gradient(rgba(5, 5, 10, 0.88), rgba(5, 5, 10, 0.55) 55%, rgba(5, 5, 10, 0));
+  transition: opacity 240ms ease;
+}
+.nav[data-theme="light"]::before { opacity: 0; }
+.hero ::selection { background: #6d4cff; color: #fff; }
+.hero :focus-visible { outline-color: var(--d-focus); }
+
+/* ======================================================================
+   1. HERO (dark): the particle story
+   ====================================================================== */
+.hero { position: relative; background: var(--night); color: var(--d-ink); }
+.hero-stage { position: relative; height: var(--vh); overflow: hidden; background: var(--night); }
+.hero-stage canvas, .hero-still, .hero-still img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-still img { object-fit: cover; object-position: 60% 50%; }
+.hero-gl { opacity: 0; transition: opacity 1.1s var(--ease-out); }
+.hero.is-live .hero-gl { opacity: 1; }
+.hero.is-live .hero-still { opacity: 0; transition: opacity 1.1s var(--ease-out); }
+.hero-scrim {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(5,5,10,0.7) 0, rgba(5,5,10,0) 150px),
+    linear-gradient(to top, rgba(5,5,10,0.88) 0, rgba(5,5,10,0.6) 20%, rgba(5,5,10,0) 46%),
+    radial-gradient(80% 62% at 0% 100%, rgba(5,5,10,0.55) 0, rgba(5,5,10,0) 72%);
+}
+
+.hero-intro {
+  position: relative; z-index: 2;
+  margin-top: calc(-1 * var(--vh));
+  min-height: var(--vh);
+  display: grid; align-content: end;
+  padding: calc(var(--nav-h) + 40px) var(--gutter) clamp(36px, 6vh, 64px);
+}
+.hero h1 {
+  font-weight: var(--w-dark);
+  font-size: clamp(2.5rem, 6.1vw, 6rem);
+  line-height: 1.02; letter-spacing: -0.035em;
+  max-width: 15ch;
+}
+.hero h1 .ln { display: block; }
+.hero-foot {
+  margin-top: clamp(28px, 4.4vh, 44px);
+  display: grid; grid-template-columns: minmax(0, 27rem) auto 1fr;
+  align-items: end; column-gap: 44px; row-gap: 20px;
+}
+.lede { color: var(--d-ink-2); font-size: 19px; line-height: 1.45; max-width: 34ch; text-wrap: pretty; }
+.status { justify-self: end; color: var(--d-ink-3); font-size: 14px; letter-spacing: 0.02em; text-align: right; }
+.status i { color: var(--d-ink-3); padding: 0 0.3em; }
+.status span { white-space: nowrap; }
+
+/* entrance: the one authored moment on first paint */
+.js .hero h1 .ln, .js .hero-foot > * { animation: rise 1.2s var(--ease-out) both; }
+.js .hero h1 .ln:nth-child(2) { animation-delay: 70ms; }
+.js .hero-foot > :nth-child(1) { animation-delay: 220ms; }
+.js .hero-foot > :nth-child(2) { animation-delay: 280ms; }
+.js .hero-foot > :nth-child(3) { animation-delay: 340ms; }
+@keyframes rise { from { opacity: 0; transform: translateY(0.4em); filter: blur(10px); } }
+
+.beat-line {
+  font-family: var(--display); font-weight: var(--w-dark);
+  font-size: clamp(2rem, 4.3vw, 4.25rem); line-height: 1.04; letter-spacing: -0.035em;
+  max-width: 13ch; text-wrap: balance;
+}
+.hero-flood { display: none; }
+
+/* live: the stage pins for the whole story; the story lines and the flood pin over it */
+.gl .hero { height: calc(5.1 * var(--vh)); }
+.gl .hero-stage { position: sticky; top: 0; }
+.gl .hero-story {
+  position: sticky; top: 0; z-index: 1;
+  height: var(--vh); margin-top: calc(-1 * var(--vh));
+  pointer-events: none;
+}
+.gl .beat { position: absolute; left: var(--gutter); bottom: clamp(48px, 12vh, 120px); opacity: 0; visibility: hidden; will-change: opacity, transform, filter; }
+.gl .beat-still { display: none; }
+.gl .beat .beat-line { opacity: var(--flood-o, 1); }
+.gl .hero-flood {
+  display: block; position: sticky; top: 0; z-index: 3;
+  height: var(--vh); margin-top: calc(-1 * var(--vh));
+  pointer-events: none; overflow: hidden; visibility: hidden;
+}
+.flood-disc {
+  position: absolute; left: 0; top: 0;
+  width: 120vmax; height: 120vmax; margin: -60vmax 0 0 -60vmax;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--ground) 0, var(--ground) 63%, #f6f2ff 66.5%, #dccdff 69%, #a98bff 71.5%, rgba(122, 86, 255, 0.5) 75%, rgba(82, 48, 210, 0.16) 84%, rgba(40, 20, 120, 0) 96%);
+  transform: scale(0.02); will-change: transform;
+}
+.flood-fill { position: absolute; inset: 0; background: var(--ground); opacity: 0; }
+
+/* ======================================================================
+   2. THE PHONE (light): a pinned film
+   ====================================================================== */
+.film { position: relative; background: var(--ground); }
+.film-stage {
+  position: relative; height: var(--vh); overflow: hidden;
+  background:
+    radial-gradient(64% 52% at 50% 56%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(180deg, var(--ground) 0%, var(--ground) 36%, var(--ground-lo) 82%, var(--ground) 100%);
+}
+.film-gl, .film-still, .film-still img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.film-still img { object-fit: cover; object-position: 50% 100%; }
+.film-gl { z-index: 1; }
+.film.is-live .film-still { display: none; }
+.preview-tag {
+  position: absolute; z-index: 2; right: var(--gutter); bottom: 20px;
+  font-size: 12.5px; letter-spacing: 0.01em; color: var(--ink-3);
+}
+.fbeat-title {
+  font-weight: var(--w-light);
+  font-size: clamp(2rem, 3.5vw, 3.6rem); line-height: 1.04; letter-spacing: -0.035em;
+}
+.fbeat-line { margin-top: 20px; font-size: clamp(17px, 1.3vw, 20px); line-height: 1.45; color: var(--ink-2); max-width: 30ch; text-wrap: pretty; }
+.fbeat .fine { margin-top: 18px; max-width: 44ch; }
+
+.gl .film { height: calc(4 * var(--vh)); }
+.gl .film-stage { position: sticky; top: 0; }
+.gl .film-beats {
+  position: sticky; top: 0; z-index: 2;
+  height: var(--vh); margin-top: calc(-1 * var(--vh));
+  pointer-events: none;
+}
+.gl .fbeat { position: absolute; opacity: 0; visibility: hidden; will-change: opacity, transform; }
+.gl .fbeat-1 { left: var(--gutter); top: 50%; width: min(40vw, 600px); margin-top: -0.5em; transform: translateY(-50%); }
+.gl .fbeat-2 { right: var(--gutter); top: 50%; width: min(38vw, 560px); transform: translateY(-50%); }
+.gl .fbeat-3 { right: var(--gutter); top: calc(var(--nav-h) + 7vh); width: min(42vw, 620px); }
+.gl .fbeat-1 .fbeat-title { max-width: 11em; }
+.gl .fbeat-3 .fbeat-title { max-width: 11em; }
+
+/* ======================================================================
+   3. BUBBLES (light): seal, then reroute
+   ====================================================================== */
+.bubbles { position: relative; background: var(--ground); }
+.b-stage { position: relative; height: var(--vh); overflow: hidden; z-index: 0; }
+.b-stage::before, .b-stage::after { content: ""; position: absolute; left: 0; right: 0; height: 120px; z-index: 1; pointer-events: none; }
+.b-stage::before { top: 0; background: linear-gradient(var(--ground), rgba(244, 243, 248, 0)); }
+.b-stage::after { bottom: 0; background: linear-gradient(rgba(244, 243, 248, 0), var(--ground)); }
+.b-still, .b-still img, .b-gl { position: absolute; inset: 0; width: 100%; height: 100%; }
+.b-still img { object-fit: cover; }
+.b-gl { opacity: 0; transition: opacity 600ms var(--ease-out); }
+.bubbles.is-live .b-gl { opacity: 1; }
+.bubbles.is-live .b-still { display: none; }
+.b-beat { position: relative; z-index: 1; }
+.b-seal { margin-top: calc(-1 * var(--vh)); }
+.b-pin { position: relative; height: var(--vh); padding: 0 var(--gutter); }
+
+.seal-copy { position: absolute; left: var(--gutter); top: 50%; transform: translateY(-50%); width: min(42vw, 600px); }
+.seal-title {
+  font-weight: var(--w-light);
+  font-size: clamp(3rem, 6.6vw, 6rem); line-height: 0.98; letter-spacing: -0.04em;
+}
+.seal-title span { display: block; white-space: nowrap; }
+.seal-line { margin-top: 26px; font-size: clamp(17px, 1.3vw, 20px); color: var(--ink-2); }
+.v-fine { display: none; }
+@media (hover: hover) and (pointer: fine) { .v-touch { display: none; } .v-fine { display: inline; } }
+.static:not(.webgl) .seal-line, html:not(.js) .seal-line { display: none; }
+
+.route-copy { position: absolute; left: var(--gutter); top: calc(var(--nav-h) + 6vh); max-width: min(46vw, 700px); }
+.route-title {
+  font-weight: var(--w-light);
+  font-size: clamp(2rem, 3.6vw, 3.5rem); line-height: 1.04; letter-spacing: -0.035em;
+  max-width: 13em;
+}
+.route-line { margin-top: 18px; font-size: clamp(17px, 1.25vw, 19px); line-height: 1.45; color: var(--ink-2); max-width: 40ch; text-wrap: pretty; }
+.route-figure { position: absolute; inset: 0; pointer-events: none; }
+.route-still { display: none; }
+.lab {
+  position: absolute; left: 0; top: 0;
+  font: 600 13px/1.2 var(--text); letter-spacing: 0.02em; white-space: nowrap;
+  color: var(--ink);
+}
+.lab b { font-weight: 500; color: var(--ink-3); margin-left: 0.4em; }
+.lab-reality { color: var(--blue); }
+.lab-reality b { color: var(--blue); opacity: 0.75; }
+.lab-alt { color: var(--ink-3); font-weight: 500; }
+.lab-wss b { color: #8a3a5c; }
+.route-fine { position: absolute; left: var(--gutter); bottom: clamp(24px, 5vh, 48px); max-width: 64ch; }
+
+.gl .bubbles { height: calc(4.2 * var(--vh)); }
+.gl .b-stage { position: sticky; top: 0; }
+.gl .b-seal { height: calc(2.2 * var(--vh)); }
+.gl .b-route { height: calc(2 * var(--vh)); }
+.gl .b-pin { position: sticky; top: 0; pointer-events: none; }
+.gl .b-pin a { pointer-events: auto; }
+.gl .lab { opacity: 0; visibility: hidden; will-change: transform, opacity; }
+
+/* ======================================================================
+   4. MODES (light): one bubble, 0 / 1 / 3 shells
+   ====================================================================== */
+.modes { padding: var(--section-y) var(--gutter) calc(var(--section-y) * 0.5); overflow-x: clip; }   /* the bubble's glow may bleed, the page may not widen */
+.modes-set {
+  border: 0; margin: 0 auto; padding: 0; min-width: 0; max-width: 1320px;
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: center; gap: clamp(32px, 6vw, 96px);
+}
+.mode-in { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none; }
+.modes h2 {
+  font-weight: var(--w-light);
+  font-size: clamp(2.1rem, 3.9vw, 3.75rem); line-height: 1.04; letter-spacing: -0.035em;
+  max-width: 12em;
+}
+.switch {
+  position: relative; margin-top: clamp(28px, 4vh, 44px);
+  display: inline-grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 5px; border-radius: 999px;
+  background: var(--paper);
+  box-shadow: 0 10px 26px -14px rgba(22, 20, 43, 0.35), inset 0 0 0 1px var(--line);
+}
+.switch label {
+  position: relative; z-index: 1;
+  display: grid; place-items: center; min-height: 48px; padding: 0 clamp(16px, 2vw, 28px);
+  font: 600 16px/1 var(--text); color: var(--ink-2); cursor: pointer; border-radius: 999px;
+  transition: color 200ms ease;
+}
+.switch-thumb {
+  position: absolute; z-index: 0; top: 5px; bottom: 5px; left: 5px;
+  width: calc((100% - 10px) / 3); border-radius: 999px;
+  background: linear-gradient(180deg, #4a5cff 0%, var(--blue) 100%);
+  box-shadow: 0 8px 18px -8px rgba(53, 73, 242, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  transition: transform 260ms var(--ease-out);
+}
+#mode-private:checked ~ .modes-copy .switch-thumb { transform: translateX(100%); }
+#mode-ghost:checked ~ .modes-copy .switch-thumb { transform: translateX(200%); }
+#mode-standard:checked ~ .modes-copy label[for="mode-standard"],
+#mode-private:checked ~ .modes-copy label[for="mode-private"],
+#mode-ghost:checked ~ .modes-copy label[for="mode-ghost"] { color: #fff; }
+#mode-standard:focus-visible ~ .modes-copy label[for="mode-standard"],
+#mode-private:focus-visible ~ .modes-copy label[for="mode-private"],
+#mode-ghost:focus-visible ~ .modes-copy label[for="mode-ghost"] { outline: 2px solid var(--blue); outline-offset: 4px; }
+@media (hover: hover) and (pointer: fine) {
+  .switch label:hover { color: var(--ink); }
+  #mode-standard:checked ~ .modes-copy label[for="mode-standard"]:hover,
+  #mode-private:checked ~ .modes-copy label[for="mode-private"]:hover,
+  #mode-ghost:checked ~ .modes-copy label[for="mode-ghost"]:hover { color: #fff; }
+}
+.mode-texts { margin-top: 26px; min-height: 7.5em; }
+.mode-text { display: none; }
+.mode-line { font-size: clamp(18px, 1.5vw, 22px); line-height: 1.42; color: var(--ink); max-width: 30ch; text-wrap: pretty; }
+.mode-text .fine { margin-top: 12px; }
+#mode-standard:checked ~ .modes-copy .mt-standard,
+#mode-private:checked ~ .modes-copy .mt-private,
+#mode-ghost:checked ~ .modes-copy .mt-ghost { display: block; animation: text-in 260ms var(--ease-out); }
+@keyframes text-in { from { opacity: 0; transform: translateY(6px); } }
+
+.modes-visual { margin: 0; display: grid; justify-items: center; gap: 8px; }
+.mv-stage {
+  position: relative; width: min(100%, 640px); aspect-ratio: 5 / 4;
+  display: grid; place-items: center;
+}
+.mv-stage::before {     /* the coloured light the bubble sits in, as in the Bubbles scene */
+  content: ""; position: absolute; inset: -6%; border-radius: 50%; z-index: -1;
+  background:
+    radial-gradient(42% 40% at 28% 36%, rgba(232, 160, 255, 0.42), rgba(232, 160, 255, 0) 70%),
+    radial-gradient(44% 42% at 74% 64%, rgba(120, 140, 255, 0.38), rgba(120, 140, 255, 0) 72%);
+}
+.mv-bubble { position: relative; z-index: 4; width: 62%; height: auto; filter: drop-shadow(0 22px 26px rgba(43, 30, 115, 0.22)); }
+.shell {
+  position: absolute; z-index: 3; left: 50%; top: 50%;
+  border-radius: 46% / 50%;
+  background:
+    radial-gradient(70% 60% at 30% 22%, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.14) 46%, rgba(255, 255, 255, 0) 70%),
+    radial-gradient(90% 80% at 70% 90%, rgba(150, 120, 255, 0.2) 0%, rgba(150, 120, 255, 0) 60%),
+    rgba(246, 243, 255, 0.34);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -14px 30px -10px rgba(110, 84, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+    0 26px 50px -26px rgba(53, 60, 200, 0.42);
+  opacity: 0; transform: translate(-50%, -50%) scale(0.9);
+  transition: opacity 240ms var(--ease-out), transform 300ms var(--ease-out);
+}
+.shell-1 { width: 66%; height: 50%; z-index: 5; }
+.shell-2 { width: 80%; height: 66%; z-index: 2; }
+.shell-3 { width: 95%; height: 84%; z-index: 1; }
+#mode-private:checked ~ .modes-visual .shell-1,
+#mode-ghost:checked ~ .modes-visual .shell { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+#mode-ghost:checked ~ .modes-visual .shell-2 { transition-delay: 50ms; }
+#mode-ghost:checked ~ .modes-visual .shell-3 { transition-delay: 100ms; }
+.mv-tags { position: absolute; left: 0; right: 0; bottom: 2%; height: 1.4em; text-align: center; }
+.modes-visual { position: relative; }
+.mv-tag { position: absolute; inset: 0; font: 600 14px/1.4 var(--text); letter-spacing: 0.02em; color: var(--ink-3); opacity: 0; transition: opacity 200ms ease; }
+#mode-standard:checked ~ .modes-visual .tag-standard,
+#mode-private:checked ~ .modes-visual .tag-private,
+#mode-ghost:checked ~ .modes-visual .tag-ghost { opacity: 1; }
+
+/* ======================================================================
+   5. STATUS (light): bold type
+   ====================================================================== */
+.status-sec {
+  padding: calc(var(--section-y) * 0.6) var(--gutter) var(--section-y); max-width: 1320px; margin: 0 auto; box-sizing: content-box;
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); column-gap: clamp(32px, 6vw, 96px); align-items: end;
+}
+.status-track, .status-sec h2 { grid-column: 1 / -1; }
+.status-track { display: flex; align-items: center; gap: 14px; margin-bottom: clamp(28px, 4vh, 44px); max-width: 720px; }
+.st-node { display: grid; gap: 2px; flex: none; }
+.st-node b { font: 600 15px/1.2 var(--display); letter-spacing: 0.01em; color: var(--ink-3); }
+.st-node i { font-size: 13px; color: var(--ink-3); }
+.st-now b { color: var(--blue); }
+.st-now { position: relative; padding-left: 24px; }
+.st-now::before {
+  content: ""; position: absolute; left: 0; top: 2px; width: 14px; height: 14px; border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, #b9c2ff 0, #5466ff 38%, #2a36c8 100%);
+  box-shadow: 0 0 0 5px rgba(53, 73, 242, 0.12), 0 4px 10px -2px rgba(53, 73, 242, 0.6);
+}
+.st-rail { flex: 1 1 60px; height: 2px; border-radius: 2px; background: repeating-linear-gradient(90deg, rgba(22, 20, 43, 0.22) 0 6px, transparent 6px 12px); }
+.status-sec h2 {
+  font-weight: var(--w-light);
+  font-size: clamp(2.6rem, 7.4vw, 7.25rem); line-height: 0.96; letter-spacing: -0.045em;
+  max-width: 10em;
+}
+.status-text { margin-top: clamp(24px, 3.4vh, 36px); font-size: clamp(18px, 1.45vw, 21px); line-height: 1.5; color: var(--ink-2); max-width: 54ch; text-wrap: pretty; }
+
+/* ======================================================================
+   6. SUPPORT (light)
+   ====================================================================== */
+.support {
+  position: relative; overflow: hidden;
+  padding: var(--section-y) var(--gutter);
+  text-align: center; display: grid; justify-items: center;
+  background:
+    radial-gradient(40% 46% at 18% 62%, rgba(242, 196, 255, 0.6), rgba(242, 196, 255, 0) 100%),
+    radial-gradient(40% 46% at 82% 44%, rgba(196, 206, 255, 0.66), rgba(196, 206, 255, 0) 100%),
+    var(--ground);
+}
+.support-mark { width: 88px; height: 88px; margin-bottom: 30px; filter: drop-shadow(0 18px 24px rgba(70, 40, 190, 0.28)); }
+.support h2 {
+  font-weight: var(--w-light);
+  font-size: clamp(2.6rem, 6.4vw, 6rem); line-height: 0.98; letter-spacing: -0.042em;
+}
+.support p { margin-top: 24px; max-width: 44ch; color: var(--ink-2); font-size: clamp(18px, 1.4vw, 20px); line-height: 1.5; text-wrap: pretty; }
+.support .actions { margin-top: 34px; justify-content: center; }
+
+/* ======================================================================
+   STATIC: no JavaScript, no WebGL or reduced motion. Designed stills, no scroll travel.
+   ====================================================================== */
+:is(html:not(.js), .static) .hero-story { position: relative; z-index: 1; }
+:is(html:not(.js), .static) .beat { position: relative; min-height: var(--vh); display: grid; align-content: end; padding: 0 var(--gutter) clamp(56px, 12vh, 120px); overflow: hidden; }
+:is(html:not(.js), .static) .beat-still, :is(html:not(.js), .static) .beat-still img { position: absolute; inset: 0; width: 100%; height: 100%; }
+:is(html:not(.js), .static) .beat-still img { object-fit: cover; object-position: 60% 40%; }
+:is(html:not(.js), .static) .beat::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, rgba(5,5,10,0.85) 0, rgba(5,5,10,0) 46%), linear-gradient(to bottom, var(--night) 0, rgba(5,5,10,0) 18%);
+}
+:is(html:not(.js), .static) .beat-line { position: relative; z-index: 1; }
+:is(html:not(.js), .static) .hero-flood {
+  display: block; height: 56vh;
+  background: radial-gradient(130% 100% at 58% 100%, var(--ground) 34%, #e6dcff 46%, #9d83f0 60%, #3a2585 76%, var(--night) 94%);
+}
+
+:is(html:not(.js), .static) .film-stage { height: auto; min-height: var(--vh); }
+:is(html:not(.js), .static) .film-still { position: absolute; }
+:is(html:not(.js), .static) .film-gl { display: none; }
+:is(html:not(.js), .static) .film-beats {
+  position: absolute; inset: 0; z-index: 2;
+  display: grid; align-content: start; gap: clamp(22px, 3.6vh, 36px);
+  padding: calc(var(--nav-h) + 5vh) var(--gutter) 64px 52%;
+}
+:is(html:not(.js), .static) .fbeat-title { font-size: clamp(1.5rem, 2.1vw, 2.2rem); }
+:is(html:not(.js), .static) .fbeat-line { margin-top: 10px; font-size: 17px; }
+:is(html:not(.js), .static) .fbeat .fine { margin-top: 10px; }
+
+:is(html:not(.js), .static) .b-stage { height: var(--vh); }
+:is(html:not(.js), .static) .route-figure {
+  position: relative; inset: auto; margin: 0 calc(-1 * var(--gutter));
+  aspect-ratio: 1440 / 900;
+}
+:is(html:not(.js), .static) .route-still { display: block; position: absolute; inset: 0; -webkit-mask-image: linear-gradient(transparent 0, #000 14%, #000 82%, transparent 100%); mask-image: linear-gradient(transparent 0, #000 14%, #000 82%, transparent 100%); }
+:is(html:not(.js), .static) .route-still img { width: 100%; height: 100%; }
+:is(html:not(.js), .static) .b-route .b-pin { height: auto; padding-top: calc(var(--nav-h) + 6vh); padding-bottom: clamp(32px, 6vh, 64px); }
+:is(html:not(.js), .static) .route-copy { position: relative; top: auto; left: auto; margin-bottom: -18%; z-index: 1; }
+:is(html:not(.js), .static) .route-fine { position: relative; left: auto; bottom: auto; margin-top: 8px; }
+:is(html:not(.js), .static) .lab-wss { left: auto; right: 43.26%; top: 57.11%; }
+:is(html:not(.js), .static) .lab-reality { left: 60%; top: 31.39%; transform: translate(-50%, -100%); }
+:is(html:not(.js), .static) .lab-tor { left: 60%; top: 72.11%; transform: translateX(-50%); }
+:is(html:not(.js), .static) .lab-rest { left: 60%; top: 79.11%; transform: translateX(-50%); }
+/* reduced motion with WebGL: the seal cluster stays live and calm; nothing travels */
+.static.webgl .b-stage .b-still { display: block; }
+.static.webgl .bubbles.is-live .b-still { display: none; }
+
+
+/* ======================================================================
+   TABLET
+   ====================================================================== */
+@media (max-width: 1100px) {
+  .hero-foot { grid-template-columns: minmax(0, 1fr) auto; }
+  .hero-foot .status { grid-column: 1 / -1; justify-self: start; text-align: left; }
+}
+@media (max-width: 960px) {
+  .status-sec { grid-template-columns: 1fr; }
+  .modes-set { grid-template-columns: 1fr; }
+  .modes-visual { order: -1; }
+  .mv-stage { width: min(100%, 440px); }
+}
+
+/* ======================================================================
+   PHONE (390): its own composition
+   ====================================================================== */
+@media (max-width: 700px) {
+  /* hero */
+  .hero-scrim {
+    background:
+      linear-gradient(to bottom, rgba(5,5,10,0.6) 0, rgba(5,5,10,0) 96px),
+      linear-gradient(to top, rgba(5,5,10,0.92) 0, rgba(5,5,10,0.6) 34%, rgba(5,5,10,0) 56%);
+  }
+  .hero-intro { padding: 96px 16px 26px; }
+  .hero h1 { font-size: clamp(2.2rem, 10.6vw, 3rem); letter-spacing: -0.04em; line-height: 1.04; }
+  .hero h1 .ln { display: inline; }
+  .hero-foot { grid-template-columns: 1fr; margin-top: 18px; row-gap: 18px; }
+  .lede { font-size: 17px; }
+  .hero .actions .btn { flex: 1 1 auto; }
+  .hero .actions .btn-ghost-d { flex: 0 0 auto; }
+  .status { justify-self: start; text-align: left; font-size: 13px; }
+  .beat-line { font-size: clamp(1.75rem, 8.4vw, 2.4rem); max-width: 12ch; }
+  .gl .beat { left: 16px; right: 16px; bottom: max(40px, 9vh); }
+
+  /* phone film: copy on top, phone below */
+  .gl .film { height: calc(3 * var(--vh)); }
+  .gl .fbeat-1, .gl .fbeat-2, .gl .fbeat-3 {
+    left: 0; right: 0; top: calc(var(--nav-h) + 18px); width: auto; margin: 0; transform: none;
+    padding: 0 20px; text-align: center;
+  }
+  .gl .fbeat .fbeat-title { max-width: 11em; margin: 0 auto; }
+  .fbeat-title { font-size: clamp(1.7rem, 7.6vw, 2.2rem); letter-spacing: -0.04em; }
+  .fbeat-line { margin: 10px auto 0; font-size: 16px; max-width: 30ch; }
+  .fbeat .fine { margin: 8px auto 0; font-size: 12.5px; max-width: 40ch; }
+  .preview-tag { right: 16px; bottom: 12px; font-size: 11.5px; }
+
+  /* bubbles */
+  .seal-copy { top: calc(var(--nav-h) + 20px); transform: none; width: auto; right: var(--gutter); }
+  .seal-title { font-size: clamp(2.7rem, 14vw, 3.6rem); }
+  .seal-line { margin-top: 14px; font-size: 16px; }
+  .route-copy { top: calc(var(--nav-h) + 16px); right: var(--gutter); max-width: none; }
+  .route-title { font-size: clamp(1.6rem, 7.4vw, 2.1rem); letter-spacing: -0.04em; }
+  .route-line { margin-top: 10px; font-size: 15px; }
+  .lab { font-size: 11.5px; }
+  .route-fine { right: var(--gutter); bottom: 18px; font-size: 12px; }
+  /* shorter pins on phones; main.js scales the scroll unit by 0.8 to match */
+  .gl .hero { height: calc(4.28 * var(--vh)); }
+  .gl .bubbles { height: calc(3.6 * var(--vh)); }
+  .gl .b-seal { height: calc(1.9 * var(--vh)); }    /* seal copy pinned until its fade ends */
+  .gl .b-route { height: calc(1.7 * var(--vh)); }   /* route copy pinned while the stream reroutes */
+  .lab-wss { text-align: right; }
+  .lab-wss b { display: block; margin: 2px 0 0; }
+  /* modes: heading, then the visual, then the switch under the thumb, then the words */
+  .modes-copy { display: contents; }
+  .modes h2 { order: 1; }
+  .modes-visual { order: 2; margin: -8px 0 -18px; }
+  .switch { order: 3; margin-top: 0; }
+  .mode-texts { order: 4; margin-top: 4px; }
+  .modes-set { gap: 22px; }
+  .mv-stage { width: 100%; }
+
+  /* modes */
+  .modes { padding-top: 72px; }
+  .switch { display: grid; width: 100%; }
+  .switch label { padding: 0 8px; font-size: 15px; }
+  .mode-texts { min-height: 8.5em; }
+
+  /* status, support, footer */
+  .status-track { gap: 10px; }
+  .st-node b { font-size: 13.5px; }
+  .st-node i { font-size: 12px; }
+  .support { text-align: left; justify-items: start; }
+  .support-mark { width: 64px; height: 64px; margin-bottom: 24px; }
+  .support .actions { justify-content: flex-start; }
+  .support .actions .btn { flex: 1 1 100%; }
+
+  /* static on phones */
+  :is(html:not(.js), .static) .film-stage { min-height: 0; height: auto; display: grid; }
+  :is(html:not(.js), .static) .film-still { position: relative; height: 150vw; }
+  :is(html:not(.js), .static) .film-still img { object-position: 50% 78%; }
+  :is(html:not(.js), .static) .fbeat-line, :is(html:not(.js), .static) .fbeat .fine { margin-left: 0; margin-right: 0; }
+  :is(html:not(.js), .static) .film-beats { position: relative; padding: 32px 16px 56px; gap: 36px; }
+  :is(html:not(.js), .static) .route-figure { aspect-ratio: 390 / 844; margin-top: -30%; }
+  :is(html:not(.js), .static) .route-copy { margin-bottom: 0; }
+  :is(html:not(.js), .static) .lab-wss { right: 60.26%; top: 60.95%; }
+  :is(html:not(.js), .static) .lab-reality { left: 50%; top: 38.45%; }
+  :is(html:not(.js), .static) .lab-tor { left: 50%; top: 74.44%; }
+  :is(html:not(.js), .static) .lab-rest { left: 50%; top: 80.75%; }
+}
+
+/* ======================================================================
+   REDUCED MOTION: composed stills (set by the head script); keep fades, drop travel
+   ====================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .js .hero h1 .ln, .js .hero-foot > * { animation: fade 0.5s ease both; }
+  @keyframes fade { from { opacity: 0; } }
+  .shell { transform: translate(-50%, -50%) scale(1); transition: opacity 200ms ease; }
+  .switch-thumb { transition: transform 1ms linear; }
+  #mode-standard:checked ~ .modes-copy .mt-standard,
+  #mode-private:checked ~ .modes-copy .mt-private,
+  #mode-ghost:checked ~ .modes-copy .mt-ghost { animation: fade 200ms ease; }
+}
+
+
+/* ======================================================================
+   LANDSCAPE PHONE: the scenes switch to their wide layouts; copy goes compact beside them
+   ====================================================================== */
+@media (max-width: 960px) and (orientation: landscape) and (max-height: 500px) {
+  .gl .fbeat-1, .gl .fbeat-2, .gl .fbeat-3 { text-align: left; padding: 0; width: 44vw; top: calc(var(--nav-h) + 16px); transform: none; }
+  .gl .fbeat-1 { left: var(--gutter); right: auto; }
+  .gl .fbeat-2, .gl .fbeat-3 { left: auto; right: var(--gutter); width: 40vw; }
+  .gl .fbeat .fbeat-title { margin: 0; max-width: none; }
+  .fbeat-title { font-size: 1.6rem; }
+  .fbeat-line, .fbeat .fine { margin-left: 0; margin-right: 0; }
+  .route-copy { top: calc(var(--nav-h) + 10px); right: auto; max-width: 44vw; }
+  .route-title { font-size: 1.25rem; }
+  .route-line { font-size: 14px; margin-top: 6px; }
+  .route-fine { max-width: 60ch; font-size: 12px; bottom: 10px; }
+  .gl .lab-alt { display: none; }   /* too short for the standby labels; Tor and REST are named in the copy */
+  .seal-copy { top: 50%; transform: translateY(-50%); right: auto; width: 40vw; }
+  .modes-set { grid-template-columns: 1fr 1fr; }
+  .modes-copy { display: block; }
+  .modes-visual { order: 0; margin: 0; }
+  .switch { margin-top: 20px; }
+}
+
+/* Russian: longer words need a little more measure in a few display lines */
+:lang(ru) .route-title { max-width: 15em; }
+/* Russian route headline runs to five lines at the shared size and slid into the bubble row on shorter windows:
+   wider measure, and a size bound by both width and height so the copy always ends above the stream */
+@media (min-width: 701px) {
+  :lang(ru) .route-copy { max-width: min(52vw, 740px); }
+  :lang(ru) .route-title { max-width: none; font-size: clamp(1.7rem, min(3vw, 5vh), 2.9rem); }
+  /* «Написал —» is wider than "Say it.": a step smaller so the dash clears the bubble cluster */
+  :lang(ru) .seal-title { font-size: clamp(2.6rem, 5.4vw, 5.6rem); }
+}
+:lang(ru) .gl .fbeat-1 .fbeat-title { max-width: 12em; }
+@media (max-width: 700px) {
+  /* «Зашифрованный» is the longest word in display type: the hero line is sized so it fits at 360 */
+  :lang(ru) .hero h1 { font-size: clamp(1.6rem, 8.8vw, 2.5rem); }
+  :lang(ru) .seal-title { font-size: clamp(2.3rem, 11.6vw, 3.1rem); }
+  :lang(ru) .hero-foot, :lang(ru) .hero-intro { min-width: 0; }
+}
+
+/* ======================================================================
+   TOUCH (html.play): nothing pinned, nothing scrubbed. Every section has its natural height and the
+   scenes play on a timer when they are in view (see main.js). Desktop (html.gl) is unaffected.
+   ====================================================================== */
+/* hero: one screen. The headline stays; the shapes play above it with a caption under the nav */
+.play .hero-story { position: absolute; inset: 0 0 auto 0; height: var(--vh); z-index: 3; pointer-events: none; }
+.play .beat {
+  position: absolute; left: var(--gutter); right: var(--gutter);
+  top: calc(var(--nav-h) + var(--safe-t) + 14px);
+  opacity: 0; visibility: hidden; will-change: opacity, transform, filter;
+}
+.play .beat-still { display: none; }
+/* owner, 2026-10-26: on phones the beat captions above the headline read as a second headline ("a slide").
+   Touch shows the particle sequence alone above the one headline; the beats are told again further down. */
+.play .hero-story .beat { display: none !important; }
+.play .beat-line { font-size: clamp(1.45rem, 6.6vw, 2.6rem); max-width: 17ch; text-shadow: 0 2px 24px rgba(5, 5, 10, 0.8); }
+/* the next section starts light: a band of light rising out of the night closes the hero */
+.play .hero-flood {
+  display: block; height: calc(var(--vh) * 0.42);
+  background: radial-gradient(130% 100% at 55% 100%, var(--ground) 34%, #e6dcff 46%, #9d83f0 60%, #3a2585 76%, var(--night) 94%);
+}
+
+/* the phone: the stage, then the three lines as ordinary text */
+.play .film-stage { height: calc(var(--vh) * 0.78); }
+.play .film-beats {
+  display: grid; gap: clamp(28px, 4vh, 44px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  padding: 8px var(--gutter) calc(var(--section-y) * 0.6);
+  text-align: left;
+}
+.play .fbeat-title { font-size: clamp(1.6rem, 6.4vw, 2.4rem); }
+.play .fbeat-line, .play .fbeat .fine { margin-left: 0; margin-right: 0; }
+
+/* bubbles: copy, then the stage; the route section gets its own stage (the canvas moves between them) */
+.play .bubbles { display: flex; flex-direction: column; }
+.play .b-seal { order: 1; margin-top: 0; }
+.play .b-stage { order: 2; height: calc(var(--vh) * 0.7); }
+.play .b-route { order: 3; }
+.play .b-pin { height: auto; padding: 0 var(--gutter); }
+.play .seal-copy, .play .route-copy, .play .route-fine {
+  position: static; inset: auto; transform: none; width: auto; max-width: 40rem;
+}
+.play .seal-copy { padding-top: calc(var(--section-y) * 0.55); }
+.play .route-copy { padding-top: calc(var(--section-y) * 0.5); }
+.play .route-figure { position: relative; inset: auto; height: calc(var(--vh) * 0.7); margin: 4px calc(-1 * var(--gutter)) 0; overflow: hidden; }
+.play .route-fine { margin: 4px 0 0; padding-bottom: calc(var(--section-y) * 0.5); }
+.play .lab { opacity: 0; visibility: hidden; will-change: transform, opacity; }
+/* whichever stage does not hold the canvas shows its designed still (main.js sets .holds-gl, so this works without relational selectors) */
+.play .b-stage:not(.holds-gl) .b-still,
+.play .route-figure:not(.holds-gl) .route-still { display: block; }
+.play .route-still { position: absolute; inset: 0; }
+.play .route-still img { width: 100%; height: 100%; object-fit: cover; }
+.play .bubbles.is-live .route-figure.holds-gl .route-still { display: none; }

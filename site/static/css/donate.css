@@ -1,0 +1,406 @@
+/* SHIFROM Support page (donate.html) only. Loads after base.css; never restyles .nav, .foot, .btn or the tokens.
+   Desktop: the hero, "Where support goes" and "Ways to contribute" run in one column with the allocation graph
+   (js/pages/donate-graph.js) pinned beside them, in the Roadmap page's language on the light ground.
+   Below 1100px the graph is a band under the hero. Without WebGL, JavaScript or with reduced motion: a still of it. */
+
+/* wallet addresses and the graph's small tags are data, so they get a real monospace (self-hosted, already in fonts/) */
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/static/fonts/jetbrains-mono-latin-500-normal.woff2?v=cb182fee") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+2000-206F, U+2212, U+2215;
+}
+
+:root {
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --warn: #A51F66;             /* deep brand magenta, for the two safety notes */
+  --warn-ink: #5C1238;
+  --warn-ground: #FBEDF5;
+  --lit-from: #8C88A6;         /* the statements before they reach the reading line (3.2:1 on the ground) */
+}
+@property --lit { syntax: "<color>"; inherits: true; initial-value: #16142B; }
+
+/* ======================================================================
+   THE FLOW: one column of content, the graph pinned beside it
+   ====================================================================== */
+.d-flow {
+  max-width: 1320px; margin-inline: auto; box-sizing: content-box;
+  padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px));
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.84fr);
+  column-gap: clamp(32px, 4vw, 72px);
+}
+.d-hero, .d-goes, .d-ways { grid-column: 1; min-width: 0; }
+.d-hero { grid-row: 1; }
+.d-goes { grid-row: 2; }
+.d-ways { grid-row: 3; }
+.d-stage-col { grid-column: 2; grid-row: 1 / span 3; min-width: 0; margin-right: calc(-1 * var(--gutter)); }
+.d-stage { position: sticky; top: calc(var(--nav-h) + var(--safe-t, 0px)); height: calc(var(--vh) - var(--nav-h) - var(--safe-t, 0px)); overflow: hidden; }
+
+/* ======================================================================
+   1. HERO
+   ====================================================================== */
+.d-hero {
+  min-height: calc(var(--vh) - var(--nav-h) - var(--safe-t, 0px));
+  display: grid; align-content: center;
+  padding: clamp(32px, 6vh, 72px) 0 clamp(48px, 9vh, 96px);
+}
+.d-hero h1 span { display: block; }
+.d-intro {
+  margin-top: clamp(26px, 4vh, 40px);
+  font-size: clamp(18px, 1.45vw, 21px); line-height: 1.5; color: var(--ink-2);
+  max-width: 40ch; text-wrap: pretty;
+}
+.d-intro + .d-intro { margin-top: 14px; }
+.d-hero .actions { margin-top: clamp(28px, 4.4vh, 44px); }
+.d-hero .btn svg { flex: none; }
+
+/* first paint: the copy settles in while the graph draws itself on */
+.js .d-hero > * { animation: d-rise 900ms var(--ease-out) both; }
+.js .d-hero > :nth-child(2) { animation-delay: 60ms; }
+.js .d-hero > :nth-child(3) { animation-delay: 110ms; }
+.js .d-hero > :nth-child(4) { animation-delay: 160ms; }
+@keyframes d-rise { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } }
+
+/* ======================================================================
+   THE ALLOCATION GRAPH
+   ====================================================================== */
+.d-still, .d-still img, .d-gl { position: absolute; inset: 0; width: 100%; height: 100%; }
+.d-still img { object-fit: contain; }
+.d-gl { display: none; }
+.d-labels { position: absolute; inset: 0; pointer-events: none; }
+
+/* live: the canvas fades in as the lines draw on; the still waits in case the scene never arrives */
+.gl .d-gl { display: block; opacity: 0; transition: opacity 500ms var(--ease-out); }
+.gl .d-still { opacity: 0; animation: still-late 600ms ease 3.2s both; }
+.gl .d-stage.is-live .d-gl { opacity: 1; }
+.gl .d-stage.is-live .d-still { animation: none; opacity: 0; }
+.gl .d-stage.is-still .d-gl, .gl .d-stage.is-still .d-labels { display: none; }
+.gl .d-stage.is-still .d-still { animation: none; opacity: 1; }
+@keyframes still-late { to { opacity: 1; } }
+
+/* labels: page text over the graph (written by the scene); a ground-coloured halo keeps them clear of the lines */
+.gl-lab {
+  position: absolute; left: 0; top: 0; display: block; white-space: nowrap;
+  opacity: 0; visibility: hidden; will-change: transform, opacity;
+  font: 600 15px/1.25 var(--text); letter-spacing: -0.003em; color: var(--ink);
+  text-shadow: 0 0 2px var(--ground), 0 0 6px var(--ground), 0 0 12px var(--ground);
+}
+.gl-lab b { font-weight: 600; transition: color 180ms ease; }
+.gl-lab small {
+  display: block; margin-top: 6px;
+  font: 500 10.5px/1.5 var(--mono); letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-3);
+  white-space: pre-line;
+}
+.gl-lab small .nc { text-transform: none; }
+.gl-lab.is-dst { text-align: center; white-space: normal; overflow-wrap: normal; }   /* wraps between words, only when the graph caps its width */
+.gl-lab.is-hot b { color: var(--blue); }
+.gl-lab.is-note b { font: 500 10.5px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+
+/* Russian: the self-hosted JetBrains Mono is Latin-only, so the graph's small tags use Onest (Cyrillic) instead */
+:lang(ru) .gl-lab small, :lang(ru) .gl-lab.is-note b { font-family: var(--text); font-weight: 500; letter-spacing: 0.06em; }
+/* Russian display words run longer («Поддержать», «Инфраструктура», «Аудит безопасности»): sized from measured widths */
+.d-hero h1:lang(ru) { font-size: clamp(2.3rem, 5.8vw, 5.4rem); }
+:lang(ru) .use-t { font-size: clamp(1.9rem, 3.75vw, 3.7rem); white-space: normal; }
+
+/* ======================================================================
+   SECTION HEADS
+   ====================================================================== */
+.d-head .t-lead { margin-top: 18px; max-width: 34ch; font-size: clamp(17px, 1.3vw, 19px); }
+
+/* ======================================================================
+   2. WHERE SUPPORT GOES: three statements, each tied to a branch of the graph
+   ====================================================================== */
+.d-goes { padding: clamp(72px, 12vh, 140px) 0 clamp(24px, 4vh, 48px); }
+.uses { list-style: none; margin: clamp(32px, 5vh, 56px) 0 0; padding: 0; }
+.use {
+  display: grid; row-gap: 10px;
+  padding: clamp(22px, 3.6vh, 34px) 0 clamp(24px, 3.8vh, 36px);
+  border-top: 1px solid var(--line);
+}
+.use:last-child { border-bottom: 1px solid var(--line); }
+.use:focus-visible { outline-offset: 6px; }
+.use-t {
+  margin: 0; color: var(--lit);
+  font-family: var(--display); font-weight: var(--w-light);
+  font-size: clamp(2rem, 4.15vw, 4.1rem); line-height: 1; letter-spacing: -0.04em;
+  white-space: nowrap;
+  transition: color 200ms ease;
+}
+.use-d { font-size: clamp(17px, 1.3vw, 19px); line-height: 1.5; color: var(--ink-2); max-width: 44ch; text-wrap: pretty; }
+.use.is-hot .use-t, .use:focus-visible .use-t { color: var(--blue); }
+@media (hover: hover) and (pointer: fine) { .use:hover .use-t { color: var(--blue); } }
+
+/* the statements darken as they reach the reading line (a colour only; static where unsupported) */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (hover: hover), (prefers-reduced-motion: no-preference) and (pointer: fine) {
+    .use-t { animation: lit linear both; animation-timeline: view(); animation-range: entry 30% cover 42%; }
+    @keyframes lit { from { --lit: var(--lit-from); } to { --lit: var(--ink); } }
+  }
+}
+
+/* ======================================================================
+   3. WAYS TO CONTRIBUTE
+   ====================================================================== */
+.d-ways { padding: clamp(72px, 12vh, 140px) 0 clamp(32px, 5vh, 56px); }
+.group { margin-top: clamp(40px, 6vh, 64px); }
+.group + .group { margin-top: clamp(56px, 9vh, 104px); }
+.group-h {
+  margin: 0 0 clamp(18px, 2.6vh, 26px);
+  font-family: var(--display); font-weight: 600;
+  font-size: clamp(1.2rem, 1.6vw, 1.5rem); line-height: 1.2; letter-spacing: -0.02em;
+}
+
+/* --- card or PayPal: two different blocks, not two copies of one --- */
+.pays { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(14px, 1.6vw, 20px); }
+.pay {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 36px;
+  padding: clamp(28px, 3.2vw, 48px);
+  border-radius: 34px;
+}
+.pay-name {
+  margin: 0; font-family: var(--display); line-height: 0.98; letter-spacing: -0.04em; text-wrap: balance;
+}
+.pay-terms { margin-top: 14px; font: 600 15px/1.3 var(--text); letter-spacing: 0.01em; }
+.pay-terms i { padding: 0 0.35em; }
+.pay-text { font-size: clamp(17px, 1.3vw, 19px); line-height: 1.5; max-width: 38ch; text-wrap: pretty; }
+.pay-note { margin-top: 16px; display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; line-height: 1.5; max-width: 52ch; text-wrap: pretty; }
+.pay-note svg { flex: none; margin-top: 1px; }
+.pay-btn { margin-top: clamp(24px, 3.6vh, 34px); }
+.pay-btn svg { flex: none; }
+
+/* Liberapay: the recurring one, a dark block lit by the brand light */
+.pay-lp {
+  background: #141128; color: var(--d-ink);
+  box-shadow: 0 40px 70px -44px rgba(22, 20, 43, 0.62);
+}
+.pay-lp .pay-name { font-weight: var(--w-dark); font-size: clamp(2.6rem, 4.6vw, 4.5rem); }
+.pay-lp .pay-terms { color: #E7C9FF; }
+.pay-lp .pay-text { color: var(--d-ink-2); }
+.pay-lp .pay-note { color: var(--d-ink-3); }
+.pay-lp :focus-visible { outline-color: var(--d-focus); }
+.pay-lp ::selection { background: #6d4cff; color: #fff; }
+.pay-light { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.pay-light i { position: absolute; border-radius: 50%; will-change: transform; }
+.pl-m {
+  width: 78%; aspect-ratio: 1; left: -22%; top: -38%;
+  background: radial-gradient(closest-side, rgba(255, 56, 232, 0.5), rgba(255, 56, 232, 0.16) 52%, rgba(255, 56, 232, 0) 100%);
+  animation: drift-m 19s var(--ease-in-out) infinite alternate;
+}
+.pl-b {
+  width: 92%; aspect-ratio: 1; right: -36%; bottom: -58%;
+  background: radial-gradient(closest-side, rgba(47, 98, 255, 0.62), rgba(47, 98, 255, 0.2) 54%, rgba(47, 98, 255, 0) 100%);
+  animation: drift-b 23s var(--ease-in-out) infinite alternate;
+}
+@keyframes drift-m { to { transform: translate(16%, 12%) scale(1.1); } }
+@keyframes drift-b { to { transform: translate(-12%, -10%) scale(0.94); } }
+
+/* Buy Me a Coffee: the one-time one, white paper */
+.pay-bmc {
+  background: var(--paper); color: var(--ink);
+  box-shadow: 0 34px 64px -42px rgba(43, 30, 115, 0.42), inset 0 0 0 1px var(--line);
+}
+.pay-bmc .pay-name { font-weight: var(--w-light); font-size: clamp(2.2rem, 3.6vw, 3.5rem); }
+.pay-bmc .pay-terms { color: var(--blue); }
+.pay-bmc .pay-text { color: var(--ink-2); }
+
+/* --- crypto: one list of addresses, printed in full --- */
+.coins-panel {
+  background: var(--paper); border-radius: 34px;
+  padding: 0 clamp(20px, 3.4vw, 52px) clamp(8px, 1.4vw, 16px);
+  box-shadow: 0 30px 60px -44px rgba(43, 30, 115, 0.38), inset 0 0 0 1px var(--line);
+}
+.verify {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: clamp(20px, 3vh, 28px) 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 16.5px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty;
+}
+.verify svg { flex: none; color: var(--warn); margin-top: 0; }
+.verify strong { color: var(--ink); font-weight: 650; }
+
+.coins { list-style: none; margin: 0; padding: 0; }
+.coin {
+  display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 18px;
+  padding: clamp(26px, 4vh, 36px) 0;
+}
+.coin + .coin { border-top: 1px solid var(--line); }
+.coin-name {
+  margin: 0; font-family: var(--display); font-weight: var(--w-light);
+  font-size: clamp(1.6rem, 2.3vw, 2.2rem); line-height: 1.05; letter-spacing: -0.03em;
+}
+.coin-net { margin-top: 8px; font: 600 14px/1.3 var(--text); letter-spacing: 0.02em; color: var(--blue); }
+.coin-net i { padding: 0 0.3em; }
+.coin-text { margin-top: 10px; font-size: 15.5px; line-height: 1.5; color: var(--ink-2); max-width: 52ch; text-wrap: pretty; }
+.coin-id { display: grid; grid-template-columns: auto 1fr; align-items: baseline; column-gap: 16px; }
+.coin-id .coin-text { grid-column: 1 / -1; }
+.coin-net { margin-top: 0; }
+
+.coin-addr {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px 20px;
+  padding: 16px 16px 16px 24px; border-radius: 20px;
+  background: var(--ground); box-shadow: inset 0 0 0 1px rgba(22, 20, 43, 0.06);
+  transition: background-color 240ms ease, box-shadow 240ms ease;
+}
+.coin-addr.is-done { background: #EDEFFF; box-shadow: inset 0 0 0 1.5px rgba(53, 73, 242, 0.5); }
+.addr {
+  display: block; min-width: 0;
+  font: 500 clamp(15px, 1.3vw, 19px)/1.62 var(--mono); letter-spacing: 0.01em; color: var(--ink);
+  font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0, "zero" 1;
+  overflow-wrap: anywhere;
+  -webkit-user-select: all; user-select: all;
+  cursor: text;
+}
+.addr .g { margin-right: 0.42em; }
+.addr .g:last-child { margin-right: 0; }
+.addr::selection, .addr ::selection { background: var(--blue); color: #fff; }
+
+.copy {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 46px; padding: 0 18px 0 15px; border: 0; border-radius: 999px;
+  background: var(--paper); color: var(--ink);
+  font: 600 15px/1 var(--text); letter-spacing: 0.005em; white-space: nowrap; cursor: pointer;
+  box-shadow: 0 6px 16px -10px rgba(22, 20, 43, 0.4), inset 0 0 0 1px var(--line);
+  transition: background-color 180ms ease, color 180ms ease, box-shadow 200ms ease, transform 140ms var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+.copy[hidden], .copy-hint[hidden] { display: none; }
+.copy:active { transform: scale(0.97); }
+.copy.is-done { background: var(--blue); color: #fff; box-shadow: 0 10px 22px -10px rgba(53, 73, 242, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+@media (hover: hover) and (pointer: fine) {
+  .copy:hover { box-shadow: 0 10px 22px -12px rgba(22, 20, 43, 0.45), inset 0 0 0 1px rgba(22, 20, 43, 0.24); }
+  .copy.is-done:hover { box-shadow: 0 10px 22px -10px rgba(53, 73, 242, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.22); }
+}
+.copy-ic, .copy-l { display: grid; }
+.copy-ic > *, .copy-l > * { grid-area: 1 / 1; transition: opacity 160ms ease, transform 220ms var(--ease-out), filter 160ms ease; }
+.copy-l { justify-items: start; }
+.ic-done { opacity: 0; transform: scale(0.5); filter: blur(2px); }
+.cl-b { opacity: 0; transform: translateY(7px); filter: blur(2px); }
+.copy.is-done .ic-copy { opacity: 0; transform: scale(0.5); filter: blur(2px); }
+.copy.is-done .ic-done { opacity: 1; transform: none; filter: none; }
+.copy.is-done .cl-a { opacity: 0; transform: translateY(-7px); filter: blur(2px); }
+.copy.is-done .cl-b { opacity: 1; transform: none; filter: none; }
+.copy-hint { grid-column: 1 / -1; font-size: 14px; color: var(--ink-2); }
+.copy-hint kbd { font: 600 12.5px/1 var(--text); padding: 3px 6px; border-radius: 6px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line), 0 1px 0 var(--line); color: var(--ink); }
+
+/* ======================================================================
+   4. GRANTS AND INVESTMENT
+   ====================================================================== */
+.d-contact {
+  position: relative; overflow: clip;
+  padding-bottom: calc(var(--section-y) * 0.9);
+  background:
+    radial-gradient(34% 40% at 12% 66%, rgba(242, 196, 255, 0.5), rgba(242, 196, 255, 0) 100%),
+    radial-gradient(36% 42% at 90% 56%, rgba(196, 206, 255, 0.6), rgba(196, 206, 255, 0) 100%),
+    var(--ground);
+}
+.section.d-contact { padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px)); padding-top: calc(var(--section-y) * 0.6 + clamp(64px, 10vh, 104px)); }
+.mails {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px clamp(24px, 4vw, 64px);
+  margin-top: clamp(32px, 6vh, 64px);
+}
+.mail { display: grid; justify-items: start; align-content: start; gap: 12px; padding-top: 24px; border-top: 1px solid var(--line); }
+.mail-for { font-size: clamp(17px, 1.3vw, 19px); line-height: 1.45; color: var(--ink-2); }
+.mail-a {
+  font: var(--w-light) clamp(1.45rem, 2.9vw, 2.75rem)/1.12 var(--display); letter-spacing: -0.035em;
+  color: var(--ink); text-decoration: none; overflow-wrap: anywhere;
+  padding: 4px 0 8px;
+  background: linear-gradient(currentColor, currentColor) left 100% / 0 2px no-repeat;
+  transition: background-size 260ms var(--ease-out), color 160ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .mail-a:hover { color: var(--blue); background-size: 100% 2px; }
+}
+.stop {
+  margin-top: clamp(40px, 7vh, 72px);
+  display: flex; gap: 14px; align-items: center;
+  padding: 20px 26px; border-radius: 22px;
+  background: var(--warn-ground); color: var(--warn-ink);
+  box-shadow: inset 0 0 0 1px rgba(165, 31, 102, 0.14);
+  font: 600 clamp(17px, 1.4vw, 20px)/1.4 var(--text); text-wrap: pretty;
+}
+.stop svg { flex: none; color: var(--warn); }
+
+/* touch devices: nothing is driven by scroll position. Each statement darkens once, on a timer,
+   when it comes into view (js/pages/donate.js adds .is-in); without JavaScript it is simply ink. */
+@media (prefers-reduced-motion: no-preference) {
+  .touch .use-t { --lit: var(--lit-from); transition: --lit 700ms var(--ease-out), color 200ms ease; }
+  .touch .use.is-in .use-t { --lit: var(--ink); }
+}
+
+/* ======================================================================
+   TOUCH: no tap flash, no double-tap delay, no long-press text selection on controls (addresses stay selectable)
+   ====================================================================== */
+.d-flow a, .d-flow button, .d-contact a, .use { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.d-flow .btn, .copy { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+@media (hover: none) {
+  /* a tap on a statement is the hover equivalent: it lights its title (and its branch in the graph) */
+  .use:focus { outline: none; }
+  .use:focus .use-t { color: var(--blue); }
+}
+@media (pointer: coarse) {
+  .mail-a { min-height: 44px; display: inline-flex; align-items: center; }
+}
+
+/* ======================================================================
+   BELOW 1100px AND ON TOUCH: one column; the graph is a band under the hero (not pinned)
+   ====================================================================== */
+@media (max-width: 1099px), (hover: none) and (pointer: coarse) {   /* and every touch device, iPads included: an in-flow figure, never pinned */
+  .d-flow { grid-template-columns: minmax(0, 1fr); }
+  .d-hero, .d-goes, .d-ways, .d-stage-col { grid-column: 1; grid-row: auto; }
+  .d-stage-col { margin-right: 0; }
+  .d-hero { min-height: 0; padding-bottom: 8px; }
+  .d-stage { position: relative; top: auto; height: auto; aspect-ratio: 4 / 3; width: min(100%, 640px); margin-inline: auto; }
+  .d-goes { padding-top: clamp(48px, 8vh, 96px); }
+}
+
+/* ======================================================================
+   PHONE (390)
+   ====================================================================== */
+@media (max-width: 700px) {
+  .d-hero { padding-top: 28px; }
+  .d-hero h1 { font-size: clamp(2.8rem, 14.6vw, 4rem); letter-spacing: -0.045em; }
+  .d-intro { font-size: 17px; }
+  .d-intro-2 { font-size: 15.5px; color: var(--ink-3); }
+  .d-hero .actions .btn { flex: 1 1 100%; }
+  .d-stage { aspect-ratio: 9 / 10; width: 100%; max-height: 74vh; max-height: 74svh; margin-top: 12px; }
+  .gl-lab { font-size: 12.5px; }
+  .gl-lab small { display: none; }
+  .gl-lab.is-note b { font-size: 9.5px; }
+  .d-goes { padding-top: 40px; }
+  .uses { margin-top: 28px; }
+  .use { padding: 22px 0 24px; row-gap: 8px; }
+  .use-t { font-size: clamp(1.8rem, 8.9vw, 2.6rem); }
+  .d-hero h1:lang(ru) { font-size: clamp(2.2rem, 11.2vw, 3.4rem); }
+  :lang(ru) .use-t { font-size: clamp(1.6rem, 8.1vw, 2.4rem); }
+  .pay { padding: 26px 22px 24px; border-radius: 26px; gap: 28px; }
+  .pay-text, .pay-note { max-width: none; }
+  .d-ways { padding-top: 56px; }
+  .section.d-contact { padding-top: 96px; }
+  .pay .pay-btn { width: 100%; }
+  .coins-panel { border-radius: 26px; padding: 0 16px 6px; }
+  .verify { font-size: 15.5px; gap: 12px; }
+  .coin { padding: 24px 0; row-gap: 14px; }
+  .coin-id { grid-template-columns: 1fr; row-gap: 6px; }
+  .coin-addr { grid-template-columns: 1fr; padding: 16px; }
+  .copy { justify-self: stretch; justify-content: center; min-height: 48px; }
+  .copy-l { justify-items: center; }
+  .mails { grid-template-columns: 1fr; }
+  .stop { padding: 18px 18px; align-items: flex-start; }
+}
+
+@media (max-width: 1099px) and (orientation: landscape) and (max-height: 560px) {
+  .d-stage { aspect-ratio: auto; height: min(86vh, 420px); height: min(86svh, 420px); max-height: none; width: min(100%, 640px); }
+}
+
+/* ======================================================================
+   REDUCED MOTION: keep fades and colour, drop travel
+   ====================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .js .d-hero > * { animation: d-fade 400ms ease both; }
+  @keyframes d-fade { from { opacity: 0; } }
+  .pl-m, .pl-b { animation: none; }
+  .copy-ic > *, .copy-l > * { transform: none !important; filter: none !important; transition: opacity 160ms ease; }
+  .copy:active { transform: none; }
+  .mail-a { transition: color 160ms ease; }
+}

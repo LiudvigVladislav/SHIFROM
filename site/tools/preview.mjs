@@ -15,7 +15,8 @@ const mime = {
   '.html': 'text/html; charset=utf-8', '.png': 'image/png',
   '.woff2': 'font/woff2', '.xml': 'application/xml',
   '.json': 'application/json', '.txt': 'text/plain; charset=utf-8',
-  '.css': 'text/css', '.js': 'text/javascript',
+  '.css': 'text/css', '.js': 'text/javascript', '.webp': 'image/webp',
+  '.svg': 'image/svg+xml',
 };
 const server = http.createServer((req, res) => {
   try {
