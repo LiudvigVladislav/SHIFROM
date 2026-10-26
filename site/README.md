@@ -5,11 +5,31 @@ and six corresponding Russian pages under `/ru/`. There is no build step.
 
 ## Source Of Truth
 
-Edit the twelve HTML files directly. Each embeds its styles and interactions.
+Edit the twelve HTML files and the shared files under `static/` directly.
 Apply shared changes to all twelve pages and content changes to both languages.
-`styles.css` and `site.js` are reference copies, not runtime dependencies.
-The main eight pages use the full interaction script; the four engineering
-pages use only its navigation portion.
+
+- `static/css/`: `base.css` (every page) plus one stylesheet per page.
+- `static/js/`: ES modules. `nav.js` runs on every page; `main.js` drives the
+  home page and `scenes/`; `pages/` holds the other pages' controllers and scenes.
+  One script serves both languages and reads `<html lang>`.
+- `static/img/<page>/`: the designed stills shown without WebGL, with reduced
+  motion, and before a scene starts.
+- `static/vendor/three/`: three.js r186 (MIT, `LICENSE`), only `three.module.js`,
+  `three.core.js` and the addons the scripts import, each minified with esbuild
+  (ESM, exports unchanged). Do not edit these files; regenerate them when an
+  import changes. The pages' import map has one exact entry per imported addon.
+
+Every reference to a file under `static/` (HTML, CSS `url()`, module imports
+and the import map) carries `?v=` with the first 8 hex digits of that file's
+SHA-256, so a changed file always gets a new URL and an unchanged one keeps
+its URL. A file is always referenced by one URL, so each module loads once.
+After editing a file, update its version wherever it is referenced; those files
+change too, so their versions change in turn. `node --test site/tools/preview.test.mjs`
+fails on a stale version. The brand files keep the queries listed below; the
+wordmark and the social image are referenced without one, as before.
+
+Every page reads completely without JavaScript or WebGL: the 3D scenes are
+progressive enhancements over the stills.
 
 | Page | English | Russian |
 | --- | --- | --- |
@@ -38,9 +58,12 @@ The approved SHIFROM artwork is copied without redrawing or recompression.
 
 The new social image has a distinct URL to avoid reusing an old cached preview.
 Logo/icon URLs carry a content-hash version query for the same reason. Existing
-asset paths remain available. Fonts are self-hosted under `/static/fonts/`:
-Inter and JetBrains Mono include Latin and Cyrillic; Geist falls back to Inter
-for Cyrillic. There are no Google Fonts or other font-CDN requests.
+asset paths remain available. Fonts are self-hosted under `/static/fonts/` with their licences:
+Unbounded and Onest (variable, Latin and Cyrillic subsets) and JetBrains Mono
+500 (Latin). The earlier Inter, Geist and JetBrains Mono files stay at their
+old URLs for pages still in caches; the current pages do not load them.
+There are no Google Fonts or other font-CDN requests, and the
+pages make no third-party requests at all.
 
 Use `/static/` for website assets. `/assets/` is reserved for legal-page assets
 by the existing Caddy routing.
@@ -52,8 +75,9 @@ browser-language detection, local storage, or inline content swapping.
 Each page has a self-canonical URL and reciprocal `en`, `ru`, and `x-default`
 hreflang links. `sitemap.xml` lists the same twelve URLs and alternate pairs.
 
-The mobile menu declares its expanded state, excludes collapsed links from
-keyboard focus, closes on Escape or outside activation, and adapts on resize.
+The phone menu is a native `<details>` element: it works without JavaScript,
+exposes its expanded state, keeps collapsed links out of keyboard focus, and
+`nav.js` closes it on Escape, outside activation, or after a link is chosen.
 Navigation and page content remain available when JavaScript is disabled.
 
 ## Local Preview

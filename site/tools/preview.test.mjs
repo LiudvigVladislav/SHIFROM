@@ -55,10 +55,52 @@ test('separately served public resources and query-versioned images', async () =
     '/.well-known/assetlinks.json': 'deploy/well-known/assetlinks.json',
     '/sitemap.xml': 'site/sitemap.xml', '/robots.txt': 'site/robots.txt',
     '/static/logo-mark.png?v=bc5ceee9': 'site/static/logo-mark.png',
+    '/static/favicon.png?v=b9180644': 'site/static/favicon.png',
+    '/static/apple-touch-icon.png?v=533eb4c4': 'site/static/apple-touch-icon.png',
     '/static/shifrom-wordmark-white.png': 'site/static/shifrom-wordmark-white.png',
     '/static/shifrom-social-132f0f6a.png': 'site/static/shifrom-social-132f0f6a.png',
   };
   for (const [route, file] of Object.entries(resources)) await exact(route, file);
+});
+
+test('page assets are served from /static/ with their types', async () => {
+  const types = {
+    '/static/css/base.css': 'text/css', '/static/js/main.js': 'text/javascript',
+    '/static/vendor/three/three.module.js': 'text/javascript', '/static/fonts/onest-latin-wght-normal.woff2': 'font/woff2',
+    '/static/img/stills/hero-cloud-desktop.webp': 'image/webp',
+  };
+  for (const [route, type] of Object.entries(types)) {
+    await exact(route, `site${route}`);
+    assert.equal((await fetch(base + route, { method: 'HEAD' })).headers.get('content-type'), type, route);
+  }
+});
+
+test('every /static/ reference carries the version of the file it names', async () => {
+  const { createHash } = await import('node:crypto');
+  const site = new URL('site/', root);
+  const hash = async (p) => createHash('sha256').update(await fs.readFile(new URL('.' + p, site))).digest('hex').slice(0, 8);
+  const queued = new Set();
+  const queue = [];
+  const check = async (ref, base) => {
+    const u = new URL(ref, 'http://site' + base);
+    if (u.origin !== 'http://site' || !u.pathname.startsWith('/static/')) return;
+    const v = u.searchParams.get('v');
+    if (!v) assert.match(u.pathname, /shifrom-wordmark-white|shifrom-social-132f0f6a/, `${base}: ${ref} has no version`);
+    else assert.equal(v, await hash(u.pathname), `${base}: ${ref} has a stale version`);
+    if (/\.(css|js)$/.test(u.pathname) && !queued.has(u.pathname)) { queued.add(u.pathname); queue.push(u.pathname); }
+  };
+  for (const route of routes) {
+    const html = await fs.readFile(new URL(`site${route}${route.endsWith('/') ? 'index.html' : ''}`, root), 'utf8');
+    for (const m of html.matchAll(/\s(?:href|src)="([^"]+)"/g)) await check(m[1], route);
+    for (const m of html.matchAll(/\ssrcset="([^"]+)"/g)) for (const part of m[1].split(',')) await check(part.trim().split(/\s+/)[0], route);
+    const map = html.match(/<script type="importmap">([\s\S]*?)<\/script>/);
+    if (map) for (const v of Object.values(JSON.parse(map[1]).imports)) await check(v, route);
+  }
+  while (queue.length) {
+    const p = queue.shift();
+    const src = await fs.readFile(new URL('.' + p, site), 'utf8');
+    for (const m of src.matchAll(/['"(]((?:\.{1,2}\/|\/static\/)[^'"()\s]+\?v=[0-9a-f]+)/g)) await check(m[1], p);
+  }
 });
 
 test('HEAD preserves headers without returning a body', async () => {

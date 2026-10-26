@@ -1,0 +1,307 @@
+/* SHIFROM roadmap page. Loads after base.css.
+   A dark instrument page: one pinned stage holds the track graph (js/pages/roadmap-scene.js) on the right,
+   the ledger scrolls on the left and drives it. It floods back to the light ground before the shared footer.
+   Without WebGL, JavaScript or with reduced motion the stage holds a designed still of the same graph. */
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/static/fonts/jetbrains-mono-latin-500-normal.woff2?v=cb182fee") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+
+:root {
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --sig: #7c88ff;          /* signal: work in progress */
+  --sig-2: #b9a6ff;        /* signal: the Now plane */
+  --rule: rgba(244, 242, 255, 0.1);
+}
+/* the self-hosted mono is Latin-only: on Russian pages the small technical tags are set in Onest instead */
+:root:lang(ru) { --mono: var(--text); }
+
+html { background: var(--night); scrollbar-color: rgba(244, 242, 255, 0.28) var(--night); }
+html::-webkit-scrollbar-track { background: var(--night); }
+html::-webkit-scrollbar-thumb { background: rgba(244, 242, 255, 0.26); border-color: var(--night); }
+.rm-body { background: var(--night); color: var(--d-ink); }
+.rm-body .rm :focus-visible { outline-color: var(--d-focus); }
+.rm ::selection { background: #6d4cff; color: #fff; }
+
+/* the nav sits in its dark state over the instrument; this band keeps scrolled text from running under its links */
+.rm-scrim {
+  position: fixed; inset: 0 0 auto 0; z-index: 55; pointer-events: none;
+  height: calc(var(--nav-h) + 26px);
+  background: linear-gradient(var(--night) 0, rgba(5, 5, 10, 0.94) calc(var(--nav-h) - 8px), rgba(5, 5, 10, 0));
+  transition: opacity 240ms ease;
+}
+.is-light-top .rm-scrim { opacity: 0; }
+
+.rm {
+  --col: min(36vw, 520px);
+  position: relative;
+  margin-top: calc(-1 * var(--nav-h));
+}
+
+/* ---------- the stage ---------- */
+.rm-back { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.rm-stage {
+  position: sticky; top: 0;
+  height: var(--vh); overflow: hidden;
+  background: radial-gradient(70% 60% at 68% 52%, #0b0a18 0%, var(--night) 70%);
+}
+.rm-stage::after {        /* the graph steps back behind the reading column */
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, var(--night) 0, var(--night) calc(var(--gutter) + var(--col) + 12px), rgba(5, 5, 10, 0) calc(var(--gutter) + var(--col) + 150px));
+}
+.rm-still, .rm-still img, .rm-gl { position: absolute; inset: 0; width: 100%; height: 100%; }
+.rm-still img { object-fit: cover; object-position: 100% 50%; }
+.rm-gl { display: none; opacity: 0; transition: opacity 500ms var(--ease-out); }
+.gl .rm-gl { display: block; }
+.rm.is-live .rm-gl { opacity: 1; }
+.gl .rm-still { display: none; }      /* live: the graph draws itself on; the still is the static fallback */
+.rm-labels { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+
+/* projected labels (written by the scene); a ground-coloured halo keeps them legible where lines pass behind */
+.gl-lab {
+  position: absolute; left: 0; top: 0; white-space: nowrap;
+  text-shadow: 0 0 2px var(--night), 0 0 6px var(--night), 0 0 12px var(--night);
+  font: 500 13px/1.2 var(--text); letter-spacing: 0.005em; color: var(--d-ink-2);
+  opacity: 0; will-change: transform, opacity;
+  transition: color 160ms ease;
+}
+.gl-lab.is-node { font-size: 13.5px; }
+.gl-lab.is-node.st-shipped { color: var(--d-ink); }
+.gl-lab.is-node.st-planned { color: var(--d-ink-3); }
+.gl-lab.is-hot, .gl-lab.is-focus { color: #fff; }
+.gl-lab.is-focus { color: var(--sig-2); }
+.gl-lab.is-lane { font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--d-ink-3); }
+.gl-lab.is-zone { font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--d-ink-3); }
+.gl-lab.is-gate { font: 600 13px/1.3 var(--text); color: var(--d-ink); }
+.gl-lab.is-right { text-align: right; }
+.gl-lab.is-gate small { display: block; font: 500 12px/1.3 var(--text); color: var(--d-ink-3); margin-top: 2px; }
+.gl-lab.is-now { color: var(--sig-2); }
+.gl-lab.is-now small { color: rgba(185, 166, 255, 0.75); }
+
+.rm-legend {
+  position: absolute; z-index: 3; right: var(--gutter); bottom: clamp(20px, 4vh, 36px);
+  display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center;
+  font: 500 11px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--d-ink-3);
+}
+.rm-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.rm-axis-note { padding-left: 20px; border-left: 1px solid var(--rule); }
+
+/* status indicators: solid (shipped), a turning segmented arc (in progress), hollow (planned) */
+.ind { display: inline-block; flex: none; width: 11px; height: 11px; border-radius: 50%; vertical-align: middle; }
+.ind-s { background: var(--d-ink); }
+.ind-l { box-shadow: inset 0 0 0 1.5px var(--d-ink-3); }
+.ind-p {
+  width: 13px; height: 13px; margin: -1px;
+  background: conic-gradient(from 0deg, rgba(124, 136, 255, 0.15) 0 20%, var(--sig) 85%);
+  -webkit-mask: repeating-conic-gradient(#000 0 26deg, transparent 26deg 36deg), radial-gradient(farthest-side, transparent calc(100% - 2.6px), #000 calc(100% - 2.4px));
+  -webkit-mask-composite: source-in;
+  mask: repeating-conic-gradient(#000 0 26deg, transparent 26deg 36deg), radial-gradient(farthest-side, transparent calc(100% - 2.6px), #000 calc(100% - 2.4px));
+  mask-composite: intersect;
+  animation: ind-turn 6s linear infinite;
+}
+@keyframes ind-turn { to { transform: rotate(1turn); } }
+
+/* ---------- opening ---------- */
+.rm-intro, .rm-ledger, .rm-why {
+  position: relative; z-index: 1;
+  padding-left: max(var(--gutter), env(safe-area-inset-left)); padding-right: max(var(--gutter), env(safe-area-inset-right));
+}
+.rm-intro {
+  min-height: var(--vh);
+  padding-top: calc(var(--nav-h) + 48px); padding-bottom: clamp(56px, 10vh, 112px);
+  display: grid; align-content: center;
+}
+.rm-intro > * { max-width: var(--col); }
+.rm-title {
+  font-family: var(--display); font-weight: var(--w-dark);
+  font-size: clamp(3.4rem, 6.5vw, 5.25rem); line-height: 0.95; letter-spacing: -0.045em;
+  margin-left: -0.04em; color: var(--d-ink);
+}
+/* one word: never let "Roadmap" break inside itself (at 6rem it split as Roadma/p in the 520px column) */
+.rm-title:lang(en) { white-space: nowrap; }
+/* «Дорожная карта» is two long words: smaller, so each word keeps to one line inside the reading column */
+.rm-title:lang(ru) { font-size: clamp(2.6rem, 5vw, 4.5rem); line-height: 1; }
+.rm-lead { margin-top: clamp(28px, 4.6vh, 44px); font-size: clamp(19px, 1.5vw, 22px); line-height: 1.45; color: var(--d-ink); text-wrap: pretty; }
+.rm-pledge { margin-top: 0.7em; font-size: clamp(19px, 1.5vw, 22px); line-height: 1.45; color: var(--d-ink-2); text-wrap: pretty; }
+.rm-note { margin-top: clamp(28px, 5vh, 44px); font-size: 15.5px; line-height: 1.55; color: var(--d-ink-3); text-wrap: pretty; max-width: min(var(--col), 46ch); }
+
+.js .rm-intro > * { animation: rm-rise 0.9s var(--ease-out) both; }
+.js .rm-intro > :nth-child(2) { animation-delay: 70ms; }
+.js .rm-intro > :nth-child(3) { animation-delay: 120ms; }
+.js .rm-intro > :nth-child(4) { animation-delay: 170ms; }
+@keyframes rm-rise { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } }
+
+/* ---------- the ledger ---------- */
+.rm-ledger > * { max-width: var(--col); }
+.lg-group { padding-top: clamp(72px, 12vh, 132px); }
+.lg-group:first-child { padding-top: 0; }
+.lg-h {
+  display: flex; align-items: baseline; gap: 14px;
+  font-weight: var(--w-dark); color: var(--d-ink);
+  font-size: clamp(1.9rem, 2.9vw, 2.75rem); line-height: 1; letter-spacing: -0.035em;
+  padding-bottom: 18px;
+}
+.lg-n { font: 500 13px/1 var(--mono); letter-spacing: 0.04em; color: var(--d-ink-3); }
+.lg { margin: 0; border-bottom: 1px solid var(--rule); }
+.lg-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px;
+  padding: 17px 12px 18px; margin: 0 -12px;
+  border-top: 1px solid var(--rule);
+  transition: background-color 160ms ease;
+}
+.lg-item {
+  display: flex; align-items: center; gap: 13px;
+  font-weight: 600; font-size: 17px; line-height: 1.3; letter-spacing: 0.002em; color: var(--d-ink);
+}
+.lg-meta {
+  grid-row: 1; grid-column: 2; align-self: center; margin: 0;
+  display: flex; gap: 10px;
+  font: 500 10.5px/1 var(--mono); letter-spacing: 0.07em; text-transform: uppercase; color: var(--d-ink-3);
+}
+.lg-meta span + span::before { content: "·"; margin-right: 10px; color: rgba(154, 150, 189, 0.6); }
+.lg-desc {
+  grid-column: 1 / -1; margin: 7px 0 0; padding-left: 24px;
+  font-size: 15.5px; line-height: 1.5; color: var(--d-ink-2); max-width: 52ch; text-wrap: pretty;
+}
+.lg-row.is-now { background: rgba(244, 242, 255, 0.035); }
+.lg-row.is-hot { background: rgba(124, 136, 255, 0.11); }
+.lg-row.is-hot .lg-item { color: #fff; }
+@media (hover: hover) and (pointer: fine) { .gl .lg-row { cursor: default; } }
+
+/* ---------- why iOS comes next ---------- */
+.rm-why { padding-top: clamp(140px, 26vh, 280px); padding-bottom: clamp(120px, 20vh, 200px); }
+.rm-why > * { max-width: var(--col); }
+.rm-why-h {
+  font-weight: var(--w-dark); color: var(--d-ink);
+  font-size: clamp(2.6rem, 5vw, 4.9rem); line-height: 0.98; letter-spacing: -0.042em;
+  max-width: min(var(--col), 8em);
+}
+.rm-why-h:lang(ru) { font-size: clamp(2.3rem, 3.9vw, 3.75rem); max-width: var(--col); }
+.rm-why-big {
+  margin-top: clamp(28px, 4.4vh, 40px);
+  font-family: var(--display); font-weight: 360;
+  font-size: clamp(1.3rem, 1.75vw, 1.7rem); line-height: 1.32; letter-spacing: -0.018em; color: var(--d-ink);
+  text-wrap: pretty;
+}
+.rm-why-text { margin-top: 22px; font-size: clamp(17px, 1.3vw, 19px); line-height: 1.6; color: var(--d-ink-2); max-width: min(var(--col), 52ch); text-wrap: pretty; }
+.rm-actions { margin-top: clamp(32px, 5vh, 44px); }
+.rm-actions .btn-ghost-d svg { transition: transform 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .rm-actions .btn-ghost-d:hover svg { transform: translate(2px, -2px); } }
+
+/* ---------- back to the light ground, as on the homepage ---------- */
+.rm-flood {
+  height: clamp(200px, 34vh, 340px);
+  background: radial-gradient(140% 100% at 66% 100%, var(--ground) 30%, #e9e3f8 42%, #b7a8ea 55%, #3d2f7c 72%, #0d0b1c 86%, var(--night) 94%);
+}
+.rm-main { padding-bottom: 0; }
+
+/* ---------- tablet ---------- */
+@media (max-width: 1100px) {
+  .rm { --col: min(42vw, 460px); }
+  .rm-legend .rm-axis-note { display: none; }
+}
+
+/* ---------- phone: the graph becomes a band pinned under the nav; the ledger slides beneath it ---------- */
+@media (max-width: 700px) {
+  /* the band and the nav together keep to about 40% of the screen */
+  .rm { --col: 100%; --band: clamp(200px, calc(40svh - var(--nav-h)), 320px); margin-top: 0; }
+  .rm-back { z-index: 2; }
+  .rm-stage {
+    top: var(--nav-h); height: var(--band);
+    -webkit-mask-image: linear-gradient(#000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(#000 calc(100% - 28px), transparent);
+    background: var(--night);
+  }
+  .rm-stage { pointer-events: auto; touch-action: pan-y; -webkit-tap-highlight-color: transparent; }   /* taps pick nodes; swipes scroll the page */
+  .rm-stage::after {        /* the frozen gutter that holds the lane names */
+    background: linear-gradient(90deg, var(--night) 0, var(--night) calc(var(--gut, 114px) - 10px), rgba(5, 5, 10, 0) calc(var(--gut, 114px) + 26px));
+  }
+  :is(html:not(.js), .static) .rm-stage::after { display: none; }   /* the still carries its own lane names */
+  .gl-lab.is-lane { font-size: 11px; letter-spacing: 0.06em; }
+  .gl-lab.is-node { font-size: 12.5px; color: #fff; }
+  .rm-still img { object-position: 50% 50%; }
+  .rm-legend { display: none; }    /* on the band every ledger row already carries its mark and status word */
+  .rm-legend .rm-axis-note { display: none; }
+  .gl-lab.is-gate small { display: none; }
+  .rm-scrim { height: var(--nav-h); background: var(--night); }
+  .gl-lab.is-node { font-size: 12px; }
+  .rm-intro { min-height: 0; padding-top: calc(var(--band) + 20px); padding-bottom: 48px; align-content: start; }
+  .rm-title { font-size: clamp(3rem, 15vw, 4rem); }
+  .rm-title:lang(ru) { font-size: clamp(2.5rem, 13vw, 3.4rem); }
+  .rm-lead, .rm-pledge { font-size: 18px; }
+  .rm-lead { margin-top: 18px; }
+  .rm-note { margin-top: 20px; font-size: 14.5px; }
+  .lg-group { padding-top: 64px; }
+  .lg-h { font-size: 2rem; }
+  .lg-row { grid-template-columns: 1fr; padding-block: 18px 20px; -webkit-tap-highlight-color: transparent; }
+  .lg-item { font-size: 17.5px; }
+  .lg-desc { font-size: 16px; }
+  .lg-meta { grid-row: 3; grid-column: 1; padding-left: 24px; margin-top: 10px; font-size: 12px; }
+  .rm-why { padding-top: 96px; padding-bottom: 80px; }
+  .rm-why > *, .rm-why-h { max-width: none; }
+  .rm-why-h { font-size: clamp(2.3rem, 11vw, 3rem); }
+  .rm-why-h:lang(ru) { font-size: clamp(2rem, 9.4vw, 2.6rem); }
+  .rm-why-big { font-size: 1.25rem; }
+  .rm-actions .btn { flex: 1 1 100%; }
+}
+
+@media (max-width: 700px) and (orientation: landscape) {
+  .rm { --band: 220px; }
+  .rm-stage { position: relative; top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .rm-intro > * { animation: rm-fade 0.4s ease both; }
+  @keyframes rm-fade { from { opacity: 0; } }
+  .ind-p { animation: none; }
+  .rm-gl { transition: none; }
+}
+
+/* The ledger scrolls under the fixed nav on this dark page: give the dark nav its own ground,
+   mirroring the light nav's frosted bar in base.css. */
+.nav[data-theme="dark"] {
+  background: rgba(5, 5, 10, 0.78);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: 0 1px 0 rgba(244, 242, 255, 0.06);
+}
+
+/* ---------- touch (phones and tablets): nothing pinned, nothing driven by scroll ----------
+   The graph is an ordinary figure at the top of the page; the ledger scrolls 1:1 beneath it.
+   js/pages/roadmap.js mirrors this query: draw-on on a timer, tap a row to frame its node. */
+.rm-flood { position: relative; }
+.rm-flood-mark { position: absolute; left: 0; top: 55%; width: 1px; height: 1px; pointer-events: none; }
+.lg-show { display: none; }
+@media (hover: none) and (pointer: coarse) {
+  .rm { --col: min(100%, 680px); margin-top: 0; }
+  .rm-back { position: relative; inset: auto; z-index: 0; pointer-events: auto; }
+  .rm-stage {
+    position: relative; top: auto;
+    height: clamp(300px, 52vh, 560px); height: clamp(300px, 52svh, 560px);
+    touch-action: pan-y; -webkit-tap-highlight-color: transparent;
+    -webkit-mask-image: linear-gradient(#000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(#000 calc(100% - 28px), transparent);
+  }
+  .rm-stage::after {        /* the lane names keep a quiet gutter on the left */
+    background: linear-gradient(90deg, var(--night) 0, var(--night) calc(var(--gut, 114px) - 10px), rgba(5, 5, 10, 0) calc(var(--gut, 114px) + 26px));
+  }
+  :is(html:not(.js), .static) .rm-stage::after { display: none; }
+  .rm-intro { min-height: 0; padding-top: 36px; padding-bottom: 56px; align-content: start; }
+  .rm-why > *, .rm-why-h, .rm-why-h:lang(ru) { max-width: var(--col); }
+  .lg-row { -webkit-tap-highlight-color: transparent; }
+  .lg-show {
+    display: inline-flex; align-items: center; grid-column: 1 / -1; justify-self: start;
+    min-height: 44px; margin: 4px 0 -10px; padding: 0 0 0 24px;
+    border: 0; background: none; cursor: pointer;
+    font: 500 14px/1 var(--text); color: var(--sig-2);
+    text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.25em;
+  }
+}
+@media (hover: none) and (pointer: coarse) and (max-width: 700px) {
+  .rm { --col: 100%; }
+  .rm-back { z-index: 0; }
+  .rm-stage { height: var(--band); }
+  .rm-intro { padding-top: 20px; padding-bottom: 48px; }
+}
