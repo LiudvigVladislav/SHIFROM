@@ -1,6 +1,7 @@
-// Homepage controller. One live mode on every device: nothing is pinned and nothing is driven by the scroll
-// position. The page moves 1:1 with the wheel or the finger; each scene plays a timeline when its section is
-// about 40% in view and pauses offscreen. There is no scroll listener at all.
+// Homepage controller. One live mode on every device: nothing is pinned for extra scroll length. The page moves
+// 1:1 with the wheel or the finger; each scene plays a timeline when its section is about 40% in view and pauses
+// offscreen. The one exception is the wide bubbles stage: it holds still for the one screen its route copy takes
+// to scroll over it, and that scroll drives its scene.
 //   play   WebGL and motion allowed: the three scenes play on timers.
 //   static reduced motion or no WebGL: designed stills (the calm seal cluster stays live under reduced motion).
 // Two compositions, chosen by CSS media queries and mirrored here:
@@ -262,7 +263,7 @@ const TL = {
 };
 const tlScene = { hero: 'particles', phone: 'phone', route: 'bubbles' };
 let tickRaf = 0, tickLast = 0;
-function running(k) { return TL[k].seen && live[tlScene[k]] && !document.hidden && TL[k].t < TL[k].end && (k !== 'route' || zone === 'route'); }
+function running(k) { return TL[k].seen && live[tlScene[k]] && !document.hidden && TL[k].t < TL[k].end && (k !== 'route' || (zone === 'route' && flow())); }
 function tick(now) {
   const dt = Math.min(0.05, (now - tickLast) / 1000); tickLast = now;
   let any = false;
@@ -270,8 +271,9 @@ function tick(now) {
   tickRaf = any ? requestAnimationFrame(tick) : 0;
 }
 function playSync() {
-  for (const k of Object.keys(TL)) if (live[tlScene[k]] && (k !== 'route' || zone === 'route')) TL[k].apply(TL[k].t);
-  if (zone === 'seal' && scenes.bubbles) scenes.bubbles.setProgress(0);
+  for (const k of Object.keys(TL)) if (live[tlScene[k]] && (k !== 'route' || (zone === 'route' && flow()))) TL[k].apply(TL[k].t);
+  if (zone === 'seal' && flow() && scenes.bubbles) scenes.bubbles.setProgress(0);
+  scrub();
   const want = Object.keys(TL).some(running);
   if (want && !tickRaf) { tickLast = performance.now(); tickRaf = requestAnimationFrame(tick); }
   else if (!want && tickRaf) { cancelAnimationFrame(tickRaf); tickRaf = 0; }
@@ -293,6 +295,15 @@ function hostGl() {
   const labHost = flow() ? routeFig : bStage;
   for (const el of labEls) if (el.parentNode !== labHost) labHost.append(el);
 }
+// wide: the scene follows the page across the held screen, from the loose cluster (section at the top) to the
+// finished route (route copy in place); scrolling back plays it backwards
+const ROUTE_END = 2.9;
+let scrubRaf = 0;
+function scrub() {
+  scrubRaf = 0;
+  if (flow() || !scenes.bubbles) return;
+  scenes.bubbles.setProgress(ROUTE_END * clamp(-bub.getBoundingClientRect().top / (bStage.offsetHeight * 0.92)));
+}
 function setZone(z) {
   if (z === zone) return;
   zone = z;
@@ -302,7 +313,8 @@ function setZone(z) {
 
 if (isPlay()) {
   hostGl();
-  FLOW_MQ.addEventListener('change', hostGl);
+  FLOW_MQ.addEventListener('change', () => { hostGl(); playSync(); });
+  addEventListener('scroll', () => { if (!scrubRaf) scrubRaf = requestAnimationFrame(scrub); }, { passive: true });
   const ioPlay = new IntersectionObserver((entries) => {
     for (const e of entries) {
       const k = e.target.dataset.tl;
