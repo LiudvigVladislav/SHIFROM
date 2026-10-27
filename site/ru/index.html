@@ -31,7 +31,7 @@
 <link rel="preload" href="/static/fonts/onest-latin-wght-normal.woff2?v=052df745" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/static/fonts/unbounded-cyrillic-wght-normal.woff2?v=e30bf6a6" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/static/fonts/onest-cyrillic-wght-normal.woff2?v=68e5e01d" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/static/css/base.css?v=8cf70641">
+<link rel="stylesheet" href="/static/css/base.css?v=d7107c54">
 <link rel="stylesheet" href="/static/css/home.css?v=971d3fdb">
 <script>
 /* Decide the page mode before first paint: scroll-scrubbed scenes (gl, fine pointer), timed scenes (play, touch) or designed stills (static). */
@@ -49,6 +49,23 @@
 })();
 </script>
 <script type="importmap">{"imports":{"three":"/static/vendor/three/three.module.js?v=6f0d18b1","three/addons/environments/RoomEnvironment.js":"/static/vendor/three/addons/environments/RoomEnvironment.js?v=7c0f8204","three/addons/geometries/RoundedBoxGeometry.js":"/static/vendor/three/addons/geometries/RoundedBoxGeometry.js?v=800dfe97","three/addons/lines/LineMaterial.js":"/static/vendor/three/addons/lines/LineMaterial.js?v=ff08dd36","three/addons/lines/LineSegments2.js":"/static/vendor/three/addons/lines/LineSegments2.js?v=653dae95","three/addons/lines/LineSegmentsGeometry.js":"/static/vendor/three/addons/lines/LineSegmentsGeometry.js?v=a9277f7d","three/addons/postprocessing/EffectComposer.js":"/static/vendor/three/addons/postprocessing/EffectComposer.js?v=460c8b24","three/addons/postprocessing/OutputPass.js":"/static/vendor/three/addons/postprocessing/OutputPass.js?v=4031c971","three/addons/postprocessing/RenderPass.js":"/static/vendor/three/addons/postprocessing/RenderPass.js?v=0bb3b352","three/addons/postprocessing/UnrealBloomPass.js":"/static/vendor/three/addons/postprocessing/UnrealBloomPass.js?v=bc123526","three/addons/utils/BufferGeometryUtils.js":"/static/vendor/three/addons/utils/BufferGeometryUtils.js?v=aba9507c"}}</script>
+<link rel="modulepreload" href="/static/js/main.js?v=b4146020">
+<link rel="modulepreload" href="/static/js/timing.js?v=efb2bbe9">
+<link rel="modulepreload" href="/static/js/nav.js?v=8e8e58d7">
+<link rel="modulepreload" href="/static/js/scenes/particles.js?v=88d93cc4">
+<link rel="modulepreload" href="/static/vendor/three/three.module.js?v=6f0d18b1">
+<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/EffectComposer.js?v=460c8b24">
+<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/RenderPass.js?v=0bb3b352">
+<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/UnrealBloomPass.js?v=bc123526">
+<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/OutputPass.js?v=4031c971">
+<link rel="modulepreload" href="/static/js/scenes/yield.js?v=c5724892">
+<link rel="modulepreload" href="/static/vendor/three/three.core.js?v=c001a388">
+<link rel="modulepreload" href="/static/vendor/three/addons/shaders/CopyShader.js?v=41d281b4">
+<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/ShaderPass.js?v=b188f5e0">
+<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/MaskPass.js?v=60017eab">
+<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/Pass.js?v=9c1a4327">
+<link rel="modulepreload" href="/static/vendor/three/addons/shaders/LuminosityHighPassShader.js?v=c7816aae">
+<link rel="modulepreload" href="/static/vendor/three/addons/shaders/OutputShader.js?v=8f72cd38">
 </head>
 <body>
 <a class="skip" href="#main">Перейти к содержанию</a>
@@ -94,8 +111,8 @@
   <section class="hero" id="hero" aria-labelledby="hero-h">
     <div class="hero-stage">
       <picture class="hero-still" aria-hidden="true">
-        <source media="(max-width: 700px)" srcset="/static/img/stills/hero-cloud-mobile.webp?v=4adaa821">
-        <img src="/static/img/stills/hero-cloud-desktop.webp?v=cf96ca97" alt="" width="1600" height="1000" decoding="async" fetchpriority="high">
+        <source media="(max-width: 700px)" srcset="/static/img/stills/hero-cloud-mobile.webp?v=832fd9ed">
+        <img src="/static/img/stills/hero-cloud-desktop.webp?v=4b2b3f90" alt="" width="1440" height="900" decoding="async" fetchpriority="high">
       </picture>
       <canvas class="hero-gl" aria-hidden="true"></canvas>
       <div class="hero-scrim" aria-hidden="true"></div>
@@ -279,9 +296,10 @@
     <a href="/ru/about.html">О проекте</a>
     <a href="/ru/roadmap.html">Дорожная карта</a>
     <a href="/ru/writeups/">Инженерия</a>
+    <a class="foot-top" href="#top">Наверх</a>
   </nav>
 </footer>
 
-<script type="module" src="/static/js/main.js?v=d6fb6363"></script>
+<script type="module" src="/static/js/main.js?v=b4146020"></script>
 </body>
 </html>

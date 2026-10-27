@@ -4,7 +4,7 @@
 //        about 40% in view and pauses offscreen. No scroll listener at all.
 // Both: lazy mounting (one WebGL context per scene, three at most), offscreen pause.
 import { clamp, smooth, heroStage, FLOOD, PHONE_BEATS, beatAlpha } from './timing.js?v=efb2bbe9';
-import './nav.js?v=89cfabfe';
+import './nav.js?v=8e8e58d7';
 
 const root = document.documentElement;
 const GL = root.classList.contains('gl');           // scroll-scrubbed scenes (fine pointer)
@@ -194,7 +194,7 @@ const factories = {
     onFrame: (p) => { if (GL) drawFilmBeats(p); },
     onLost: () => lose('phone', film),
   })),
-  bubbles: () => import('./scenes/bubbles.js?v=3ac219fd').then((m) => m.mount($('.b-gl'), {
+  bubbles: () => import('./scenes/bubbles.js?v=aa817ea3').then((m) => m.mount($('.b-gl'), {
     phone: phoneMQ.matches && innerHeight > innerWidth, calm: REDUCED,   // landscape phones get the wide layout
     flow: PLAY,
     copyEl: PLAY ? null : $('.seal-copy'), copyPin: PLAY ? null : $('.b-seal .b-pin'),
