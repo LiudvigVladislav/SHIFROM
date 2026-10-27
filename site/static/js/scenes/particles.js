@@ -7,7 +7,6 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { heroStage as stageFromScroll } from '../timing.js?v=efb2bbe9';
 import { yieldTask, warm } from './yield.js?v=c5724892';
 
 const FOV = 35, CAM_Z = 10;
@@ -29,9 +28,10 @@ const lin = (c) => Math.pow(c / 255, 2.2);
 
 // The mark is sampled from the kit's favicon.png (the same mark at 192 px, 40 KB instead of 611 KB);
 // it is drawn up to 380 px with smoothing so the alpha threshold still cuts clean edges.
-async function sampleLogo(url, count) {
-  const img = new Image();
-  img.src = url;
+// src is the page's own <img> of the mark when there is one (no second request), or a URL
+async function sampleLogo(src, count) {
+  let img = src;
+  if (typeof src === 'string') { img = new Image(); img.src = src; }
   await img.decode();
   const S = 380;
   const cv = document.createElement('canvas');
@@ -377,9 +377,11 @@ void main() {
 /* ---------- scene ---------- */
 
 let S = null; // the mounted scene, if any
+const clamp01 = (x) => Math.min(1, Math.max(0, x));
 
 export async function mount(canvas, opt = {}) {
   if (S) return S.api;
+  const isFlow = () => (typeof opt.flow === 'function' ? opt.flow() : !!opt.flow);
   const phone = !!opt.phone;
   const N = phone ? 30000 : 100000;
   const DPR = Math.min(window.devicePixelRatio || 1, phone ? 1.5 : 2);
@@ -397,7 +399,7 @@ export async function mount(canvas, opt = {}) {
   camera.position.set(0, 0, CAM_Z);
 
   // ---- data
-  const logo = await sampleLogo(opt.logoUrl, N);
+  const logo = await sampleLogo(opt.logoImg || opt.logoUrl, N);
   await yieldTask();
   const P0 = new Float32Array(N * 3), C0 = new Float32Array(N * 3);
   buildCloud(N, P0, C0);
@@ -499,7 +501,7 @@ export async function mount(canvas, opt = {}) {
       U.uRib.value.set(0.16, 0.06, 0.44, 0);
     } else {
       // flow (touch): a caption sits under the nav and the headline below, so the shapes sit a little lower and smaller
-      if (opt.flow) U.uShape.value.set(0, hh * 0.2, Math.min(2 * hw * 0.74, 2 * hh * 0.36), 0);
+      if (isFlow()) U.uShape.value.set(0, hh * 0.2, Math.min(2 * hw * 0.74, 2 * hh * 0.36), 0);
       else U.uShape.value.set(0, hh * 0.3, Math.min(2 * hw * 0.86, 2 * hh * 0.44), 0);
       U.uField.value.set(0, hh * 0.3, hw * 1.25, hh * 0.62);
       U.uRib.value.set(0.08, 0.2, 0.2, 0);
@@ -585,7 +587,7 @@ export async function mount(canvas, opt = {}) {
   const onLost = (e) => { e.preventDefault(); lost = true; stop(); opt.onLost && opt.onLost(); };
   canvas.addEventListener('webglcontextlost', onLost);
 
-  function setProgress(u) { target = stageFromScroll(u); }
+  function setProgress(stage) { target = clamp01(stage / 4) * 4; }   // 0 cloud, 1 mark, 2 bubble, 3 lock, 4 ribbon
 
   // where the ribbon crosses the barrier, in CSS px inside the canvas (the flood starts there)
   function getFocus() {
@@ -606,7 +608,7 @@ export async function mount(canvas, opt = {}) {
   const api = {
     start, stop, setProgress, dispose, resize, setPointer, getFocus,
     stage: () => s,
-    setStage(v) { target = v; },   // time-based playback (touch): the page's timeline sets the stage directly
+    setStage: setProgress,
   };
   S = { api };
   return api;

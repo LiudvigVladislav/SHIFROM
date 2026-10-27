@@ -129,6 +129,7 @@ let S = null;
 
 export async function mount(canvas, opt = {}) {
   if (S) return S.api;
+  const isFlow = () => (typeof opt.flow === 'function' ? opt.flow() : !!opt.flow);
   const isPhone = !!opt.phone;
   const calm = !!opt.calm;         // reduced motion: no float, no fly-away, seals fade in place
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -297,7 +298,7 @@ export async function mount(canvas, opt = {}) {
     const db = renderer.getDrawingBufferSize(new THREE.Vector2());
     backMat.uniforms.uRes.value.copy(db);
     // the seal copy, measured inside its pinned panel (the panel pins at the stage top)
-    if (opt.copyEl && opt.copyPin) {
+    if (!isFlow() && opt.copyEl && opt.copyPin) {
       const c = opt.copyEl.getBoundingClientRect(), p = opt.copyPin.getBoundingClientRect();
       L.copy = { x: c.left - p.left, y: c.top - p.top, w: c.width, h: c.height };
     } else L.copy = { x: -9999, y: -9999, w: 0, h: 0 };
@@ -340,6 +341,8 @@ export async function mount(canvas, opt = {}) {
   }
 
   // ---------- pointer (stage coordinates) ----------
+  // declared before the listeners: the build yields between steps, so input can arrive mid-build
+  let raf = 0, last = 0, simT = 0, lost = false;
   const ptr = { x: -9999, y: -9999, nx: 0, ny: 0, inside: false, down: null };
   let hovered = null;
   const interactive = (t) => t && t.closest && t.closest('a, button, summary, details, .nav, input, label, .menu-sheet');
@@ -409,7 +412,7 @@ export async function mount(canvas, opt = {}) {
   function anchor() {
     const c = L.copy;
     // flow (touch): the copy is above the stage, so the cluster owns the whole stage
-    if (opt.flow) return {
+    if (isFlow()) return {
       x: 0, y: 0, rx: L.vw * (isPhone ? 0.5 : 0.42), ry: L.vh * 0.4,
       copy: { x0: -1e5, x1: -1e5 + 1, y1: -1e5 + 1, y0: -1e5 },
       top: cy(10),
@@ -767,7 +770,6 @@ export async function mount(canvas, opt = {}) {
     for (let k = 0; k < 420; k++) { step(1 / 60, S0); if (k % 70 === 69) await yieldTask(); }
   }
 
-  let raf = 0, last = 0, simT = 0, lost = false;
   function advance(dt) {
     const St = scrollState(U);
     K1 = St.k1;

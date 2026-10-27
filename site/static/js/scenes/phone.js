@@ -63,6 +63,7 @@ let S = null;
 
 export async function mount(canvas, opt = {}) {
   if (S) return S.api;
+  const isFlow = () => (typeof opt.flow === 'function' ? opt.flow() : !!opt.flow);
   const phoneMQ = matchMedia('(max-width: 720px) and (orientation: portrait)');   // landscape phones use the wide film
   let isPhone = phoneMQ.matches;
 
@@ -76,7 +77,8 @@ export async function mount(canvas, opt = {}) {
     document.fonts.load('400 44px "Onest"', 'Aa Майя'),
     document.fonts.load('600 50px "Onest"', 'Aa Майя'),
   ]).catch(() => {});
-  const logo = await loadImg(opt.logoUrl);
+  // the page's own <img> of the mark when there is one, so the file is fetched once
+  const logo = opt.logoImg ? await opt.logoImg.decode().then(() => opt.logoImg, () => loadImg(opt.logoUrl)) : await loadImg(opt.logoUrl);
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   // production: no synchronous shader-log queries on a program's first use (they stall the main thread)
@@ -546,7 +548,7 @@ export async function mount(canvas, opt = {}) {
 
     const o = poseAt(isPhone ? POSES.phone : POSES.desk, pShown);
     // flow (touch): the copy sits below the stage, so the phone is centred in it instead of sitting low
-    if (opt.flow && isPhone) { o.y += 0.78; o.s *= 1.04; }
+    if (isFlow() && isPhone) { o.y += 0.78; o.s *= 1.04; }
     // turn in from edge-on while the section scrolls into view
     const ie = easeOutCubic(enterShown);
     o.ry += (-Math.PI / 2 + 0.25 - o.ry) * (1 - ie);

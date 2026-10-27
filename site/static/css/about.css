@@ -1,5 +1,5 @@
 /* SHIFROM About page only. Loads after base.css; uses its tokens, type and buttons.
-   1 entrance (dark, the particle mark over a horizon of light that floods the page on scroll)
+   1 entrance (dark, the particle mark over a horizon of light; nothing on the page follows the scroll)
    2 mission (one statement, lit word by word) · 3 how it is built (+ the four points)
    4 who builds it · 5 where next. */
 
@@ -20,7 +20,7 @@ html:not(.js) .nav { position: absolute; }
 .ab-hero ::selection { background: #6d4cff; color: #fff; }
 .ab-hero :focus-visible { outline-color: var(--d-focus); }
 
-.ab-stage { position: absolute; inset: 0; z-index: 0; will-change: transform; }
+.ab-stage { position: absolute; inset: 0; z-index: 0; }
 .ab-stage canvas, .ab-still, .ab-still img { position: absolute; inset: 0; width: 100%; height: 100%; }
 .ab-still img { object-fit: cover; object-position: 64% 40%; }
 .ab-gl { opacity: 0; transition: opacity 1.1s var(--ease-out); }
@@ -57,8 +57,6 @@ html:not(.js) .nav { position: absolute; }
   background: radial-gradient(closest-side,
     var(--ground) 0, var(--ground) 70%, #f7f3ff 71%, #e3d6ff 72.3%, #b49cff 73.9%,
     rgba(126, 92, 255, 0.5) 76.6%, rgba(88, 54, 216, 0.16) 84%, rgba(40, 20, 120, 0) 94%);
-  transform-origin: 50% 50%;
-  will-change: transform;
 }
 
 /* ======================================================================
@@ -78,7 +76,6 @@ html:not(.js) .nav { position: absolute; }
   font-size: clamp(2.3rem, 6.4vw, 6rem); line-height: 0.98; letter-spacing: -0.042em;
   color: var(--ink); max-width: 12.5em; text-wrap: balance;
 }
-.ms .w { transition: opacity 120ms linear; }
 
 /* ======================================================================
    3. HOW IT IS BUILT (light)
@@ -330,10 +327,9 @@ html:not(.js) .nav { position: absolute; }
   :lang(ru) .nx { font-size: clamp(1.8rem, 8.8vw, 2.4rem); }
 }
 
-/* touch screens: nothing follows the scroll; the mission lights word by word on a timer as each paragraph enters */
+/* the mission lights word by word on a timer as each paragraph enters (nothing on this page follows the scroll) */
 .lit-timer .ms .w { opacity: 0.2; transition: opacity 0.6s var(--ease-out); transition-delay: calc(var(--i) * 42ms); }
 .lit-timer .ms p.in .w { opacity: 1; }
-.touch-ui .ab-stage, .touch-ui .ab-disc { will-change: auto; }
 
 /* touch: immediate, quiet press feedback in place of hover */
 .nx, .tm-link { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
@@ -350,7 +346,7 @@ html:not(.js) .nav { position: absolute; }
 .ab-intro { left: max(var(--gutter), env(safe-area-inset-left)); right: max(var(--gutter), env(safe-area-inset-right)); }
 
 /* ======================================================================
-   REDUCED MOTION: the designed still, no flood travel; fades stay, travel goes
+   REDUCED MOTION: the designed still; fades stay, travel goes
    ====================================================================== */
 @media (prefers-reduced-motion: reduce) {
   .js .ab-intro > * { animation: ab-fade 0.5s ease both; }
@@ -358,6 +354,5 @@ html:not(.js) .nav { position: absolute; }
   .reveal [data-rise], .reveal .pt .pt-t, .reveal .pt .pt-d { transform: none; transition: opacity 0.4s ease; }
   .reveal [data-words] .wd { transform: none; filter: none; transition: opacity 0.4s ease; transition-delay: 0ms; }
   .reveal .pt .pt-lead { clip-path: none; transition: none; }
-  .ab-stage, .ab-disc { will-change: auto; }
   .tm-link, .tm-link svg, .nx span, .nx svg { transition: none; }
 }
