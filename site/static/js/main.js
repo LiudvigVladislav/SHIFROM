@@ -277,36 +277,46 @@ function playSync() {
   else if (!want && tickRaf) { cancelAnimationFrame(tickRaf); tickRaf = 0; }
 }
 
-// Bubbles: one canvas, two stages (seal, route). It moves into whichever stage is more in view.
+// Bubbles: one canvas. Wide: it stays in the seal stage, which holds still under both beats (CSS), and the zone
+// follows the copy. Flow: there are two stages (seal, route) and it moves into whichever is more in view.
 let zone = 'seal';
-const ratio = { seal: 0, route: 0 };
-function setZone(z) {
-  if (z === zone) return;
-  zone = z;
-  const host = z === 'route' ? routeFig : bStage;
+const ratio = { seal: 0, sealCopy: 0, route: 0 };
+const bSeal = $('.b-seal'), labEls = $$('[data-lab]');
+function hostGl() {
+  const host = zone === 'route' && flow() ? routeFig : bStage;
   if (bCanvas.parentNode !== host) {
     host.prepend(bCanvas); scenes.bubbles && scenes.bubbles.resize();
     // the stage it left fades to its still (CSS); the canvas fades in here instead of popping
     if (!REDUCED && bCanvas.animate) bCanvas.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 360, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' });
   }
   bStage.classList.toggle('holds-gl', host === bStage); routeFig.classList.toggle('holds-gl', host === routeFig);
+  const labHost = flow() ? routeFig : bStage;
+  for (const el of labEls) if (el.parentNode !== labHost) labHost.append(el);
+}
+function setZone(z) {
+  if (z === zone) return;
+  zone = z;
+  hostGl();
   playSync();
 }
 
 if (isPlay()) {
-  bStage.classList.add('holds-gl');
+  hostGl();
+  FLOW_MQ.addEventListener('change', hostGl);
   const ioPlay = new IntersectionObserver((entries) => {
     for (const e of entries) {
       const k = e.target.dataset.tl;
-      if (k === 'seal' || k === 'route') ratio[k] = e.intersectionRatio;
-      if (k !== 'seal') TL[k].seen = e.intersectionRatio >= 0.38;   // plays from about 40% in view, pauses below
+      if (k in ratio) ratio[k] = e.intersectionRatio;
+      if (k in TL) TL[k].seen = e.intersectionRatio >= 0.38;   // plays from about 40% in view, pauses below
     }
-    if (ratio.route > ratio.seal && ratio.route >= 0.2) setZone('route');
-    else if (ratio.seal > ratio.route && ratio.seal >= 0.2) setZone('seal');
+    // the held wide stage is always fully in view, so there the seal copy says how far the page has moved
+    const seal = flow() ? ratio.seal : ratio.sealCopy;
+    if (ratio.route > seal && ratio.route >= 0.2) setZone('route');
+    else if (seal > ratio.route && seal >= 0.2) setZone('seal');
     playSync();
   }, { threshold: [0, 0.2, 0.35, 0.4, 0.5, 0.65, 0.8, 1] });
-  heroStageEl.dataset.tl = 'hero'; filmStage.dataset.tl = 'phone'; bStage.dataset.tl = 'seal'; routeFig.dataset.tl = 'route';
-  for (const el of [heroStageEl, filmStage, bStage, routeFig]) ioPlay.observe(el);
+  heroStageEl.dataset.tl = 'hero'; filmStage.dataset.tl = 'phone'; bStage.dataset.tl = 'seal'; bSeal.dataset.tl = 'sealCopy'; routeFig.dataset.tl = 'route';
+  for (const el of [heroStageEl, filmStage, bStage, bSeal, routeFig]) ioPlay.observe(el);
   document.addEventListener('visibilitychange', playSync);
 }
 drawFilmBeats(0);
