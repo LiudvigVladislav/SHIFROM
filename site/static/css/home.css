@@ -523,7 +523,14 @@ html:not(.js) .nav { position: absolute; }
    route stages, and whichever stage does not hold it shows its designed still (main.js sets .holds-gl) */
 .play .lab { opacity: 0; visibility: hidden; will-change: transform, opacity; }
 .play .b-stage:not(.holds-gl) .b-still,
-.play .route-figure:not(.holds-gl) .route-still { display: block; }
+.play .route-figure:not(.holds-gl) .route-still { display: block; animation: still-in 360ms var(--ease-out); }
+@keyframes still-in { from { opacity: 0; } }
+/* both stages dissolve into the page at their edges, so the seam between them never shows (the canvas is opaque) */
+.play .b-stage > :is(.b-still, .b-gl),
+.play .route-figure > :is(.route-still, .b-gl) {
+  -webkit-mask-image: linear-gradient(transparent 0, #000 16%, #000 84%, transparent 100%);
+  mask-image: linear-gradient(transparent 0, #000 16%, #000 84%, transparent 100%);
+}
 .play .route-still { position: absolute; inset: 0; }
 .play .route-still img { width: 100%; height: 100%; object-fit: cover; }
 .play .bubbles.is-live .route-figure.holds-gl .route-still { display: none; }

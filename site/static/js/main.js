@@ -284,7 +284,11 @@ function setZone(z) {
   if (z === zone) return;
   zone = z;
   const host = z === 'route' ? routeFig : bStage;
-  if (bCanvas.parentNode !== host) { host.prepend(bCanvas); scenes.bubbles && scenes.bubbles.resize(); }
+  if (bCanvas.parentNode !== host) {
+    host.prepend(bCanvas); scenes.bubbles && scenes.bubbles.resize();
+    // the stage it left fades to its still (CSS); the canvas fades in here instead of popping
+    if (!REDUCED && bCanvas.animate) bCanvas.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 360, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' });
+  }
   bStage.classList.toggle('holds-gl', host === bStage); routeFig.classList.toggle('holds-gl', host === routeFig);
   playSync();
 }
