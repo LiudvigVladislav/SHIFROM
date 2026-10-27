@@ -30,27 +30,27 @@
 <link rel="preload" href="/static/fonts/unbounded-latin-wght-normal.woff2?v=22f9b928" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/static/fonts/onest-latin-wght-normal.woff2?v=052df745" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/static/css/base.css?v=d7107c54">
-<link rel="stylesheet" href="/static/css/home.css?v=7e4a48ce">
+<link rel="stylesheet" href="/static/css/home.css?v=971d3fdb">
 <script>
-/* Decide the page mode before first paint, without touching the GPU (creating a WebGL context here would block
-   parsing and the first paint): play = timed WebGL scenes, static = designed stills. The hero scene creates the
-   real context after load and drops the page to the stills if WebGL turns out to be unavailable. */
+/* Decide the page mode before first paint: scroll-scrubbed scenes (gl, fine pointer), timed scenes (play, touch) or designed stills (static). */
 (function () {
-  var c = document.documentElement.classList;
-  var gl = !!window.WebGLRenderingContext;
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var r = document.documentElement, c = r.classList, gl = false;
   c.add('js');
+  try { var cv = document.createElement('canvas'), x = cv.getContext('webgl2') || cv.getContext('webgl'); gl = !!x; var l = x && x.getExtension('WEBGL_lose_context'); if (l) l.loseContext(); } catch (e) {}
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* touch screens (phones, tablets): no pinned, scroll-scrubbed films; scenes play on a timer instead */
+  var touch = matchMedia('(hover: none) and (pointer: coarse)').matches;
   if (gl) c.add('webgl');
-  if (matchMedia('(hover: none) and (pointer: coarse)').matches) c.add('touch');
-  c.add(gl && !reduce ? 'play' : 'static');
+  if (touch) c.add('touch');
+  c.add(gl && !reduce ? (touch ? 'play' : 'gl') : 'static');
   if (reduce) c.add('reduced');
 })();
 </script>
 <script type="importmap">{"imports":{"three":"/static/vendor/three/three.module.js?v=6f0d18b1","three/addons/environments/RoomEnvironment.js":"/static/vendor/three/addons/environments/RoomEnvironment.js?v=7c0f8204","three/addons/geometries/RoundedBoxGeometry.js":"/static/vendor/three/addons/geometries/RoundedBoxGeometry.js?v=800dfe97","three/addons/lines/LineMaterial.js":"/static/vendor/three/addons/lines/LineMaterial.js?v=ff08dd36","three/addons/lines/LineSegments2.js":"/static/vendor/three/addons/lines/LineSegments2.js?v=653dae95","three/addons/lines/LineSegmentsGeometry.js":"/static/vendor/three/addons/lines/LineSegmentsGeometry.js?v=a9277f7d","three/addons/postprocessing/EffectComposer.js":"/static/vendor/three/addons/postprocessing/EffectComposer.js?v=460c8b24","three/addons/postprocessing/OutputPass.js":"/static/vendor/three/addons/postprocessing/OutputPass.js?v=4031c971","three/addons/postprocessing/RenderPass.js":"/static/vendor/three/addons/postprocessing/RenderPass.js?v=0bb3b352","three/addons/postprocessing/UnrealBloomPass.js":"/static/vendor/three/addons/postprocessing/UnrealBloomPass.js?v=bc123526","three/addons/utils/BufferGeometryUtils.js":"/static/vendor/three/addons/utils/BufferGeometryUtils.js?v=aba9507c"}}</script>
-<link rel="modulepreload" href="/static/js/main.js?v=6d47b88f">
-<link rel="modulepreload" href="/static/js/timing.js?v=4e28233b">
+<link rel="modulepreload" href="/static/js/main.js?v=b4146020">
+<link rel="modulepreload" href="/static/js/timing.js?v=efb2bbe9">
 <link rel="modulepreload" href="/static/js/nav.js?v=8e8e58d7">
-<link rel="modulepreload" href="/static/js/scenes/particles.js?v=c6f54cdc">
+<link rel="modulepreload" href="/static/js/scenes/particles.js?v=88d93cc4">
 <link rel="modulepreload" href="/static/vendor/three/three.module.js?v=6f0d18b1">
 <link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/EffectComposer.js?v=460c8b24">
 <link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/RenderPass.js?v=0bb3b352">
@@ -149,7 +149,7 @@
       </div>
     </div>
 
-    <div class="hero-flood" aria-hidden="true"></div>
+    <div class="hero-flood" aria-hidden="true"><div class="flood-disc"></div><div class="flood-fill"></div></div>
   </section>
 
   <!-- 2. The phone: light studio, pinned film -->
@@ -310,6 +310,6 @@
   </nav>
 </footer>
 
-<script type="module" src="/static/js/main.js?v=6d47b88f"></script>
+<script type="module" src="/static/js/main.js?v=b4146020"></script>
 </body>
 </html>

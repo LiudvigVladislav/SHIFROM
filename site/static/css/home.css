@@ -10,10 +10,6 @@ html:not(.js) .nav { position: absolute; }
   transition: opacity 240ms ease;
 }
 .nav[data-theme="light"]::before { opacity: 0; }
-.nav[data-theme="dark"].is-scrolled {
-  background: rgba(5, 5, 10, 0.74);
-  -webkit-backdrop-filter: blur(16px) saturate(140%); backdrop-filter: blur(16px) saturate(140%);
-}
 .hero ::selection { background: #6d4cff; color: #fff; }
 .hero :focus-visible { outline-color: var(--d-focus); }
 
@@ -65,8 +61,7 @@ html:not(.js) .nav { position: absolute; }
 .js .hero-foot > :nth-child(1) { animation-delay: 220ms; }
 .js .hero-foot > :nth-child(2) { animation-delay: 280ms; }
 .js .hero-foot > :nth-child(3) { animation-delay: 340ms; }
-/* text is readable from the first paint: the entrance settles it into place rather than revealing it */
-@keyframes rise { from { opacity: 0.55; transform: translateY(0.3em); filter: blur(6px); } }
+@keyframes rise { from { opacity: 0; transform: translateY(0.4em); filter: blur(10px); } }
 
 .beat-line {
   font-family: var(--display); font-weight: var(--w-dark);
@@ -75,6 +70,30 @@ html:not(.js) .nav { position: absolute; }
 }
 .hero-flood { display: none; }
 
+/* live: the stage pins for the whole story; the story lines and the flood pin over it */
+.gl .hero { height: calc(5.1 * var(--vh)); }
+.gl .hero-stage { position: sticky; top: 0; }
+.gl .hero-story {
+  position: sticky; top: 0; z-index: 1;
+  height: var(--vh); margin-top: calc(-1 * var(--vh));
+  pointer-events: none;
+}
+.gl .beat { position: absolute; left: var(--gutter); bottom: clamp(48px, 12vh, 120px); opacity: 0; visibility: hidden; will-change: opacity, transform, filter; }
+.gl .beat-still { display: none; }
+.gl .beat .beat-line { opacity: var(--flood-o, 1); }
+.gl .hero-flood {
+  display: block; position: sticky; top: 0; z-index: 3;
+  height: var(--vh); margin-top: calc(-1 * var(--vh));
+  pointer-events: none; overflow: hidden; visibility: hidden;
+}
+.flood-disc {
+  position: absolute; left: 0; top: 0;
+  width: 120vmax; height: 120vmax; margin: -60vmax 0 0 -60vmax;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--ground) 0, var(--ground) 63%, #f6f2ff 66.5%, #dccdff 69%, #a98bff 71.5%, rgba(122, 86, 255, 0.5) 75%, rgba(82, 48, 210, 0.16) 84%, rgba(40, 20, 120, 0) 96%);
+  transform: scale(0.02); will-change: transform;
+}
+.flood-fill { position: absolute; inset: 0; background: var(--ground); opacity: 0; }
 
 /* ======================================================================
    2. THE PHONE (light): a pinned film
@@ -101,16 +120,19 @@ html:not(.js) .nav { position: absolute; }
 .fbeat-line { margin-top: 20px; font-size: clamp(17px, 1.3vw, 20px); line-height: 1.45; color: var(--ink-2); max-width: 30ch; text-wrap: pretty; }
 .fbeat .fine { margin-top: 18px; max-width: 44ch; }
 
-/* wide composition (fine pointer, wider than 960px): one screen; the three lines swap in time beside the phone */
-@media (min-width: 961px) and (hover: hover), (min-width: 961px) and (pointer: fine) {
-  .play .film-beats { position: absolute; inset: 0 0 auto 0; height: var(--vh); z-index: 2; pointer-events: none; }
-  .play .fbeat { position: absolute; opacity: 0; visibility: hidden; will-change: opacity, transform; }
-  .play .fbeat-1 { left: var(--gutter); top: 50%; width: min(40vw, 600px); margin-top: -0.5em; transform: translateY(-50%); }
-  .play .fbeat-2 { right: var(--gutter); top: 50%; width: min(38vw, 560px); transform: translateY(-50%); }
-  .play .fbeat-3 { right: var(--gutter); top: calc(var(--nav-h) + 7vh); width: min(42vw, 620px); }
-  .play .fbeat-1 .fbeat-title, .play .fbeat-3 .fbeat-title { max-width: 11em; }
-  :lang(ru) .play .fbeat-1 .fbeat-title { max-width: 12em; }
+.gl .film { height: calc(4 * var(--vh)); }
+.gl .film-stage { position: sticky; top: 0; }
+.gl .film-beats {
+  position: sticky; top: 0; z-index: 2;
+  height: var(--vh); margin-top: calc(-1 * var(--vh));
+  pointer-events: none;
 }
+.gl .fbeat { position: absolute; opacity: 0; visibility: hidden; will-change: opacity, transform; }
+.gl .fbeat-1 { left: var(--gutter); top: 50%; width: min(40vw, 600px); margin-top: -0.5em; transform: translateY(-50%); }
+.gl .fbeat-2 { right: var(--gutter); top: 50%; width: min(38vw, 560px); transform: translateY(-50%); }
+.gl .fbeat-3 { right: var(--gutter); top: calc(var(--nav-h) + 7vh); width: min(42vw, 620px); }
+.gl .fbeat-1 .fbeat-title { max-width: 11em; }
+.gl .fbeat-3 .fbeat-title { max-width: 11em; }
 
 /* ======================================================================
    3. BUBBLES (light): seal, then reroute
@@ -161,8 +183,13 @@ html:not(.js) .nav { position: absolute; }
 .lab-wss b { color: #8a3a5c; }
 .route-fine { position: absolute; left: var(--gutter); bottom: clamp(24px, 5vh, 48px); max-width: 64ch; }
 
-/* the route copy and fine print sit above the canvas when it moves into the route stage */
-.route-copy, .route-fine { z-index: 2; }
+.gl .bubbles { height: calc(4.2 * var(--vh)); }
+.gl .b-stage { position: sticky; top: 0; }
+.gl .b-seal { height: calc(2.2 * var(--vh)); }
+.gl .b-route { height: calc(2 * var(--vh)); }
+.gl .b-pin { position: sticky; top: 0; pointer-events: none; }
+.gl .b-pin a { pointer-events: auto; }
+.gl .lab { opacity: 0; visibility: hidden; will-change: transform, opacity; }
 
 /* ======================================================================
    4. MODES (light): one bubble, 0 / 1 / 3 shells
@@ -390,8 +417,15 @@ html:not(.js) .nav { position: absolute; }
   .hero .actions .btn-ghost-d { flex: 0 0 auto; }
   .status { justify-self: start; text-align: left; font-size: 13px; }
   .beat-line { font-size: clamp(1.75rem, 8.4vw, 2.4rem); max-width: 12ch; }
+  .gl .beat { left: 16px; right: 16px; bottom: max(40px, 9vh); }
 
   /* phone film: copy on top, phone below */
+  .gl .film { height: calc(3 * var(--vh)); }
+  .gl .fbeat-1, .gl .fbeat-2, .gl .fbeat-3 {
+    left: 0; right: 0; top: calc(var(--nav-h) + 18px); width: auto; margin: 0; transform: none;
+    padding: 0 20px; text-align: center;
+  }
+  .gl .fbeat .fbeat-title { max-width: 11em; margin: 0 auto; }
   .fbeat-title { font-size: clamp(1.7rem, 7.6vw, 2.2rem); letter-spacing: -0.04em; }
   .fbeat-line { margin: 10px auto 0; font-size: 16px; max-width: 30ch; }
   .fbeat .fine { margin: 8px auto 0; font-size: 12.5px; max-width: 40ch; }
@@ -406,6 +440,11 @@ html:not(.js) .nav { position: absolute; }
   .route-line { margin-top: 10px; font-size: 15px; }
   .lab { font-size: 11.5px; }
   .route-fine { right: var(--gutter); bottom: 18px; font-size: 12px; }
+  /* shorter pins on phones; main.js scales the scroll unit by 0.8 to match */
+  .gl .hero { height: calc(4.28 * var(--vh)); }
+  .gl .bubbles { height: calc(3.6 * var(--vh)); }
+  .gl .b-seal { height: calc(1.9 * var(--vh)); }    /* seal copy pinned until its fade ends */
+  .gl .b-route { height: calc(1.7 * var(--vh)); }   /* route copy pinned while the stream reroutes */
   .lab-wss { text-align: right; }
   .lab-wss b { display: block; margin: 2px 0 0; }
   /* modes: heading, then the visual, then the switch under the thumb, then the words */
@@ -464,13 +503,17 @@ html:not(.js) .nav { position: absolute; }
    LANDSCAPE PHONE: the scenes switch to their wide layouts; copy goes compact beside them
    ====================================================================== */
 @media (max-width: 960px) and (orientation: landscape) and (max-height: 500px) {
+  .gl .fbeat-1, .gl .fbeat-2, .gl .fbeat-3 { text-align: left; padding: 0; width: 44vw; top: calc(var(--nav-h) + 16px); transform: none; }
+  .gl .fbeat-1 { left: var(--gutter); right: auto; }
+  .gl .fbeat-2, .gl .fbeat-3 { left: auto; right: var(--gutter); width: 40vw; }
+  .gl .fbeat .fbeat-title { margin: 0; max-width: none; }
   .fbeat-title { font-size: 1.6rem; }
   .fbeat-line, .fbeat .fine { margin-left: 0; margin-right: 0; }
   .route-copy { top: calc(var(--nav-h) + 10px); right: auto; max-width: 44vw; }
   .route-title { font-size: 1.25rem; }
   .route-line { font-size: 14px; margin-top: 6px; }
   .route-fine { max-width: 60ch; font-size: 12px; bottom: 10px; }
-  .play .lab-alt { display: none; }   /* too short for the standby labels; Tor and REST are named in the copy */
+  .gl .lab-alt { display: none; }   /* too short for the standby labels; Tor and REST are named in the copy */
   .seal-copy { top: 50%; transform: translateY(-50%); right: auto; width: 40vw; }
   .modes-set { grid-template-columns: 1fr 1fr; }
   .modes-copy { display: block; }
@@ -488,6 +531,7 @@ html:not(.js) .nav { position: absolute; }
   /* «Написал —» is wider than "Say it.": a step smaller so the dash clears the bubble cluster */
   :lang(ru) .seal-title { font-size: clamp(2.6rem, 5.4vw, 5.6rem); }
 }
+:lang(ru) .gl .fbeat-1 .fbeat-title { max-width: 12em; }
 @media (max-width: 700px) {
   /* «Зашифрованный» is the longest word in display type: the hero line is sized so it fits at 360 */
   :lang(ru) .hero h1 { font-size: clamp(1.6rem, 8.8vw, 2.5rem); }
@@ -496,9 +540,8 @@ html:not(.js) .nav { position: absolute; }
 }
 
 /* ======================================================================
-   PLAY (html.play, every device): nothing pinned, nothing scrubbed. Every section has its natural height and
-   the scenes play on a timer when they are in view (see main.js). The hero is the same on every device;
-   the flow composition below (touch screens, narrow windows) stacks each stage and its copy.
+   TOUCH (html.play): nothing pinned, nothing scrubbed. Every section has its natural height and the
+   scenes play on a timer when they are in view (see main.js). Desktop (html.gl) is unaffected.
    ====================================================================== */
 /* hero: one screen. The headline stays; the shapes play above it with a caption under the nav */
 .play .hero-story { position: absolute; inset: 0 0 auto 0; height: var(--vh); z-index: 3; pointer-events: none; }
@@ -509,8 +552,7 @@ html:not(.js) .nav { position: absolute; }
 }
 .play .beat-still { display: none; }
 /* owner, 2026-10-26: on phones the beat captions above the headline read as a second headline ("a slide").
-   The particle sequence plays alone above the one headline; the beats are told again further down.
-   (Desktop follows the same rule since it moved to timed playback.) */
+   Touch shows the particle sequence alone above the one headline; the beats are told again further down. */
 .play .hero-story .beat { display: none !important; }
 .play .beat-line { font-size: clamp(1.45rem, 6.6vw, 2.6rem); max-width: 17ch; text-shadow: 0 2px 24px rgba(5, 5, 10, 0.8); }
 /* the next section starts light: a band of light rising out of the night closes the hero */
@@ -519,49 +561,34 @@ html:not(.js) .nav { position: absolute; }
   background: radial-gradient(130% 100% at 55% 100%, var(--ground) 34%, #e6dcff 46%, #9d83f0 60%, #3a2585 76%, var(--night) 94%);
 }
 
-/* bubbles, both compositions: the scene positions the route labels; one canvas moves between the seal and
-   route stages, and whichever stage does not hold it shows its designed still (main.js sets .holds-gl) */
-.play .lab { opacity: 0; visibility: hidden; will-change: transform, opacity; }
-.play .b-stage:not(.holds-gl) .b-still,
-.play .route-figure:not(.holds-gl) .route-still { display: block; animation: still-in 360ms var(--ease-out); }
-@keyframes still-in { from { opacity: 0; } }
-.b-stage .lab { z-index: 2; }
-
-/* wide: one stage under both beats, as in the approved desktop layout. It holds still while the route copy
-   scrolls over it (the page itself moves 1:1), and the scene turns from the seal into the route on its timer;
-   main.js keeps the canvas and the route labels in it */
-@media (min-width: 961px) and (hover: hover), (min-width: 961px) and (pointer: fine) {
-  .play .b-stage { position: sticky; top: 0; }
-  .play .bubbles .route-figure:not(.holds-gl) .route-still { display: none; }
+/* the phone: the stage, then the three lines as ordinary text */
+.play .film-stage { height: calc(var(--vh) * 0.78); }
+.play .film-beats {
+  display: grid; gap: clamp(28px, 4vh, 44px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  padding: 8px var(--gutter) calc(var(--section-y) * 0.6);
+  text-align: left;
 }
+.play .fbeat-title { font-size: clamp(1.6rem, 6.4vw, 2.4rem); }
+.play .fbeat-line, .play .fbeat .fine { margin-left: 0; margin-right: 0; }
+
+/* bubbles: copy, then the stage; the route section gets its own stage (the canvas moves between them) */
+.play .bubbles { display: flex; flex-direction: column; }
+.play .b-seal { order: 1; margin-top: 0; }
+.play .b-stage { order: 2; height: calc(var(--vh) * 0.7); }
+.play .b-route { order: 3; }
+.play .b-pin { height: auto; padding: 0 var(--gutter); }
+.play .seal-copy, .play .route-copy, .play .route-fine {
+  position: static; inset: auto; transform: none; width: auto; max-width: 40rem;
+}
+.play .seal-copy { padding-top: calc(var(--section-y) * 0.55); }
+.play .route-copy { padding-top: calc(var(--section-y) * 0.5); }
+.play .route-figure { position: relative; inset: auto; height: calc(var(--vh) * 0.7); margin: 4px calc(-1 * var(--gutter)) 0; overflow: hidden; }
+.play .route-fine { margin: 4px 0 0; padding-bottom: calc(var(--section-y) * 0.5); }
+.play .lab { opacity: 0; visibility: hidden; will-change: transform, opacity; }
+/* whichever stage does not hold the canvas shows its designed still (main.js sets .holds-gl, so this works without relational selectors) */
+.play .b-stage:not(.holds-gl) .b-still,
+.play .route-figure:not(.holds-gl) .route-still { display: block; }
 .play .route-still { position: absolute; inset: 0; }
 .play .route-still img { width: 100%; height: 100%; object-fit: cover; }
 .play .bubbles.is-live .route-figure.holds-gl .route-still { display: none; }
-
-/* flow composition (touch screens, narrow windows): each stage, then its copy as ordinary text */
-@media (max-width: 960px), (hover: none) and (pointer: coarse) {
-  /* the phone: the stage, then the three lines */
-  .play .film-stage { height: calc(var(--vh) * 0.78); }
-  .play .film-beats {
-    display: grid; gap: clamp(28px, 4vh, 44px);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-    padding: 8px var(--gutter) calc(var(--section-y) * 0.6);
-    text-align: left;
-  }
-  .play .fbeat-title { font-size: clamp(1.6rem, 6.4vw, 2.4rem); }
-  .play .fbeat-line, .play .fbeat .fine { margin-left: 0; margin-right: 0; }
-
-  /* bubbles: copy, then the stage; the route has its own stage */
-  .play .bubbles { display: flex; flex-direction: column; }
-  .play .b-seal { order: 1; margin-top: 0; }
-  .play .b-stage { order: 2; height: calc(var(--vh) * 0.7); }
-  .play .b-route { order: 3; }
-  .play .b-pin { height: auto; padding: 0 var(--gutter); }
-  .play .seal-copy, .play .route-copy, .play .route-fine {
-    position: static; inset: auto; transform: none; width: auto; max-width: 40rem;
-  }
-  .play .seal-copy { padding-top: calc(var(--section-y) * 0.55); }
-  .play .route-copy { padding-top: calc(var(--section-y) * 0.5); }
-  .play .route-figure { position: relative; inset: auto; height: calc(var(--vh) * 0.7); margin: 4px calc(-1 * var(--gutter)) 0; overflow: hidden; }
-  .play .route-fine { margin: 4px 0 0; padding-bottom: calc(var(--section-y) * 0.5); }
-}

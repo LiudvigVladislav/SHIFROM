@@ -2,7 +2,7 @@
 // Adapted from js/scenes/particles.js (the homepage hero): only two morph targets are kept
 // (0 the chaotic cloud, 1 the mark sampled from the brand favicon), the stage runs on the clock
 // instead of the scroll, and the mark sits where the About composition wants it.
-// Contract: mount(canvas, opt) -> start() / stop() / resize() / setPointer() / dispose(). Nothing here follows the scroll.
+// Contract: mount(canvas, opt) -> start() / stop() / setProgress(flood 0..1) / dispose().
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
@@ -334,7 +334,7 @@ export async function mount(canvas, opt = {}) {
   const sp1 = { x: 0, y: 0, vx: 0, vy: 0 }, sp2 = { x: 0, y: 0, vx: 0, vy: 0 };
   const str = { x: 0, v: 0 };
   const cam = { x: 0, y: 0, vx: 0, vy: 0 };
-  let lastPX = 0, lastPY = 0, speed = 0, t0 = -1;
+  let lastPX = 0, lastPY = 0, speed = 0, t0 = -1, flood = 0;
 
   function setPointer(nx, ny, active) { ptr.tx = nx; ptr.ty = ny; ptr.active = active ? 1 : 0; }
   function spring(o, tx, ty, k, c, dt) {
@@ -362,8 +362,8 @@ export async function mount(canvas, opt = {}) {
       U.uPtr2.value.set(sp2.x, sp2.y, Math.min(0.9, Math.hypot(sp1.vx, sp1.vy) * 0.25) * (ptr.active ? 1 : 0.3));
       spring(cam, ptr.active ? ptr.tx : 0, ptr.active ? ptr.ty : 0, 8, 5.6, dt);
       const t = U.uTime.value;
-      // a slow drift and a little pointer parallax
-      camera.position.set(0.16 * Math.sin(t * 0.07) + cam.x * 0.28, 0.1 * Math.cos(t * 0.05) + cam.y * 0.18, CAM_Z);
+      // a slow drift, a little pointer parallax, and a gentle push in as the light rises
+      camera.position.set(0.16 * Math.sin(t * 0.07) + cam.x * 0.28, 0.1 * Math.cos(t * 0.05) + cam.y * 0.18, CAM_Z - 0.9 * flood);
       camera.lookAt(0, 0, 0);
       U.uSweep.value = ((t * 0.55) % 9) - 4.5;
     } else {
@@ -392,6 +392,9 @@ export async function mount(canvas, opt = {}) {
   const onLost = (e) => { e.preventDefault(); lost = true; stop(); opt.onLost && opt.onLost(); };
   canvas.addEventListener('webglcontextlost', onLost);
 
+  // flood: 0 while the entrance is dark, 1 once the light has covered it
+  function setProgress(f) { flood = Math.min(1, Math.max(0, f)); }
+
   function dispose() {
     stop();
     canvas.removeEventListener('webglcontextlost', onLost);
@@ -403,7 +406,7 @@ export async function mount(canvas, opt = {}) {
   }
 
   const api = {
-    start, stop, dispose, resize, setPointer,
+    start, stop, setProgress, dispose, resize, setPointer,
   };
   S = { api };
   return api;
@@ -411,4 +414,5 @@ export async function mount(canvas, opt = {}) {
 
 export function start() { S && S.api.start(); }
 export function stop() { S && S.api.stop(); }
+export function setProgress(f) { S && S.api.setProgress(f); }
 export function dispose() { S && S.api.dispose(); }
