@@ -28,7 +28,7 @@ const server = http.createServer((req, res) => {
     const file = path.resolve(root, relative);
     const allowed = alias ? file === path.resolve(root, alias)
       : file.startsWith(path.resolve(root, asset ? 'legal/assets' : 'site') + path.sep);
-    if (!allowed || file.startsWith(path.resolve(root, 'site/tools') + path.sep)) {
+    if (!allowed) {
       res.writeHead(403).end(); return;
     }
     if (!fs.existsSync(file) || !fs.statSync(file).isFile()) { res.writeHead(404).end(); return; }

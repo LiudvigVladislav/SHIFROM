@@ -3,9 +3,13 @@
 Static HTML/CSS/JS for `https://shifrom.com/`, with six pages in English
 and six corresponding Russian pages under `/ru/`. There is no build step.
 
+The published files live in `site/` and nothing else belongs there: this
+document is kept in `docs/website/` and the preview tooling in
+`tooling/site-preview/`, so neither is ever served with the site.
+
 ## Source Of Truth
 
-Edit the twelve HTML files and the shared files under `static/` directly.
+Edit the twelve HTML files in `site/` and the shared files under `site/static/` directly.
 Apply shared changes to all twelve pages and content changes to both languages.
 
 - `static/css/`: `base.css` (every page) plus one stylesheet per page.
@@ -24,7 +28,7 @@ and the import map) carries `?v=` with the first 8 hex digits of that file's
 SHA-256, so a changed file always gets a new URL and an unchanged one keeps
 its URL. A file is always referenced by one URL, so each module loads once.
 After editing a file, update its version wherever it is referenced; those files
-change too, so their versions change in turn. `node --test site/tools/preview.test.mjs`
+change too, so their versions change in turn. `node --test tooling/site-preview/preview.test.mjs`
 fails on a stale version. The brand files keep the queries listed below; the
 wordmark and the social image are referenced without one, as before.
 
@@ -65,8 +69,8 @@ old URLs for pages still in caches; the current pages do not load them.
 There are no Google Fonts or other font-CDN requests, and the
 pages make no third-party requests at all.
 
-Use `/static/` for website assets. `/assets/` is reserved for legal-page assets
-by the existing Caddy routing.
+Use `/static/` for website assets. `/assets/` is reserved and must not be used
+for website files.
 
 ## Languages And Navigation
 
@@ -85,18 +89,18 @@ Navigation and page content remain available when JavaScript is disabled.
 From the repository root, with Node.js installed:
 
 ```sh
-node site/tools/preview.mjs
+node tooling/site-preview/preview.mjs
 ```
 
 Open `http://127.0.0.1:4176/` or `http://127.0.0.1:4176/ru/`.
 Set `PORT` to choose another port. The preview binds only to localhost, disables
-caching, and mirrors the existing legal, funding, and Android-link routes.
+caching, and mirrors the domain's other public routes for testing.
 It is a development tool, not a production server.
 
 Run the preview's dependency-free HTTP regression checks with:
 
 ```sh
-node --test site/tools/preview.test.mjs
+node --test tooling/site-preview/preview.test.mjs
 ```
 
 The tests use an ephemeral localhost port and stop their own preview process.
@@ -105,33 +109,16 @@ Before publication, check all twelve pages at desktop and mobile widths,
 navigation with keyboard and without JavaScript, image/font loading, and
 donation copying on both successful and denied clipboard operations.
 
-## Publication Boundary
+## Publication
 
-Repository changes do not publish the website. Verify the actual production
-vhost, mounted paths, file versions, and Cloudflare cache policy first.
-The checked-in deployment still contains legacy host/path names; do not infer
-the live `shifrom.com` setup from it, replace relay hostnames, pull unrelated
-application changes into production, or recreate containers just to publish
-static pages. Deployment requires a separately approved, bounded operation.
-
-The legacy installation used `/home/phantom/Phantom/site` mounted read-only
-as `/srv/landing`. Its root `funding.json` and well-known files were separate
-single-file bind mounts; replacing their inode does not necessarily update
-the container view. A static-site publication must preserve these boundaries.
-
-Preserve the following separately served resources and verify them after any
-approved deployment:
-
-- `/funding.json` and `/.well-known/funding-manifest-urls`.
-- `/.well-known/assetlinks.json`, including Android signing fingerprints.
-- `/terms`, `/terms/ru`, `/privacy`, `/privacy/ru`, and `/assets/*`.
-- ACME challenge handling and existing certificates.
-- Relay, push, bridge, TURN, and onion endpoints and their running containers.
+Repository changes do not publish the website. Publishing is a separate,
+approved step that replaces only the files of `site/` and leaves every other
+public resource of the domain untouched. Verify the live pages afterwards.
 
 The legacy Liberapay and Buy Me a Coffee URLs and existing cryptocurrency
 addresses remain unchanged until verified replacements are supplied.
 Renaming the product is not authorization to create wallets or move funds.
 
-The dated [website review and donation-link audit](../docs/branding/SHIFROM-WEBSITE-REVIEW.md)
+The dated [website review and donation-link audit](../branding/SHIFROM-WEBSITE-REVIEW.md)
 records which destinations still need account-level rebranding. Buy Me a Coffee
 documents changing an existing page URL; do not assume a new account is needed.
