@@ -340,6 +340,8 @@ export async function mount(canvas, opt = {}) {
   }
 
   // ---------- pointer (stage coordinates) ----------
+  // declared before the listeners: the build yields between steps, so input can arrive mid-build
+  let raf = 0, last = 0, simT = 0, lost = false;
   const ptr = { x: -9999, y: -9999, nx: 0, ny: 0, inside: false, down: null };
   let hovered = null;
   const interactive = (t) => t && t.closest && t.closest('a, button, summary, details, .nav, input, label, .menu-sheet');
@@ -767,7 +769,6 @@ export async function mount(canvas, opt = {}) {
     for (let k = 0; k < 420; k++) { step(1 / 60, S0); if (k % 70 === 69) await yieldTask(); }
   }
 
-  let raf = 0, last = 0, simT = 0, lost = false;
   function advance(dt) {
     const St = scrollState(U);
     K1 = St.k1;

@@ -374,3 +374,32 @@ a, button, summary, label, .btn { touch-action: manipulation; }
 
 /* Russian: long words in display type break only where a soft hyphen (&shy;) says so */
 :lang(ru) :is(h1, h2, h3, .t-display, .t-h2, .t-h3) { hyphens: manual; -webkit-hyphens: manual; overflow-wrap: break-word; }
+
+/* ---------- back to top (added to every page by js/nav.js) ---------- */
+/* a band from the top of the page to 1.5 screens: once it has scrolled entirely above the viewport (by any
+   route, even a jump), the button shows; a 1px point could be skipped over without the observer noticing */
+.to-top-marker { position: absolute; left: 0; top: 0; width: 1px; height: calc(var(--vh, 100vh) * 1.5); pointer-events: none; visibility: hidden; }
+.to-top {
+  position: fixed; z-index: 56;
+  right: max(16px, calc(var(--safe-r) + 12px));
+  bottom: calc(16px + var(--safe-b));
+  width: 52px; height: 52px; padding: 0; border: 0; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer;
+  background: var(--paper); color: var(--ink);
+  box-shadow: 0 14px 30px -12px rgba(22, 20, 43, 0.42), 0 2px 6px rgba(22, 20, 43, 0.08), inset 0 0 0 1px rgba(22, 20, 43, 0.07);
+  touch-action: manipulation; -webkit-user-select: none; user-select: none;
+  opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.96); pointer-events: none;
+  transition: opacity 180ms ease, transform 220ms var(--ease-out), bottom 220ms var(--ease-out), visibility 0s 220ms;
+}
+.to-top.is-shown { opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition: opacity 180ms ease, transform 220ms var(--ease-out), bottom 220ms var(--ease-out); }
+.to-top:active { transform: scale(0.94); }
+.to-top:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+/* above the docked "Contents" pill of the write-up pages (48px tall, 16px from the bottom) */
+.to-top.is-stacked { bottom: calc(16px + 48px + 12px + var(--safe-b)); }
+@media (hover: hover) and (pointer: fine) {
+  .to-top { right: max(24px, calc(var(--safe-r) + 16px)); bottom: calc(24px + var(--safe-b)); }
+  .to-top:hover { color: var(--blue); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .to-top, .to-top.is-shown { transition: opacity 120ms ease, visibility 0s; transform: none; }
+}
