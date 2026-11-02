@@ -1,0 +1,40 @@
+# SHIFROM
+
+> SHIFROM is an open-source (AGPL-3.0-or-later), end-to-end encrypted messenger for Android, built for hostile networks: networks that filter, throttle or block traffic. No phone number, email or real name is required. Status: Alpha 2. Maintained by Willen LLC (Wyoming, USA).
+
+Important qualifiers that travel with every claim below:
+
+- SHIFROM is in Alpha 2. Source builds and tagged development snapshots are on GitHub; there is no public end-user APK or open beta yet. Public builds come with Beta.
+- The custom protocol composition has not yet received an independent security audit.
+- Group chats and calls are not production-ready.
+- REALITY makes traffic resemble ordinary TLS. It is not an anonymity system and may not bypass every DPI policy; founder-run tests covered specific networks and dates.
+- Sealed-sender-style envelopes reduce sender metadata, but the relay can still observe timing, message sizes, authenticated sessions and delivery destinations.
+
+## What it does
+
+- End-to-end encryption: a Double Ratchet implementation over libsodium, ED25519 identity keys generated on the device, X3DH session setup. The relay never sees plaintext; identity keys never leave the phone.
+- Several ways to reach the network: Direct WSS (encrypted WebSocket over TLS), REALITY/Xray, Tor (v3 onion, text only) and a REST fallback for when WebSocket frames are silently dropped. When one route is blocked, another takes over. An offline mesh is planned (research stage).
+- Three privacy modes: Standard (direct first, lowest latency), Private (REALITY first; not an anonymity mode), Ghost (Tor only; never silently downgrades, fails visibly instead; text only).
+- Contact verification by mutual ED25519 fingerprint check and QR exchange. Encrypted voice notes.
+- Fully open source: the code, the threat model, known issues and architecture decisions are public.
+
+## Pages
+
+- [Home](https://shifrom.com/): what SHIFROM is, privacy modes, transports, project status
+- [About](https://shifrom.com/about.html): why the project exists and how it is developed
+- [Roadmap](https://shifrom.com/roadmap.html): what is shipped, in progress and planned (stages, not dates)
+- [Engineering](https://shifrom.com/writeups/): technical write-ups
+- [When TLS stays open but accepted writes do not arrive](https://shifrom.com/writeups/how-phantom-survives-dpi.html): diagnosing a mobile-path flow stall (August 2026; measurements from one testbed, read the stated scope)
+- [Support the project](https://shifrom.com/donate.html): Liberapay, Buy Me a Coffee, Bitcoin, Monero, Ethereum
+
+Russian versions: [Главная](https://shifrom.com/ru/), [О проекте](https://shifrom.com/ru/about.html), [Дорожная карта](https://shifrom.com/ru/roadmap.html), [Инженерия](https://shifrom.com/ru/writeups/), [Поддержать](https://shifrom.com/ru/donate.html)
+
+## Source and documents
+
+- [Source code on GitHub](https://github.com/LiudvigVladislav/SHIFROM) (mirror on [Codeberg](https://codeberg.org/VladislavLiudvig/SHIFROM))
+- [Releases](https://github.com/LiudvigVladislav/SHIFROM/releases)
+- [Threat model](https://github.com/LiudvigVladislav/SHIFROM/blob/master/docs/threat-model/Threat_Model_v0.md)
+
+## Name
+
+SHIFROM was previously called PHANTOM; the old site phntm.pro redirects here. It is not related to other products named Phantom.
