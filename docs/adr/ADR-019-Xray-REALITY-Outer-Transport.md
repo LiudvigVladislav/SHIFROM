@@ -10,6 +10,12 @@ Status: accepted (2026-05-07, field-tested on a Tecno handset over МТС withou
 > stand as written; only the label is corrected. Every recorded run, including
 > its failures, is listed in
 > [`docs/field-tests/TEST_MATRIX.md`](../field-tests/TEST_MATRIX.md).
+>
+> **Amendment, 2026-11-03.** Live endpoint parameters (the server address and
+> the cover host) are replaced with placeholders in this record's explanations;
+> the live values belong to operator configuration. Claims that REALITY
+> "defeats" TSPU or is "indistinguishable" from the cover host are reworded to
+> what the evidence supports: one founder-run run, and a design intent.
 Layer: shared/core/xray (KMP, new module), apps/android, deploy/xray
 Extends: ADR-016 (Tor + UnifiedPush hybrid transport)
 
@@ -50,13 +56,15 @@ Two parallel research threads ruled out the obvious workarounds:
   obfs4 fingerprints are passively detected. Meek-azure was
   decommissioned by Microsoft.
 
-The only known censorship-resistance technique that empirically
-defeats TSPU on Russian carriers without a third-party app is
+The technique that worked in our one field run on a Russian carrier
+without a third-party app (2026-05-07, see TEST_MATRIX) is
 **VLESS+REALITY**: Xray-core's outer-protocol implementation that
-makes the client's TLS handshake byte-for-byte indistinguishable
-from a genuine handshake to a chosen cover host (typically
-`www.microsoft.com`). The censor's classifier sees a trusted-CDN
-TLS handshake to a real Microsoft endpoint and applies no throttle.
+makes the client's TLS handshake closely resemble a genuine handshake
+to a chosen cover host, a large third-party website (`<cover-site>`
+below). The intent is that the censor's classifier sees an ordinary
+TLS handshake to a widely used site and applies no throttle. That is
+not a guarantee: the endpoint's address does not belong to the cover
+host, and research on detecting REALITY exists.
 
 Stage 5E records the decision to embed VLESS+REALITY into PHANTOM
 as a parallel outer transport alongside the Tor stack from Stages 5A-5C.
@@ -72,7 +80,7 @@ The deployment shape:
 
 - **Server side** (`deploy/xray/`): a Xray-core 26.3.27 container
   bound to `:8443/tcp` on the operator VPS. REALITY mimics the
-  TLS-1.3 handshake to `www.microsoft.com:443`. VLESS clients land
+  TLS-1.3 handshake to `<cover-site>:443`. VLESS clients land
   on a freedom outbound that resolves `relay.phntm.pro` via a docker
   bridge DNS hosts override (`relay.phntm.pro → caddy`) — the
   unwrapped traffic exits the Xray container straight into the Caddy
@@ -93,7 +101,7 @@ The deployment shape:
 
   ```
   Phantom client  ──SOCKS5(127.0.0.1:10808)─►  embedded libXray
-                  ──TLS-handshake-mimicking-microsoft.com:443──►
+                  ──TLS-handshake-mimicking-<cover-site>:443──►
                                                REALITY listener (Hetzner :8443)
                   ──freedom outbound + dns.hosts override──►
                                                Caddy container (:443)
@@ -116,14 +124,15 @@ Three alternatives were eliminated:
   fingerprint) requires a separate user-installed app, which
   contradicts our "no third-party app" pitch.
 
-REALITY is the only known protocol that survives the curtain because
-it doesn't *hide* traffic — it presents traffic that **is, on the
-wire, indistinguishable from a real Microsoft TLS handshake**. The
-trick: the Xray server completes its REALITY-side handshake by live-
-proxying packets to and from the real `www.microsoft.com:443` for
-any client that doesn't carry the right pre-shared shortId+pubkey.
-TSPU active-probing thus sees a genuine Microsoft cert chain on
-every probe; the censor's classifier marks the IP as benign CDN.
+REALITY was chosen because it doesn't *hide* traffic — it presents a
+handshake **designed to look like one to a real third-party site**.
+The trick: the Xray server completes its REALITY-side handshake by
+live-proxying packets to and from the real `<cover-site>:443` for any
+client that doesn't carry the right pre-shared shortId+pubkey. TSPU
+active probing thus receives the cover site's genuine certificate
+chain, which is meant to keep the endpoint classified as ordinary
+traffic. Passive signals remain: the endpoint's address is not the
+cover site's, and the client-side parameters ship in every build.
 
 ### Why the Xray server lives on the same VPS as the relay (Path A)
 
@@ -292,12 +301,12 @@ by reading the code:
   5E becomes a no-op. This is documented behaviour, not a bug —
   the user's VPN already does what Stage 5E exists to do.
 - **REALITY's cover host is currently a hard pin.** We cover-mimic
-  `www.microsoft.com:443`. If Microsoft starts blocking RU access
+  `<cover-site>:443`. If the cover site starts blocking RU access
   to that endpoint (sanctions scenario), the Hetzner Xray server's
   active-probe response would fail and the IP would get reclassified
-  by TSPU. Mitigation: the cover host is a server-side template
-  variable; switching to another well-known TLS endpoint is a
-  config-change-and-restart operation, no APK release required.
+  by TSPU. Switching to another well-known TLS endpoint needs a
+  server config change and, because the client pins the SNI in
+  `OperatorXrayConfig`, a client release in step with it.
 - **iOS support is post-Alpha-2.** libXray's gomobile output
   produces `.aar` (Android only); the iOS equivalent (`.xcframework`
   via `gomobile bind --target=ios`) compiles only on macOS and is

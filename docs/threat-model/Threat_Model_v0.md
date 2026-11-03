@@ -20,13 +20,23 @@ TLS-encrypted bytes — message content, sender, recipient, and
 contact graph remain confidential because every envelope is
 end-to-end encrypted with the Double Ratchet and wrapped in a
 Sealed Sender header before it reaches the relay. An active
-network adversary that blocks endpoints (Russia's TSPU is the
-worked example — see ADR-019) is defeated by the censorship-
-resistance transport layer: today either Tor with operator-
-controlled WebTunnel bridges (ADR-016) or Xray VLESS+REALITY
-masquerading as a TLS handshake to `www.microsoft.com` (ADR-019),
-field-tested 2026-05-07 on one Russian carrier, one handset and
-one date; see `docs/field-tests/TEST_MATRIX.md`. A
+network adversary that blocks or throttles endpoints (Russia's
+TSPU is the worked example — see ADR-019) is addressed, not
+defeated, by the censorship-resistance transport layer: today
+either Tor with operator-controlled WebTunnel bridges (ADR-016)
+or Xray VLESS+REALITY, which presents the outer TLS handshake of
+a large third-party website (ADR-019). The REALITY route passed
+one founder-run field test on 2026-05-07: one Russian carrier,
+one handset, one date; see `docs/field-tests/TEST_MATRIX.md`.
+That is not evidence against every filtering policy. These
+transports change how a flow looks, not whether its address can
+be blocked. We assume the adversary has read this repository and
+unpacked the app: the endpoint address and the client-side
+REALITY parameters ship with every build, so the adversary can
+block the endpoint by address or confirm it with valid client
+parameters. More than one route, and endpoints that can be
+rotated, are the response to that; keeping the parameters out of
+sight is not. A
 malicious or seized relay sees only opaque ciphertext blobs —
 no plaintext, no decryptable messages; the relay's trust
 posture is recorded in ADR-004 and enforced at the protocol

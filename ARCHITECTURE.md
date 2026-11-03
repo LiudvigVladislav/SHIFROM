@@ -51,8 +51,9 @@ N seconds, deliver on next connect, drop. Trust posture in
 Two outer transports plug into the same `RelayTransport` interface:
 
 - **Tor v3 onion + WebTunnel bridges** ([ADR-016](docs/adr/ADR-016-tor-unified-push-hybrid-transport.md))
-- **Xray VLESS+REALITY**, masquerading as a TLS handshake to
-  `www.microsoft.com` to bypass Russia's TSPU 16-KB curtain
+- **Xray VLESS+REALITY**, which presents the outer TLS handshake of a
+  large third-party website, aimed at the throttling of long TLS flows
+  seen on Russian carriers
   ([ADR-019](docs/adr/ADR-019-Xray-REALITY-Outer-Transport.md))
 
 Stage 5E (Xray) was field-tested on a Tecno handset over MTS without

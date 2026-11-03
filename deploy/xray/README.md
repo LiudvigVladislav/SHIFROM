@@ -5,7 +5,7 @@ Copyright (c) 2026 Willen LLC
 
 # Stage 5E.A — Xray VLESS+REALITY server (Hetzner)
 
-Operator deployment guide for the Xray-core daemon that SHIFROM clients use as the **outer transport** when on censored networks (Russia / Iran / China). REALITY reshapes the TLS handshake so that it aims to resemble one to `www.microsoft.com`. In founder-run tests on specific networks and dates, TSPU's "16-kilobyte curtain" classifier did not throttle the resulting flow. That is an observation from those tests, not a guarantee of indistinguishability, of freedom from throttling, or of bypassing any particular DPI policy. Recorded runs are in [`docs/field-tests/TEST_MATRIX.md`](../../docs/field-tests/TEST_MATRIX.md).
+Operator deployment guide for the Xray-core daemon that SHIFROM clients use as the **outer transport** when on censored networks (Russia / Iran / China). REALITY reshapes the TLS handshake so that it aims to resemble one to `<cover-site>`. In founder-run tests on specific networks and dates, TSPU's "16-kilobyte curtain" classifier did not throttle the resulting flow. That is an observation from those tests, not a guarantee of indistinguishability, of freedom from throttling, or of bypassing any particular DPI policy. Recorded runs are in [`docs/field-tests/TEST_MATRIX.md`](../../docs/field-tests/TEST_MATRIX.md).
 
 This is **server-only**. Stage 5E.B brings the matching libXray Android library; Stage 5E.A exists to validate the wire format with a desktop NekoBox client before any Kotlin work.
 
@@ -21,7 +21,7 @@ This is **server-only**. Stage 5E.B brings the matching libXray Android library;
 - Hetzner VPS already running `deploy/docker-compose.yml` (relay + caddy + tor + ntfy + webtunnel-bridge). Adding `xray` keeps that stack untouched.
 - `docker` + `docker compose` installed (already present per Stage 1 deploy).
 - ~50 MB additional disk for the Xray image.
-- Outbound TCP to `www.microsoft.com:443` from the VPS (for the `dest` cert-chain reverse proxy).
+- Outbound TCP to `<cover-site>:443` (the `dest` in `config.json.template`) from the VPS (for the `dest` cert-chain reverse proxy).
 - UFW rule for **port 8443/tcp** (Stage 5E.A; will be promoted to shared 443 in Stage 5E.B).
 
 ---
@@ -53,7 +53,7 @@ docker run --rm ghcr.io/xtls/xray-core:latest x25519
 # UUID (VLESS client identifier — same purpose as a username).
 docker run --rm ghcr.io/xtls/xray-core:latest uuid
 # Sample output:
-#   c1e9f3a2-3b4d-4e5f-9a8b-7c6d5e4f3a2b
+#   00000000-0000-4000-8000-000000000000
 
 # ShortId — 8 random bytes hex. Real REALITY clients send one of these
 # to identify themselves to the server's REALITY listener.
@@ -129,19 +129,20 @@ Stage 5E.A's whole point: prove REALITY actually flows through TSPU before inves
 The standard VLESS share-link format:
 
 ```
-vless://<UUID>@<server-ip>:8443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.microsoft.com&fp=chrome&pbk=<PUBLIC_KEY>&sid=<SHORT_ID>&type=tcp#SHIFROM-test
+vless://<UUID>@<server-ip>:8443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=<cover-site>&fp=chrome&pbk=<PUBLIC_KEY>&sid=<SHORT_ID>&type=tcp#SHIFROM-test
 ```
 
 Substitute:
 - `<UUID>` — same as `XRAY_UUID` from §2.2
-- `<server-ip>` — Hetzner IP (e.g. `65.108.154.152`)
+- `<server-ip>` — the VPS address (e.g. `203.0.113.10`, a documentation-only address)
+- `<cover-site>` — the host in `serverNames` of the rendered `config.json`
 - `<PUBLIC_KEY>` — from `xray x25519` output (NOT the private!)
 - `<SHORT_ID>` — same as `XRAY_SHORT_ID` from §2.2
 
 Example (placeholders only):
 
 ```
-vless://c1e9f3a2-3b4d-4e5f-9a8b-7c6d5e4f3a2b@65.108.154.152:8443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.microsoft.com&fp=chrome&pbk=K3aQ...4-w&sid=3a4b5c6d7e8f9a0b&type=tcp#SHIFROM-test
+vless://00000000-0000-4000-8000-000000000000@203.0.113.10:8443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=cover.example&fp=chrome&pbk=K3aQ...4-w&sid=3a4b5c6d7e8f9a0b&type=tcp#SHIFROM-test
 ```
 
 ### 4.2 Test from a non-RU vantage first (sanity check)
@@ -157,7 +158,7 @@ Either:
 **Acceptance criteria for Stage 5E.A success:**
 - Vladislav on Tecno / Windows box, MTS WiFi, no VPN, NekoBox VLESS+REALITY tunnel connects within 5 seconds.
 - Browsing through the tunnel works (e.g. open `https://check.torproject.org` — irrelevant content, just proves end-to-end TCP works).
-- The TLS handshake to our IP looks like `www.microsoft.com` (we will have validated this with `openssl s_client -connect <server-ip>:8443 -servername www.microsoft.com` from non-RU before shipping).
+- The TLS handshake to our IP looks like `<cover-site>` (we will have validated this with `openssl s_client -connect <server-ip>:8443 -servername <cover-site>` from non-RU before shipping).
 
 If 4.3 succeeds, **Stage 5E.A is done** and Stage 5E.B (Android libXray) is unblocked.
 
