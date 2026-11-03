@@ -30,14 +30,14 @@
 <link rel="apple-touch-icon" href="/static/apple-touch-icon.png?v=533eb4c4">
 <link rel="preload" href="/static/fonts/unbounded-latin-wght-normal.woff2?v=22f9b928" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/static/fonts/onest-latin-wght-normal.woff2?v=052df745" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/static/css/base.css?v=d7107c54">
+<link rel="stylesheet" href="/static/css/base.css?v=2bf25d51">
 <link rel="stylesheet" href="/static/css/about.css?v=58e3161d">
 <script>
 /* Decide the page mode before first paint: a live entrance (gl) or the designed still (static). */
 (function () {
   var r = document.documentElement, c = r.classList, gl = false;
   c.add('js');
-  try { var cv = document.createElement('canvas'), x = cv.getContext('webgl2') || cv.getContext('webgl'); gl = !!x; var l = x && x.getExtension('WEBGL_lose_context'); if (l) l.loseContext(); } catch (e) {}
+  try { var cv = document.createElement('canvas'), x = cv.getContext('webgl2') || cv.getContext('webgl'); gl = !!x; var ri = x && x.getExtension('WEBGL_debug_renderer_info'); if (ri && /swiftshader|llvmpipe|softpipe|software|basic render/i.test(x.getParameter(ri.UNMASKED_RENDERER_WEBGL))) gl = false; var l = x && x.getExtension('WEBGL_lose_context'); if (l) l.loseContext(); } catch (e) {}
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (gl) c.add('webgl');
   c.add(gl && !reduce ? 'gl' : 'static');
@@ -47,36 +47,25 @@
 <script type="importmap">{"imports":{"three":"/static/vendor/three/three.module.js?v=6f0d18b1","three/addons/environments/RoomEnvironment.js":"/static/vendor/three/addons/environments/RoomEnvironment.js?v=7c0f8204","three/addons/geometries/RoundedBoxGeometry.js":"/static/vendor/three/addons/geometries/RoundedBoxGeometry.js?v=800dfe97","three/addons/lines/LineMaterial.js":"/static/vendor/three/addons/lines/LineMaterial.js?v=ff08dd36","three/addons/lines/LineSegments2.js":"/static/vendor/three/addons/lines/LineSegments2.js?v=653dae95","three/addons/lines/LineSegmentsGeometry.js":"/static/vendor/three/addons/lines/LineSegmentsGeometry.js?v=a9277f7d","three/addons/postprocessing/EffectComposer.js":"/static/vendor/three/addons/postprocessing/EffectComposer.js?v=460c8b24","three/addons/postprocessing/OutputPass.js":"/static/vendor/three/addons/postprocessing/OutputPass.js?v=4031c971","three/addons/postprocessing/RenderPass.js":"/static/vendor/three/addons/postprocessing/RenderPass.js?v=0bb3b352","three/addons/postprocessing/UnrealBloomPass.js":"/static/vendor/three/addons/postprocessing/UnrealBloomPass.js?v=bc123526","three/addons/utils/BufferGeometryUtils.js":"/static/vendor/three/addons/utils/BufferGeometryUtils.js?v=aba9507c"}}</script>
 <link rel="modulepreload" href="/static/js/nav.js?v=8e8e58d7">
 <link rel="modulepreload" href="/static/js/pages/about.js?v=a23e02c1">
-<link rel="modulepreload" href="/static/js/pages/about-particles.js?v=3eb8d798">
-<link rel="modulepreload" href="/static/vendor/three/three.module.js?v=6f0d18b1">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/EffectComposer.js?v=460c8b24">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/RenderPass.js?v=0bb3b352">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/UnrealBloomPass.js?v=bc123526">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/OutputPass.js?v=4031c971">
-<link rel="modulepreload" href="/static/vendor/three/three.core.js?v=c001a388">
-<link rel="modulepreload" href="/static/vendor/three/addons/shaders/CopyShader.js?v=41d281b4">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/ShaderPass.js?v=b188f5e0">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/MaskPass.js?v=60017eab">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/Pass.js?v=9c1a4327">
-<link rel="modulepreload" href="/static/vendor/three/addons/shaders/LuminosityHighPassShader.js?v=c7816aae">
-<link rel="modulepreload" href="/static/vendor/three/addons/shaders/OutputShader.js?v=8f72cd38">
+<script>if (!document.documentElement.classList.contains('static')) ["/static/js/pages/about-particles.js?v=3eb8d798","/static/vendor/three/three.module.js?v=6f0d18b1","/static/vendor/three/addons/postprocessing/EffectComposer.js?v=460c8b24","/static/vendor/three/addons/postprocessing/RenderPass.js?v=0bb3b352","/static/vendor/three/addons/postprocessing/UnrealBloomPass.js?v=bc123526","/static/vendor/three/addons/postprocessing/OutputPass.js?v=4031c971","/static/vendor/three/three.core.js?v=c001a388","/static/vendor/three/addons/shaders/CopyShader.js?v=41d281b4","/static/vendor/three/addons/postprocessing/ShaderPass.js?v=b188f5e0","/static/vendor/three/addons/postprocessing/MaskPass.js?v=60017eab","/static/vendor/three/addons/postprocessing/Pass.js?v=9c1a4327","/static/vendor/three/addons/shaders/LuminosityHighPassShader.js?v=c7816aae","/static/vendor/three/addons/shaders/OutputShader.js?v=8f72cd38"].forEach(function (h) { var l = document.createElement('link'); l.rel = 'modulepreload'; l.href = h; document.head.appendChild(l); });</script>
 </head>
 <body class="light-page about-page">
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="nav" id="nav">
   <a class="brand" href="/" aria-label="SHIFROM home">
-    <img class="brand-mark" src="/static/favicon.png?v=b9180644" width="192" height="192" alt="">
+    <img class="brand-mark" src="/static/img/nav/brand-mark.webp?v=b3b954ba" width="104" height="104" alt="">
     <span class="brand-word">
       <img class="wm-img" src="/static/shifrom-wordmark-white.png" width="781" height="119" alt="">
       <span class="wm-type" aria-hidden="true">SHIFROM</span>
     </span>
   </a>
   <nav class="links" aria-label="Main">
-    <a href="/">Home</a>
     <a href="/about.html" aria-current="page">About</a>
     <a href="/roadmap.html">Roadmap</a>
     <a href="/writeups/">Engineering</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/compare.html">Compare</a>
     <a href="/donate.html">Support</a>
   </nav>
   <div class="lang" role="group" aria-label="Language">
@@ -91,6 +80,8 @@
         <a href="/about.html" aria-current="page">About</a>
         <a href="/roadmap.html">Roadmap</a>
         <a href="/writeups/">Engineering</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/compare.html">Compare</a>
         <a href="/donate.html">Support</a>
       </nav>
       <div class="menu-lang">
@@ -171,7 +162,7 @@
     <h2 id="ab-who-h" class="who-title" data-words>Independent development with transparent funding.</h2>
     <p class="who-text" data-rise>SHIFROM is built by Vladislav Liudvig through Willen LLC, a Wyoming company formed in June 2025. The project is currently pre-revenue and is seeking mission-aligned grants and pre-seed investment for external security review, beta testing, iOS development, and operating runway.</p>
     <div class="who-pledge" data-rise>
-      <img class="who-mark" src="/static/favicon.png?v=b9180644" width="192" height="192" alt="" loading="lazy" decoding="async">
+      <img class="who-mark" src="/static/img/nav/brand-mark-192.webp?v=a5ae9937" width="192" height="192" alt="" loading="lazy" decoding="async">
       <p>Funding will not change the AGPL license or remove the published threat model, known issues, and security boundaries.</p>
     </div>
   </section>
@@ -185,7 +176,7 @@
 
 <footer class="foot">
   <div class="foot-id">
-    <img src="/static/favicon.png?v=b9180644" width="192" height="192" alt="" loading="lazy" decoding="async">
+    <img src="/static/img/nav/brand-mark.webp?v=b3b954ba" width="104" height="104" alt="" loading="lazy" decoding="async">
     <p><span class="foot-name">SHIFROM</span> <span>Maintained by Willen LLC · Wyoming, USA · AGPL-3.0-or-later</span></p>
   </div>
   <nav class="foot-links" aria-label="Footer">

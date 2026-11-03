@@ -7,7 +7,12 @@ const canvas = document.querySelector('.eng-gl');
 const band = document.querySelector('.eng-head');
 
 function hasWebGL() {
-  try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); }
+  // a software renderer (no GPU) would draw every frame on the CPU: treat it as no WebGL
+  try {
+    const x = document.createElement('canvas').getContext('webgl2') || document.createElement('canvas').getContext('webgl');
+    const ri = x && x.getExtension('WEBGL_debug_renderer_info');
+    return !!x && !(ri && /swiftshader|llvmpipe|softpipe|software|basic render/i.test(x.getParameter(ri.UNMASKED_RENDERER_WEBGL)));
+  }
   catch (e) { return false; }
 }
 
