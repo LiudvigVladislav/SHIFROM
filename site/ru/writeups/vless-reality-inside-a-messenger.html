@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Как SHIFROM ведёт соединение с ретранслятором внутри VLESS+REALITY — Инженерные заметки SHIFROM</title>
+<meta name="description" content="Как SHIFROM встраивает Xray VLESS+REALITY в своё приложение как один из маршрутов к ретранслятору, где он стоит в режимах приватности, что показал полевой тест основателя и чего он не защищает.">
+<link rel="canonical" href="https://shifrom.com/ru/writeups/vless-reality-inside-a-messenger.html">
+<link rel="alternate" hreflang="en" href="https://shifrom.com/writeups/vless-reality-inside-a-messenger.html">
+<link rel="alternate" hreflang="ru" href="https://shifrom.com/ru/writeups/vless-reality-inside-a-messenger.html">
+<link rel="alternate" hreflang="x-default" href="https://shifrom.com/writeups/vless-reality-inside-a-messenger.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="SHIFROM">
+<meta property="og:title" content="Как SHIFROM ведёт соединение с ретранслятором внутри VLESS+REALITY — Инженерные заметки SHIFROM">
+<meta property="og:description" content="Как SHIFROM встраивает Xray VLESS+REALITY в своё приложение как один из маршрутов к ретранслятору, где он стоит в режимах приватности, что показал полевой тест основателя и чего он не защищает.">
+<meta property="og:url" content="https://shifrom.com/ru/writeups/vless-reality-inside-a-messenger.html">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://shifrom.com/static/shifrom-social-132f0f6a.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1774">
+<meta property="og:image:height" content="887">
+<meta property="og:image:alt" content="SHIFROM — мессенджер с открытым кодом и сквозным шифрованием для сетей, где следят и блокируют">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://shifrom.com/static/shifrom-social-132f0f6a.png">
+<meta name="twitter:image:alt" content="SHIFROM — мессенджер с открытым кодом и сквозным шифрованием для сетей, где следят и блокируют">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://shifrom.com/#org","name":"SHIFROM","legalName":"Willen LLC","url":"https://shifrom.com/","logo":{"@type":"ImageObject","url":"https://shifrom.com/static/logo-mark.png","width":1024,"height":1024},"address":{"@type":"PostalAddress","addressRegion":"WY","addressCountry":"US"},"sameAs":["https://github.com/LiudvigVladislav/SHIFROM","https://codeberg.org/VladislavLiudvig/SHIFROM","https://liberapay.com/SHIFROM/","https://buymeacoffee.com/shifrom"]},{"@type":"WebSite","@id":"https://shifrom.com/#website","url":"https://shifrom.com/","name":"SHIFROM","inLanguage":["en","ru"],"publisher":{"@id":"https://shifrom.com/#org"}},{"@type":"MobileApplication","@id":"https://shifrom.com/#app","name":"SHIFROM","url":"https://shifrom.com/","description":"Мессенджер со сквозным шифрованием и открытым кодом, созданный для сетей, где следят и блокируют. Номер телефона не нужен. Сначала Android, затем iOS и веб. Alpha 2: исходники и tagged development snapshots на GitHub; публичные сборки появятся на этапе Beta.","operatingSystem":"Android","applicationCategory":"CommunicationApplication","softwareVersion":"Alpha 2","isAccessibleForFree":true,"license":"https://www.gnu.org/licenses/agpl-3.0.html","publisher":{"@id":"https://shifrom.com/#org"},"sameAs":["https://github.com/LiudvigVladislav/SHIFROM"],"image":"https://shifrom.com/static/shifrom-social-132f0f6a.png"},{"@type":"WebPage","@id":"https://shifrom.com/ru/writeups/vless-reality-inside-a-messenger.html#webpage","url":"https://shifrom.com/ru/writeups/vless-reality-inside-a-messenger.html","name":"Как SHIFROM ведёт соединение с ретранслятором внутри VLESS+REALITY — Инженерные заметки SHIFROM","description":"Как SHIFROM встраивает Xray VLESS+REALITY в своё приложение как один из маршрутов к ретранслятору, где он стоит в режимах приватности, что показал полевой тест основателя и чего он не защищает.","inLanguage":"ru","isPartOf":{"@id":"https://shifrom.com/#website"},"about":{"@id":"https://shifrom.com/#app"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://shifrom.com/static/shifrom-social-132f0f6a.png"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://shifrom.com/ru/"},{"@type":"ListItem","position":2,"name":"Инженерия","item":"https://shifrom.com/ru/writeups/"},{"@type":"ListItem","position":3,"name":"Как SHIFROM ведёт соединение с ретранслятором внутри VLESS+REALITY — Инженерные заметки SHIFROM","item":"https://shifrom.com/ru/writeups/vless-reality-inside-a-messenger.html"}]}},{"@type":"TechArticle","@id":"https://shifrom.com/ru/writeups/vless-reality-inside-a-messenger.html#article","headline":"Как SHIFROM ведёт соединение с ретранслятором внутри VLESS+REALITY — Инженерные заметки SHIFROM","description":"Как SHIFROM встраивает Xray VLESS+REALITY в своё приложение как один из маршрутов к ретранслятору, где он стоит в режимах приватности, что показал полевой тест основателя и чего он не защищает.","inLanguage":"ru","datePublished":"2026-11-03","author":{"@id":"https://shifrom.com/#org"},"publisher":{"@id":"https://shifrom.com/#org"},"mainEntityOfPage":{"@id":"https://shifrom.com/ru/writeups/vless-reality-inside-a-messenger.html#webpage"},"image":"https://shifrom.com/static/shifrom-social-132f0f6a.png","about":{"@id":"https://shifrom.com/#app"}}]}</script>
+<meta name="theme-color" content="#F4F3F8">
+<link rel="icon" type="image/png" href="/static/favicon.png?v=b9180644">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png?v=533eb4c4">
+<link rel="preload" href="/static/fonts/unbounded-cyrillic-wght-normal.woff2?v=e30bf6a6" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/static/fonts/onest-cyrillic-wght-normal.woff2?v=68e5e01d" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/static/css/base.css?v=d7107c54">
+<link rel="stylesheet" href="/static/css/writeups.css?v=3676a491">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="modulepreload" href="/static/js/nav.js?v=8e8e58d7">
+<link rel="modulepreload" href="/static/js/pages/writeups-article.js?v=aacff8a3">
+</head>
+<body class="light-page">
+<a class="skip" href="#main">Перейти к содержанию</a>
+
+<header class="nav" id="nav" data-theme="light">
+  <a class="brand" href="/ru/" aria-label="SHIFROM, главная">
+    <img class="brand-mark" src="/static/favicon.png?v=b9180644" width="192" height="192" alt="">
+    <span class="brand-word">
+      <img class="wm-img" src="/static/shifrom-wordmark-white.png" width="781" height="119" alt="">
+      <span class="wm-type" aria-hidden="true">SHIFROM</span>
+    </span>
+  </a>
+  <nav class="links" aria-label="Основная навигация">
+    <a href="/ru/">Главная</a>
+    <a href="/ru/about.html">О проекте</a>
+    <a href="/ru/roadmap.html">Дорожная карта</a>
+    <a href="/ru/writeups/" aria-current="page">Инженерия</a>
+    <a href="/ru/donate.html">Поддержать</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Язык">
+    <a href="/writeups/vless-reality-inside-a-messenger.html" lang="en" hreflang="en">EN</a>
+    <a href="/ru/writeups/vless-reality-inside-a-messenger.html" aria-current="true" lang="ru">RU</a>
+  </div>
+  <details class="menu">
+    <summary aria-label="Меню"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></summary>
+    <div class="menu-sheet">
+      <nav aria-label="Основная навигация (меню)">
+        <a href="/ru/">Главная</a>
+        <a href="/ru/about.html">О проекте</a>
+        <a href="/ru/roadmap.html">Дорожная карта</a>
+        <a href="/ru/writeups/" aria-current="page">Инженерия</a>
+        <a href="/ru/donate.html">Поддержать</a>
+      </nav>
+      <div class="menu-lang">
+        <a href="/writeups/vless-reality-inside-a-messenger.html" lang="en" hreflang="en">EN</a>
+        <a href="/ru/writeups/vless-reality-inside-a-messenger.html" aria-current="true" lang="ru">RU</a>
+      </div>
+    </div>
+  </details>
+</header>
+
+<div class="read-progress" aria-hidden="true"><span></span></div>
+
+<main class="page art-page" id="main">
+<article class="art" aria-labelledby="art-title">
+
+  <header class="art-head">
+    <a class="back" href="/ru/writeups/"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Инженерия</a>
+    <div class="art-titles">
+      <h1 class="art-title" id="art-title"><span class="art-title-main">Как SHIFROM ведёт соединение с ретранслятором</span> <span class="art-title-sub">внутри VLESS+REALITY</span></h1>
+      <p class="art-byline"><em>Инженерная заметка проекта SHIFROM (Willen LLC).</em></p>
+      <p class="art-meta"><time datetime="2026-11-03">Ноябрь 2026</time><span aria-hidden="true">·</span><span>10 минут чтения</span></p>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Содержание">
+    <p class="toc-label">Содержание</p>
+    <ol class="toc-list">
+      <li><a href="#what">Что такое REALITY</a></li>
+      <li><a href="#routes">Почему мессенджеру нужен не один маршрут</a></li>
+      <li><a href="#where">Где стоит REALITY: транспорты и режимы приватности</a></li>
+      <li><a href="#android">Как Xray работает внутри Android-приложения</a></li>
+      <li><a href="#field">Что показал полевой прогон и чего не показал</a></li>
+      <li><a href="#limits">Чего это не делает</a></li>
+      <li><a href="#next">Что дальше</a></li>
+    </ol>
+    <span class="toc-dot" aria-hidden="true"></span>
+  </nav>
+
+  <div class="toc-m-slot">
+  <details class="toc-m">
+    <summary><span class="toc-m-label">Содержание</span><span class="toc-m-now" aria-hidden="true"></span><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+    <nav aria-label="Содержание (меню)">
+      <ol>
+        <li><a href="#what">Что такое REALITY</a></li>
+        <li><a href="#routes">Почему мессенджеру нужен не один маршрут</a></li>
+        <li><a href="#where">Где стоит REALITY: транспорты и режимы приватности</a></li>
+        <li><a href="#android">Как Xray работает внутри Android-приложения</a></li>
+        <li><a href="#field">Что показал полевой прогон и чего не показал</a></li>
+        <li><a href="#limits">Чего это не делает</a></li>
+        <li><a href="#next">Что дальше</a></li>
+      </ol>
+    </nav>
+  </details>
+  </div>
+
+  <div class="art-body prose">
+
+    <p class="art-lede">SHIFROM — мессенджер с открытым кодом и сквозным шифрованием, спроектированный исходя из того, что сеть между устройством и ретранслятором враждебна. Первым выходит приложение для Android, версии для iOS и веба в планах. Один из маршрутов, по которым клиент может дойти до ретранслятора, — VLESS+REALITY, внешний протокол из проекта Xray-core, встроенный прямо в приложение. Эта заметка о том, как устроен этот маршрут, где он стоит, что показал наш единственный полевой прогон и чего он не защищает.</p>
+
+<section class="scope" id="scope" aria-label="Область">
+      <p><strong class="scope-lead">Область, заранее.</strong> SHIFROM находится в стадии Alpha 2, публичной сборки для пользователей пока нет. Наша собственная протокольная композиция (X3DH, Double Ratchet и Sealed Sender поверх примитивов libsodium) не проходила независимый аудит. Всё, что ниже сказано о поведении REALITY в реальной сети, опирается на одну сессию, проведённую основателем: один бюджетный Android-телефон, один мобильный оператор (МТС, мобильные данные, без VPN) в одном российском регионе, 7 мая 2026 года. Это говорит о том, что произошло в той сессии, а не о том, что REALITY проходит любую DPI-политику, любого оператора или даже того же оператора сегодня. Там, где заметка описывает устройство, она опирается на наши архитектурные решения (ADR-019, ADR-020) и код, который они описывают, а не на измерения. О том, где и как развёрнута точка входа REALITY, заметка намеренно не говорит ничего.</p>
+    </section>
+
+<h2 id="what">Что такое REALITY</h2>
+
+<p>REALITY делает проксированное соединение похожим для наблюдателя на пути на обычную сессию TLS 1.3 с известным сайтом, которым мы не управляем, — сайтом-маскировкой. Рукопожатие клиента называет этот сайт. Клиент, у которого есть заранее согласованные параметры точки входа, аутентифицируется внутри рукопожатия с помощью согласования ключей X25519 и стандартного шифрования записей TLS 1.3 и получает туннель. Любое соединение, не прошедшее эту проверку, включая активное зондирование, побайтно пересылается на настоящий сайт-маскировку, так что зондирующий получает подлинную цепочку сертификатов этого сайта. Стоит назвать и побочный эффект: сайт-маскировка видит только соединения, не прошедшие аутентификацию, и приходят они с адреса точки входа. Клиенты SHIFROM аутентифицируются и до него не доходят.</p>
+
+<p>Не менее важно, чего REALITY не делает. Он не скрывает сам факт соединения, его длительность и объём переданных байт. Это не система анонимности. Он работает против фильтрации, которая опирается на внешний вид TLS-потока, и может не пройти любую DPI-политику. Исследования по обнаружению REALITY существуют; наша исследовательская заметка от мая 2026 года фиксировала преобладающее мнение практиков, что масштабируемой атаки в продакшене известно не было, и считала, что это может измениться.</p>
+
+<h2 id="routes">Почему мессенджеру нужен не один маршрут</h2>
+
+<p>Сопутствующая заметка «<a href="https://shifrom.com/ru/writeups/how-phantom-survives-dpi.html">Когда TLS остаётся открытым, а принятые к отправке данные не доходят</a>» показывает, как прямой WebSocket-путь может отказать в мобильной сети без единой ошибки. ADR-019 фиксирует более раннюю, отдельную проблему: попытки дойти до ретранслятора через Tor с мостами, которые держит сам проект, зависали в сетях российских операторов, и документ связывает это с замедлением длинных TLS-потоков к адресам дата-центров. Этих прогонов нет в нашей публичной таблице полевых тестов, поэтому цифр из них мы здесь не приводим, а сопутствующая заметка объясняет, почему мы осторожны с любыми порогами.</p>
+
+<p>ADR-019 фиксирует и ограничения, которые привели к REALITY. Маршрут должен работать без установки отдельного приложения, а значит, не подходят схемы, зависящие от отдельного VPN- или прокси-клиента. И он не должен опираться на протоколы, которые документ описывает как распознаваемые и блокируемые у российских операторов, например WireGuard и OpenVPN. REALITY не пытается выглядеть никак; он пытается выглядеть как что-то обычное.</p>
+
+<p>Как и заключает сопутствующая заметка, ни один транспорт не является фундаментом. REALITY — один маршрут из нескольких, и наша исследовательская заметка говорит, что он никогда не должен стать единственным.</p>
+
+<h2 id="where">Где стоит REALITY: транспорты и режимы приватности</h2>
+
+<p>Клиент общается с ретранслятором через один транспортный интерфейс, за которым стоят несколько маршрутов:</p>
+
+<ul class="leads">
+  <li><strong>Direct WSS:</strong> маршрут с наименьшими накладными расходами для обычных сетей.</li>
+  <li><strong>WSS через встроенный Xray VLESS+REALITY:</strong> для сетей, где DPI мешает прямому WSS.</li>
+  <li><strong>WSS через onion-сервис Tor v3:</strong> на сегодня лучше всего скрывает сетевое происхождение, но рассчитан только на текст.</li>
+  <li><strong>REST send/poll:</strong> не отдельный внешний маршрут, а запасной способ доставки для сетей, которые пропускают HTTPS, но портят долгоживущие WebSocket-фреймы. Переход между WebSocket и REST не меняет криптографию сообщений.</li>
+</ul>
+
+<p>Транспорт пользователь не выбирает. Он выбирает режим приватности, а менеджер транспорта проходит упорядоченную цепочку, которую этот режим разрешает:</p>
+
+<div class="tbl" tabindex="0" role="region" aria-label="Режим">
+      <table role="table">
+        <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Режим</th><th scope="col" role="columnheader">Цепочка</th><th scope="col" role="columnheader">Если все варианты исчерпаны</th></tr></thead>
+        <tbody role="rowgroup">
+          <tr role="row"><th scope="row" role="rowheader">Standard (по умолчанию)</th><td role="cell" data-label="Цепочка">Direct WSS → REALITY → Tor</td><td role="cell" data-label="Если все варианты исчерпаны">видимая пользователю ошибка</td></tr>
+          <tr role="row"><th scope="row" role="rowheader">Private</th><td role="cell" data-label="Цепочка">REALITY → Tor</td><td role="cell" data-label="Если все варианты исчерпаны">видимая пользователю ошибка</td></tr>
+          <tr role="row"><th scope="row" role="rowheader">Ghost</th><td role="cell" data-label="Цепочка">только Tor</td><td role="cell" data-label="Если все варианты исчерпаны">отказ без понижения; никогда не переходит на менее приватный маршрут</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+<p>Private существует для тех, кто считает любое прямое соединение с известной точкой ретранслятора поверхностью для сопоставления. Ghost никогда не откатывается на REALITY или Direct WSS: если Tor не запускается, приложение показывает «Cannot reach relay», а не молча использует менее приватный маршрут. В ранних исследованиях рассматривалась обёртка Tor внутри REALITY для этого режима; в выпущенном Ghost её нет.</p>
+
+<p>Когда активен маршрут REALITY, ретранслятор видит источником TCP-соединения точку входа REALITY, а не устройство пользователя. Точка входа видит адрес пользователя, и обе стороны держит один и тот же оператор. Поэтому ADR-019 отказался от дополнительного Tor-звена между точкой входа и ретранслятором на стороне сервера: оно добавило бы задержку и новые отказы, скрывая информацию от стороны, которая и так управляет обоими концами. Sealed Sender скрывает личность отправителя внутри конверта в любом режиме; режим меняет видимость на уровне IP, а не криптографию приложения.</p>
+
+<p>Точка входа пересылает трафик только на ретранслятор и отбрасывает любые другие направления, поэтому не может служить прокси общего назначения. Журнал отдельных соединений у неё отключён; в её логах только сообщения о запуске и неустранимые ошибки.</p>
+
+<h2 id="android">Как Xray работает внутри Android-приложения</h2>
+
+<p>Клиент встраивает Xray-core через libXray — мобильную обёртку, которую поддерживает XTLS, — собранную gomobile в JNI-библиотеку и загружаемую в собственный процесс SHIFROM. Сборка идёт через CI в репозитории из неизменённого upstream-кода. Xray-core распространяется под MPL-2.0, SHIFROM — под AGPL-3.0-or-later; исходники Xray мы не меняем, и ADR-019 отмечает, что форк заново открыл бы вопрос совместимости лицензий.</p>
+
+<p>Ядро работает внутри foreground-сервиса сообщений, который у приложения уже есть, и открывает SOCKS5-порт на локальном интерфейсе; клиент ретранслятора подключается через этот порт. ADR-019 называет две причины работать внутри процесса, а не отдельной программой. Агрессивные менеджеры памяти на бюджетных телефонах склонны убивать «осиротевший» дочерний процесс отдельно, а ядро внутри процесса останавливается и перезапускается вместе с приложением и не требует второго постоянного уведомления. Кроме того, отдельному исполняемому файлу понадобились бы дополнительные разрешения. Сервис проходит состояния Off, Starting, Ready и Failed — так же, как сервис Tor.</p>
+
+<p>Прежде чем маршрут считается рабочим, менеджер запускает его, ждёт готовности SOCKS, а затем через этот порт проверяет health-эндпоинт ретранслятора — то есть доказывает путь целиком, а не только локальный порт. На подготовку REALITY даётся до 30 секунд, потому что холодная инициализация встроенного ядра на нашем тестовом телефоне занимала примерно столько (ADR-020); тёплый перезапуск укладывается в миллисекунды. На каждую проверку — 5 секунд. Удачный маршрут в следующий раз пробуется первым, в течение 24 часов. Цепочка проходится при холодном старте, перезапуске сервиса, смене режима и смене сети. После подключения деградацию WebSocket обрабатывает слой REST-фолбэка, а не повторный проход по цепочке.</p>
+
+<p>Пользователь видит постоянное уведомление: «Connecting via …», затем «Online via …» с названием активного маршрута или «Cannot reach relay (tried N)» с кнопкой повтора, если не сработал ни один маршрут. Смена режима разрывает соединение и запускает проход по новой цепочке.</p>
+
+<p>Это прокси внутри приложения, а не VPN для всего устройства. С VPN, который у пользователя уже включён, отношения конкурентные, а не дополняющие: по ADR-019, VPN забирает трафик приложения, и маршрут REALITY либо не работает, либо становится лишним, потому что наблюдатель в сети теперь видит VPN. Отдельная разведка по совместимости с VPN, начатая в июне 2026 года, охватывает прямой и REST-пути и не охватывает REALITY.</p>
+
+<h2 id="field">Что показал полевой прогон и чего не показал</h2>
+
+<p>В публичной таблице полевых тестов одна строка про REALITY. 7 мая 2026 года на бюджетном телефоне через мобильные данные МТС в одном российском регионе, без VPN и без отдельного прокси или Tor-приложения, внешний транспорт REALITY был доступен от начала до конца. Это был приёмочный прогон для ADR-019, с клиентом-двойником на эмуляторе. Результат: пройден. Задержка: не записана. Повторов: нет.</p>
+
+<p>Это все публичные доказательства. ADR-019 изначально называл это «подтверждённым в продакшене»; позднейшая поправка исправила формулировку на то, чем это было: приёмочный прогон основателя на одном устройстве, у одного оператора, в один день. Таблица перечисляет, чего не хватает: одна модель телефона, один регион, версия Android не записана, независимого воспроизведения нет, а WebSocket-трафик в реальном времени внутри REALITY на пути Tele2 LTE из сопутствующей заметки спроектирован, но в поле не проверен. REALITY не проектировался против описанного там зависания, и эксперимента, который отделил бы, помогает ли он, мы не проводили.</p>
+
+<p>План тестов режимов приватности описывает восемь сценариев, в нескольких участвует REALITY (например, режим Standard на российском телефоне без VPN: Direct WSS должен отказать, REALITY — сработать). Публичная таблица не содержит ни одного их прогона, поэтому мы из них ничего не утверждаем.</p>
+
+<h2 id="limits">Чего это не делает</h2>
+
+<ul class="leads">
+  <li><strong>Это не анонимность.</strong> Точка входа видит адрес пользователя, и ретранслятор держит тот же оператор.</li>
+  <li><strong>Ретранслятор по-прежнему видит</strong> время, размер сообщений, аутентифицированные сессии и адресатов доставки. Ни один из маршрутов здесь не устраняет анализ по времени и объёму, а противник, одновременно наблюдающий выход из сети и вход в ретранслятор, находится за пределами нашей модели угроз.</li>
+  <li><strong>Это не помогает против блокировки по адресу.</strong> Маскировка меняет то, как классифицируется поток, а не то, есть ли адрес в списке блокировок. Это верно для любого прокси, включая REALITY.</li>
+  <li><strong>Это зависит от сайта, которым мы не управляем.</strong> Если сайт-маскировка изменится или ограничит доступ так, что пересылка сломается, зондирование перестанет видеть настоящий сайт, и точку входа могут переклассифицировать.</li>
+  <li><strong>Это переносит TCP.</strong> Медиа в реальном времени по UDP были вне рамок этого этапа.</li>
+  <li><strong>Пока это есть только в Android-приложении.</strong> Версии SHIFROM для iOS и веба в планах; как этот маршрут будет устроен в них, ещё не решено.</li>
+  <li><strong>Это не затрагивает сквозное шифрование.</strong> Точка входа видит только зашифрованные конверты; её компрометация не раскрывает текст сообщений. Это верно ровно настолько, насколько верна не прошедшая аудит протокольная композиция.</li>
+</ul>
+
+<h2 id="next">Что дальше</h2>
+
+<p>Пробелы выше и задают работу: повторные прогоны REALITY, другие операторы и регионы, WebSocket-трафик в реальном времени внутри REALITY на пути Tele2 LTE — каждый как строка таблицы со своими условиями, включая неудачи. Сборка встроенного ядра под iOS ведётся отдельно. Наша исследовательская заметка рекомендует внешний разбор совместного распространения MPL-2.0 и AGPL до Beta. Ни у чего из этого нет даты.</p>
+
+<div class="outro">
+      <img class="outro-mark" src="/static/favicon.png?v=b9180644" width="192" height="192" alt="" loading="lazy" decoding="async">
+      <p>SHIFROM — проект с открытым кодом (AGPL-3.0-or-later). Архитектурные решения, модель угроз, таблица полевых тестов и известные проблемы открыты публично. Если вы работаете над транспортами для враждебных сетей или хотите найти дыры в наших, код и проектная документация лежат на <a href="https://github.com/LiudvigVladislav/SHIFROM">github.com/LiudvigVladislav/SHIFROM</a>, а проект — на <a href="https://shifrom.com">shifrom.com</a>.</p>
+    </div>
+  </div>
+
+  <footer class="art-end">
+    <a class="back back-end" href="/ru/writeups/"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Назад к инженерии</a>
+  </footer>
+</article>
+</main>
+
+<footer class="foot">
+  <div class="foot-id">
+    <img src="/static/favicon.png?v=b9180644" width="192" height="192" alt="" loading="lazy" decoding="async">
+    <p><span class="foot-name">SHIFROM</span> <span>Поддерживается Willen LLC · Вайоминг, США · AGPL-3.0-or-later</span></p>
+  </div>
+  <nav class="foot-links" aria-label="Ссылки в подвале">
+    <a href="https://github.com/LiudvigVladislav/SHIFROM">GitHub</a>
+    <a href="https://codeberg.org/VladislavLiudvig/SHIFROM">Codeberg</a>
+    <a href="/ru/donate.html">Поддержать</a>
+    <a href="/ru/about.html">О проекте</a>
+    <a href="/ru/roadmap.html">Дорожная карта</a>
+    <a href="/ru/writeups/">Инженерия</a>
+    <a href="/ru/faq.html">Вопросы</a>
+    <a href="/ru/compare.html">Сравнение</a>
+    <a class="foot-top" href="#top">Наверх</a>
+  </nav>
+</footer>
+<script type="module" src="/static/js/nav.js?v=8e8e58d7"></script>
+<script type="module" src="/static/js/pages/writeups-article.js?v=aacff8a3"></script>
+</body>
+</html>

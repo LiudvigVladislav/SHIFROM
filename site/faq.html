@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SHIFROM questions: phone number, VPN, encryption, downloads</title>
+<meta name="description" content="Short, honest answers about SHIFROM: no phone number needed, built-in ways around blocking instead of a separate VPN, what encryption hides and what it does not, and where the app stands.">
+<link rel="canonical" href="https://shifrom.com/faq.html">
+<link rel="alternate" hreflang="en" href="https://shifrom.com/faq.html">
+<link rel="alternate" hreflang="ru" href="https://shifrom.com/ru/faq.html">
+<link rel="alternate" hreflang="x-default" href="https://shifrom.com/faq.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SHIFROM">
+<meta property="og:title" content="SHIFROM questions: phone number, VPN, encryption, downloads">
+<meta property="og:description" content="Short, honest answers about SHIFROM: no phone number needed, built-in ways around blocking instead of a separate VPN, what encryption hides and what it does not, and where the app stands.">
+<meta property="og:url" content="https://shifrom.com/faq.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:image" content="https://shifrom.com/static/shifrom-social-132f0f6a.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1774">
+<meta property="og:image:height" content="887">
+<meta property="og:image:alt" content="SHIFROM — open-source, end-to-end encrypted messenger built for hostile networks">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://shifrom.com/static/shifrom-social-132f0f6a.png">
+<meta name="twitter:image:alt" content="SHIFROM — open-source, end-to-end encrypted messenger built for hostile networks">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://shifrom.com/#org","name":"SHIFROM","legalName":"Willen LLC","url":"https://shifrom.com/","logo":{"@type":"ImageObject","url":"https://shifrom.com/static/logo-mark.png","width":1024,"height":1024},"address":{"@type":"PostalAddress","addressRegion":"WY","addressCountry":"US"},"sameAs":["https://github.com/LiudvigVladislav/SHIFROM","https://codeberg.org/VladislavLiudvig/SHIFROM","https://liberapay.com/SHIFROM/","https://buymeacoffee.com/shifrom"]},{"@type":"WebSite","@id":"https://shifrom.com/#website","url":"https://shifrom.com/","name":"SHIFROM","inLanguage":["en","ru"],"publisher":{"@id":"https://shifrom.com/#org"}},{"@type":"MobileApplication","@id":"https://shifrom.com/#app","name":"SHIFROM","url":"https://shifrom.com/","description":"Open-source, end-to-end encrypted messenger built for hostile networks. No phone number required. Android first; iOS and web versions are planned. Alpha 2: source builds and tagged development snapshots on GitHub; public builds come with Beta.","operatingSystem":"Android","applicationCategory":"CommunicationApplication","softwareVersion":"Alpha 2","isAccessibleForFree":true,"license":"https://www.gnu.org/licenses/agpl-3.0.html","publisher":{"@id":"https://shifrom.com/#org"},"sameAs":["https://github.com/LiudvigVladislav/SHIFROM"],"image":"https://shifrom.com/static/shifrom-social-132f0f6a.png"},{"@type":"FAQPage","@id":"https://shifrom.com/faq.html#webpage","url":"https://shifrom.com/faq.html","name":"SHIFROM questions: phone number, VPN, encryption, downloads","description":"Short, honest answers about SHIFROM: no phone number needed, built-in ways around blocking instead of a separate VPN, what encryption hides and what it does not, and where the app stands.","inLanguage":"en","isPartOf":{"@id":"https://shifrom.com/#website"},"about":{"@id":"https://shifrom.com/#app"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://shifrom.com/static/shifrom-social-132f0f6a.png"},"mainEntity":[{"@type":"Question","name":"Do I need a phone number?","acceptedAnswer":{"@type":"Answer","text":"No. SHIFROM needs no phone number, no email and no real name. Your identity keys are created on your phone and never leave it."}},{"@type":"Question","name":"Does SHIFROM work without a VPN?","acceptedAnswer":{"@type":"Answer","text":"You do not need a separate VPN to reach the network: the ways around blocking are built into the app. It can connect over Direct WSS, REALITY, Tor or a REST fallback, and when one route is blocked, another takes over. Tested by the founder on specific networks and dates. This is not a guarantee against every block: REALITY is not an anonymity system and may not bypass every DPI policy."}},{"@type":"Question","name":"Is SHIFROM anonymous?","acceptedAnswer":{"@type":"Answer","text":"No, and we do not claim it is. End-to-end encryption hides what you write, and sealed-sender-style envelopes reduce what the relay learns about the sender. The relay can still see timing, message sizes, authenticated sessions and delivery destinations. Ghost mode sends everything over Tor only (text only) and never silently falls back to a direct connection. The limits are documented in the threat model."}},{"@type":"Question","name":"Who can read my messages?","acceptedAnswer":{"@type":"Answer","text":"Only the person you write to. Messages are end-to-end encrypted with a Double Ratchet implementation over libsodium, ED25519 identity keys and X3DH session setup. The relay never sees the text. The custom protocol composition has not yet had an independent security audit."}},{"@type":"Question","name":"How is SHIFROM different from Telegram, WhatsApp or Signal?","acceptedAnswer":{"@type":"Answer","text":"SHIFROM needs no phone number, encrypts every one-to-one chat end to end by default, and has ways around blocking built in. It is also younger: there is no public app and no independent audit yet. The comparison sets it next to Signal, Telegram, Session, SimpleX, Briar and Threema, with sources."}},{"@type":"Question","name":"Where can I download SHIFROM?","acceptedAnswer":{"@type":"Answer","text":"Not yet. SHIFROM is in Alpha 2: the source code and tagged development snapshots are on GitHub, but there is no public app build or open beta. Public builds come with Beta; watch the releases on GitHub to hear first."}},{"@type":"Question","name":"Is there an iPhone version?","acceptedAnswer":{"@type":"Answer","text":"Not yet. Android comes first; iOS and a web version are planned. The shared core is ready for iOS; the native iPhone app still has to be built. Donations fund that work."}},{"@type":"Question","name":"Has SHIFROM been audited?","acceptedAnswer":{"@type":"Answer","text":"Not yet. An independent security audit is planned before v1.0 and is one of the things donations pay for. Until then, the source, the threat model and the known issues are public so anyone can check them."}},{"@type":"Question","name":"Is SHIFROM open source?","acceptedAnswer":{"@type":"Answer","text":"Yes, under AGPL-3.0-or-later. The code is on GitHub with a mirror on Codeberg, along with the threat model, known issues and architecture decisions."}},{"@type":"Question","name":"Are there group chats and calls?","acceptedAnswer":{"@type":"Answer","text":"They are not ready for everyday use. Group chats are in progress and still being hardened; voice calls are experimental. One-to-one text messages and encrypted voice notes work today. See the roadmap."}},{"@type":"Question","name":"Who makes SHIFROM, and how is it funded?","acceptedAnswer":{"@type":"Answer","text":"SHIFROM is developed independently and maintained by Willen LLC (Wyoming, USA). It does not sell user data. It is funded by donations and is open to grants and pre-seed investment that keep the open-source license and the published security boundaries."}}],"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://shifrom.com/"},{"@type":"ListItem","position":2,"name":"FAQ","item":"https://shifrom.com/faq.html"}]}}]}</script>
+<meta name="theme-color" content="#F4F3F8">
+<link rel="icon" type="image/png" href="/static/favicon.png?v=b9180644">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png?v=533eb4c4">
+<link rel="preload" href="/static/fonts/unbounded-latin-wght-normal.woff2?v=22f9b928" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/static/fonts/onest-latin-wght-normal.woff2?v=052df745" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/static/css/base.css?v=d7107c54">
+<link rel="stylesheet" href="/static/css/writeups.css?v=3676a491">
+<link rel="stylesheet" href="/static/css/faq.css?v=8190e978">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="modulepreload" href="/static/js/nav.js?v=8e8e58d7">
+</head>
+<body class="light-page">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav" data-theme="light">
+  <a class="brand" href="/" aria-label="SHIFROM home">
+    <img class="brand-mark" src="/static/favicon.png?v=b9180644" width="192" height="192" alt="">
+    <span class="brand-word">
+      <img class="wm-img" src="/static/shifrom-wordmark-white.png" width="781" height="119" alt="">
+      <span class="wm-type" aria-hidden="true">SHIFROM</span>
+    </span>
+  </a>
+  <nav class="links" aria-label="Main">
+    <a href="/">Home</a>
+    <a href="/about.html">About</a>
+    <a href="/roadmap.html">Roadmap</a>
+    <a href="/writeups/">Engineering</a>
+    <a href="/donate.html">Support</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Language">
+    <a href="/faq.html" aria-current="true" lang="en" hreflang="en">EN</a>
+    <a href="/ru/faq.html" lang="ru" hreflang="ru">RU</a>
+  </div>
+  <details class="menu">
+    <summary aria-label="Menu"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></summary>
+    <div class="menu-sheet">
+      <nav aria-label="Main (menu)">
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/roadmap.html">Roadmap</a>
+        <a href="/writeups/">Engineering</a>
+        <a href="/donate.html">Support</a>
+      </nav>
+      <div class="menu-lang">
+        <a href="/faq.html" aria-current="true" lang="en" hreflang="en">EN</a>
+        <a href="/ru/faq.html" lang="ru" hreflang="ru">RU</a>
+      </div>
+    </div>
+  </details>
+</header>
+
+<main class="page wu-page" id="main">
+
+  <header class="eng-head faq-head">
+    <div class="eng-head-in">
+      <h1 class="t-display eng-title">Questions</h1>
+      <p class="t-lead eng-intro">Short answers about SHIFROM, with the limits stated next to every claim.</p>
+    </div>
+  </header>
+
+  <div class="faq">
+    <section class="faq-item" id="phone" aria-labelledby="q-phone">
+      <h2 class="faq-q" id="q-phone">Do I need a phone number?</h2>
+      <div class="faq-a">
+        <p>No. SHIFROM needs no phone number, no email and no real name. Your identity keys are created on your phone and never leave it.</p>
+      </div>
+    </section>
+    <section class="faq-item" id="vpn" aria-labelledby="q-vpn">
+      <h2 class="faq-q" id="q-vpn">Does SHIFROM work without a VPN?</h2>
+      <div class="faq-a">
+        <p>You do not need a separate VPN to reach the network: the ways around blocking are built into the app. It can connect over Direct WSS, REALITY, Tor or a REST fallback, and when one route is blocked, another takes over.</p>
+        <p class="fine">Tested by the founder on specific networks and dates. This is not a guarantee against every block: REALITY is not an anonymity system and may not bypass every DPI policy.</p>
+      </div>
+    </section>
+    <section class="faq-item" id="anonymous" aria-labelledby="q-anonymous">
+      <h2 class="faq-q" id="q-anonymous">Is SHIFROM anonymous?</h2>
+      <div class="faq-a">
+        <p>No, and we do not claim it is. End-to-end encryption hides what you write, and sealed-sender-style envelopes reduce what the relay learns about the sender. The relay can still see timing, message sizes, authenticated sessions and delivery destinations.</p>
+        <p>Ghost mode sends everything over Tor only (text only) and never silently falls back to a direct connection. The limits are documented in the <a href="https://github.com/LiudvigVladislav/SHIFROM/blob/master/docs/threat-model/Threat_Model_v0.md">threat model</a>.</p>
+      </div>
+    </section>
+    <section class="faq-item" id="read" aria-labelledby="q-read">
+      <h2 class="faq-q" id="q-read">Who can read my messages?</h2>
+      <div class="faq-a">
+        <p>Only the person you write to. Messages are end-to-end encrypted with a Double Ratchet implementation over libsodium, ED25519 identity keys and X3DH session setup. The relay never sees the text.</p>
+        <p class="fine">The custom protocol composition has not yet had an independent security audit.</p>
+      </div>
+    </section>
+    <section class="faq-item" id="different" aria-labelledby="q-different">
+      <h2 class="faq-q" id="q-different">How is SHIFROM different from Telegram, WhatsApp or Signal?</h2>
+      <div class="faq-a">
+        <p>SHIFROM needs no phone number, encrypts every one-to-one chat end to end by default, and has ways around blocking built in. It is also younger: there is no public app and no independent audit yet. The <a href="/compare.html">comparison</a> sets it next to Signal, Telegram, Session, SimpleX, Briar and Threema, with sources.</p>
+      </div>
+    </section>
+    <section class="faq-item" id="download" aria-labelledby="q-download">
+      <h2 class="faq-q" id="q-download">Where can I download SHIFROM?</h2>
+      <div class="faq-a">
+        <p>Not yet. SHIFROM is in Alpha 2: the source code and tagged development snapshots are on GitHub, but there is no public app build or open beta. Public builds come with Beta; <a href="https://github.com/LiudvigVladislav/SHIFROM/releases">watch the releases on GitHub</a> to hear first.</p>
+      </div>
+    </section>
+    <section class="faq-item" id="ios" aria-labelledby="q-ios">
+      <h2 class="faq-q" id="q-ios">Is there an iPhone version?</h2>
+      <div class="faq-a">
+        <p>Not yet. Android comes first; iOS and a web version are planned. The shared core is ready for iOS; the native iPhone app still has to be built. <a href="/donate.html">Donations</a> fund that work.</p>
+      </div>
+    </section>
+    <section class="faq-item" id="audit" aria-labelledby="q-audit">
+      <h2 class="faq-q" id="q-audit">Has SHIFROM been audited?</h2>
+      <div class="faq-a">
+        <p>Not yet. An independent security audit is planned before v1.0 and is one of the things donations pay for. Until then, the source, the threat model and the known issues are public so anyone can check them.</p>
+      </div>
+    </section>
+    <section class="faq-item" id="open" aria-labelledby="q-open">
+      <h2 class="faq-q" id="q-open">Is SHIFROM open source?</h2>
+      <div class="faq-a">
+        <p>Yes, under AGPL-3.0-or-later. The code is on <a href="https://github.com/LiudvigVladislav/SHIFROM">GitHub</a> with a mirror on <a href="https://codeberg.org/VladislavLiudvig/SHIFROM">Codeberg</a>, along with the threat model, known issues and architecture decisions.</p>
+      </div>
+    </section>
+    <section class="faq-item" id="groups" aria-labelledby="q-groups">
+      <h2 class="faq-q" id="q-groups">Are there group chats and calls?</h2>
+      <div class="faq-a">
+        <p>They are not ready for everyday use. Group chats are in progress and still being hardened; voice calls are experimental. One-to-one text messages and encrypted voice notes work today. See the <a href="/roadmap.html">roadmap</a>.</p>
+      </div>
+    </section>
+    <section class="faq-item" id="who" aria-labelledby="q-who">
+      <h2 class="faq-q" id="q-who">Who makes SHIFROM, and how is it funded?</h2>
+      <div class="faq-a">
+        <p>SHIFROM is developed independently and maintained by Willen LLC (Wyoming, USA). It does not sell user data. It is funded by <a href="/donate.html">donations</a> and is open to grants and pre-seed investment that keep the open-source license and the published security boundaries.</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="foot-id">
+    <img src="/static/favicon.png?v=b9180644" width="192" height="192" alt="" loading="lazy" decoding="async">
+    <p><span class="foot-name">SHIFROM</span> <span>Maintained by Willen LLC · Wyoming, USA · AGPL-3.0-or-later</span></p>
+  </div>
+  <nav class="foot-links" aria-label="Footer">
+    <a href="https://github.com/LiudvigVladislav/SHIFROM">GitHub</a>
+    <a href="https://codeberg.org/VladislavLiudvig/SHIFROM">Codeberg</a>
+    <a href="/donate.html">Donate</a>
+    <a href="/about.html">About</a>
+    <a href="/roadmap.html">Roadmap</a>
+    <a href="/writeups/">Engineering</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/compare.html">Compare</a>
+    <a class="foot-top" href="#top">Back to top</a>
+  </nav>
+</footer>
+<script type="module" src="/static/js/nav.js?v=8e8e58d7"></script>
+</body>
+</html>

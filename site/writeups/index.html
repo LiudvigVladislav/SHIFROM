@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Engineering — SHIFROM</title>
+<title>Engineering notes: encrypted messaging under censorship — SHIFROM</title>
 <meta name="description" content="Technical write-ups from the SHIFROM project — diagnosis, architecture, and what we got wrong along the way.">
 <link rel="canonical" href="https://shifrom.com/writeups/">
 <link rel="alternate" hreflang="en" href="https://shifrom.com/writeups/">
@@ -11,7 +11,7 @@
 <link rel="alternate" hreflang="x-default" href="https://shifrom.com/writeups/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SHIFROM">
-<meta property="og:title" content="Engineering — SHIFROM">
+<meta property="og:title" content="Engineering notes: encrypted messaging under censorship — SHIFROM">
 <meta property="og:description" content="Technical write-ups from the SHIFROM project — diagnosis, architecture, and what we got wrong along the way.">
 <meta property="og:url" content="https://shifrom.com/writeups/">
 <meta property="og:locale" content="en_US">
@@ -24,7 +24,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://shifrom.com/static/shifrom-social-132f0f6a.png">
 <meta name="twitter:image:alt" content="SHIFROM — open-source, end-to-end encrypted messenger built for hostile networks">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://shifrom.com/#org","name":"SHIFROM","legalName":"Willen LLC","url":"https://shifrom.com/","logo":{"@type":"ImageObject","url":"https://shifrom.com/static/logo-mark.png","width":1024,"height":1024},"address":{"@type":"PostalAddress","addressRegion":"WY","addressCountry":"US"},"sameAs":["https://github.com/LiudvigVladislav/SHIFROM","https://codeberg.org/VladislavLiudvig/SHIFROM","https://liberapay.com/SHIFROM/","https://buymeacoffee.com/shifrom"]},{"@type":"WebSite","@id":"https://shifrom.com/#website","url":"https://shifrom.com/","name":"SHIFROM","inLanguage":["en","ru"],"publisher":{"@id":"https://shifrom.com/#org"}},{"@type":"MobileApplication","@id":"https://shifrom.com/#app","name":"SHIFROM","url":"https://shifrom.com/","description":"Open-source, end-to-end encrypted messenger for Android, built for hostile networks. No phone number required. Alpha 2: source builds and tagged development snapshots on GitHub; public builds come with Beta.","operatingSystem":"Android","applicationCategory":"CommunicationApplication","softwareVersion":"Alpha 2","isAccessibleForFree":true,"license":"https://www.gnu.org/licenses/agpl-3.0.html","publisher":{"@id":"https://shifrom.com/#org"},"sameAs":["https://github.com/LiudvigVladislav/SHIFROM"],"image":"https://shifrom.com/static/shifrom-social-132f0f6a.png"},{"@type":"CollectionPage","@id":"https://shifrom.com/writeups/#webpage","url":"https://shifrom.com/writeups/","name":"Engineering — SHIFROM","description":"Technical write-ups from the SHIFROM project — diagnosis, architecture, and what we got wrong along the way.","inLanguage":"en","isPartOf":{"@id":"https://shifrom.com/#website"},"about":{"@id":"https://shifrom.com/#app"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://shifrom.com/static/shifrom-social-132f0f6a.png"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://shifrom.com/"},{"@type":"ListItem","position":2,"name":"Engineering","item":"https://shifrom.com/writeups/"}]}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://shifrom.com/#org","name":"SHIFROM","legalName":"Willen LLC","url":"https://shifrom.com/","logo":{"@type":"ImageObject","url":"https://shifrom.com/static/logo-mark.png","width":1024,"height":1024},"address":{"@type":"PostalAddress","addressRegion":"WY","addressCountry":"US"},"sameAs":["https://github.com/LiudvigVladislav/SHIFROM","https://codeberg.org/VladislavLiudvig/SHIFROM","https://liberapay.com/SHIFROM/","https://buymeacoffee.com/shifrom"]},{"@type":"WebSite","@id":"https://shifrom.com/#website","url":"https://shifrom.com/","name":"SHIFROM","inLanguage":["en","ru"],"publisher":{"@id":"https://shifrom.com/#org"}},{"@type":"MobileApplication","@id":"https://shifrom.com/#app","name":"SHIFROM","url":"https://shifrom.com/","description":"Open-source, end-to-end encrypted messenger built for hostile networks. No phone number required. Android first; iOS and web versions are planned. Alpha 2: source builds and tagged development snapshots on GitHub; public builds come with Beta.","operatingSystem":"Android","applicationCategory":"CommunicationApplication","softwareVersion":"Alpha 2","isAccessibleForFree":true,"license":"https://www.gnu.org/licenses/agpl-3.0.html","publisher":{"@id":"https://shifrom.com/#org"},"sameAs":["https://github.com/LiudvigVladislav/SHIFROM"],"image":"https://shifrom.com/static/shifrom-social-132f0f6a.png"},{"@type":"CollectionPage","@id":"https://shifrom.com/writeups/#webpage","url":"https://shifrom.com/writeups/","name":"Engineering notes: encrypted messaging under censorship — SHIFROM","description":"Technical write-ups from the SHIFROM project — diagnosis, architecture, and what we got wrong along the way.","inLanguage":"en","isPartOf":{"@id":"https://shifrom.com/#website"},"about":{"@id":"https://shifrom.com/#app"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://shifrom.com/static/shifrom-social-132f0f6a.png"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://shifrom.com/"},{"@type":"ListItem","position":2,"name":"Engineering","item":"https://shifrom.com/writeups/"}]}}]}</script>
 <meta name="theme-color" content="#F4F3F8">
 <link rel="icon" type="image/png" href="/static/favicon.png?v=b9180644">
 <link rel="apple-touch-icon" href="/static/apple-touch-icon.png?v=533eb4c4">
@@ -89,7 +89,15 @@
 
   <section class="notes" aria-label="Write-ups">
     <article class="entry">
-      <p class="entry-meta"><time datetime="2026-08">August 2026</time> <span>18 min read</span></p>
+      <p class="entry-meta"><time datetime="2026-11-03">November 2026</time> <span>9 min read</span></p>
+      <div class="entry-body">
+        <h2 class="entry-title"><a href="/writeups/vless-reality-inside-a-messenger.html">How SHIFROM carries its relay connection inside VLESS+REALITY</a></h2>
+        <p class="entry-sum">How the SHIFROM app embeds Xray VLESS+REALITY as one route to the relay, where it sits in the privacy modes, what one founder-run field test showed, and what it does not protect.</p>
+        <span class="entry-cta" aria-hidden="true">Read the write-up<svg viewBox="0 0 24 24" width="20" height="20"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+    </article>
+    <article class="entry">
+      <p class="entry-meta"><time datetime="2026-08-13">August 2026</time> <span>18 min read</span></p>
       <div class="entry-body">
         <h2 class="entry-title"><a href="/writeups/how-phantom-survives-dpi.html">Diagnosing a Mobile-Path WebSocket Flow Stall</a></h2>
         <p class="entry-sum">Five hypotheses tested against a mobile-path flow stall, two field measurements on a Russian network, and the transport architecture that followed.</p>
@@ -114,6 +122,8 @@
     <a href="/about.html">About</a>
     <a href="/roadmap.html">Roadmap</a>
     <a href="/writeups/">Engineering</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/compare.html">Compare</a>
     <a class="foot-top" href="#top">Back to top</a>
   </nav>
 </footer>

@@ -1,0 +1,29 @@
+/* SHIFROM FAQ (faq.html, ru/faq.html). Loads after base.css and writeups.css (the page header and the light
+   behind it); a ledger of questions: the question on the left, a short answer on the right, hairlines between. */
+
+.faq-head { min-height: clamp(380px, 52vh, 540px); }
+
+.faq {
+  max-width: 1320px; margin: 0 auto; box-sizing: content-box;
+  padding: 0 var(--gutter) var(--section-y);
+}
+.faq-item {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); column-gap: clamp(32px, 5vw, 88px);
+  padding: clamp(32px, 5vh, 52px) 0;
+  border-top: 1px solid var(--line);
+}
+.faq-q {
+  font-family: var(--display); font-weight: var(--w-light);
+  font-size: clamp(1.25rem, 1.9vw, 1.6rem); line-height: 1.18; letter-spacing: -0.02em;
+  color: var(--ink); text-wrap: balance;
+}
+.faq-a { display: grid; gap: 14px; }
+.faq-a p { font-size: 17px; line-height: 1.6; color: var(--ink-2); max-width: 62ch; text-wrap: pretty; }
+.faq-a a { color: var(--blue); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.faq-a a:hover { color: var(--blue-press); }
+.faq-a .fine { margin-top: 2px; }
+.faq-item:target .faq-q { color: var(--blue); }
+
+@media (max-width: 760px) {
+  .faq-item { grid-template-columns: minmax(0, 1fr); row-gap: 14px; }
+}
