@@ -2,7 +2,7 @@
 
 Production deployment for the SHIFROM relay and landing page.
 
-- **Target host:** `phantom-relay-01` (Hetzner Helsinki, CPX22, Ubuntu 24.04, 65.108.154.152)
+- **Target host:** `phantom-relay-01` (Hetzner Helsinki, CPX22, Ubuntu 24.04, address in the operator's private notes)
 - **SSH:** `phantom@relay.phntm.pro` (ed25519 key)
 - **Services:** Rust relay + Caddy reverse proxy, both in Docker.
 
