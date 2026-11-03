@@ -1,0 +1,64 @@
+/* SHIFROM comparison (compare.html, ru/compare.html). Loads after base.css and writeups.css. One plain table:
+   the row labels stay put while the seven columns scroll sideways on narrow screens; SHIFROM's column is tinted.
+   A switch fades the cells that match SHIFROM's, leaving the differences. */
+
+.faq-head { min-height: clamp(380px, 52vh, 540px); }
+
+.cmp {
+  max-width: 1320px; margin: 0 auto; box-sizing: content-box;
+  padding: 0 var(--gutter) var(--section-y);
+}
+.cmp-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-bottom: 18px; }
+.cmp-checked { margin: 0; max-width: 72ch; }
+
+/* "only what differs" switch; js/pages/compare.js unhides it */
+.cmp-diff {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px 0 10px;
+  border: 0; border-radius: 999px; background: var(--paper); color: var(--ink);
+  font: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer;
+  box-shadow: inset 0 0 0 1px var(--line);
+  transition: transform 140ms var(--ease-out), box-shadow 180ms ease;
+}
+.cmp-diff[hidden] { display: none; }
+.cmp-diff:active { transform: scale(0.97); }
+.cmp-sw { position: relative; flex: none; width: 34px; height: 20px; border-radius: 999px; background: rgba(22, 20, 43, 0.16); transition: background-color 200ms ease; }
+.cmp-sw::after {
+  content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(22, 20, 43, 0.3);
+  transition: transform 200ms var(--ease-out);
+}
+.cmp-diff[aria-pressed="true"] .cmp-sw { background: var(--blue); }
+.cmp-diff[aria-pressed="true"] .cmp-sw::after { transform: translateX(14px); }
+@media (hover: hover) and (pointer: fine) {
+  .cmp-diff:hover { box-shadow: inset 0 0 0 1px rgba(22, 20, 43, 0.24); }
+}
+
+.cmp-scroll {
+  overflow-x: auto; overscroll-behavior-x: contain;
+  border-radius: 18px; background: var(--paper);
+  box-shadow: 0 18px 40px -28px rgba(22, 20, 43, 0.35), inset 0 0 0 1px var(--line);
+}
+.cmp-scroll:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.cmp-table { width: 100%; min-width: 1080px; border-collapse: collapse; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+.cmp-table th, .cmp-table td { padding: 16px 18px; text-align: left; vertical-align: top; border-top: 1px solid var(--line); }
+.cmp-table thead th, .cmp-table thead td { border-top: 0; padding-top: 20px; padding-bottom: 14px; }
+.cmp-table thead th { font-family: var(--display); font-weight: var(--w-light); font-size: 15px; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; }
+.cmp-table tbody th { font-weight: 600; color: var(--ink); width: 15%; }
+/* the row labels stay visible while the columns scroll */
+.cmp-table tbody th, .cmp-table thead td { position: sticky; left: 0; z-index: 1; background: var(--paper); box-shadow: 1px 0 0 var(--line); }
+.cmp-table .cmp-us { background: rgba(53, 73, 242, 0.06); color: var(--ink); }
+.cmp-table thead .cmp-us { color: var(--blue); }
+/* switch on: cells that say the same as SHIFROM fade back, rows where every app matches drop out */
+.cmp-table td { transition: opacity 200ms var(--ease-out); }
+.cmp-table.is-diff td[data-same] { opacity: 0.22; }
+.cmp-table.is-diff tr.cmp-alike { display: none; }
+@media (prefers-reduced-motion: reduce) { .cmp-table td, .cmp-sw, .cmp-sw::after { transition: none; } }
+
+.cmp-note { margin-top: 18px; max-width: 80ch; }
+.cmp-note a { color: var(--blue); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+
+@media (max-width: 760px) {
+  .cmp-table { font-size: 14px; }
+  .cmp-table tbody th { width: 34vw; min-width: 120px; }
+}

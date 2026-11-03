@@ -97,4 +97,52 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://shifrom.com/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://shifrom.com/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://shifrom.com/ru/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shifrom.com/faq.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://shifrom.com/ru/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://shifrom.com/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://shifrom.com/ru/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shifrom.com/faq.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://shifrom.com/compare.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://shifrom.com/compare.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://shifrom.com/ru/compare.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shifrom.com/compare.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://shifrom.com/ru/compare.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://shifrom.com/compare.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://shifrom.com/ru/compare.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shifrom.com/compare.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://shifrom.com/writeups/vless-reality-inside-a-messenger.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://shifrom.com/writeups/vless-reality-inside-a-messenger.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://shifrom.com/ru/writeups/vless-reality-inside-a-messenger.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shifrom.com/writeups/vless-reality-inside-a-messenger.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://shifrom.com/ru/writeups/vless-reality-inside-a-messenger.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://shifrom.com/writeups/vless-reality-inside-a-messenger.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://shifrom.com/ru/writeups/vless-reality-inside-a-messenger.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shifrom.com/writeups/vless-reality-inside-a-messenger.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
