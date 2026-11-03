@@ -30,14 +30,14 @@
 <link rel="apple-touch-icon" href="/static/apple-touch-icon.png?v=533eb4c4">
 <link rel="preload" href="/static/fonts/unbounded-latin-wght-normal.woff2?v=22f9b928" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/static/fonts/onest-latin-wght-normal.woff2?v=052df745" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/static/css/base.css?v=d7107c54">
+<link rel="stylesheet" href="/static/css/base.css?v=2bf25d51">
 <link rel="stylesheet" href="/static/css/home.css?v=971d3fdb">
 <script>
 /* Decide the page mode before first paint: scroll-scrubbed scenes (gl, fine pointer), timed scenes (play, touch) or designed stills (static). */
 (function () {
   var r = document.documentElement, c = r.classList, gl = false;
   c.add('js');
-  try { var cv = document.createElement('canvas'), x = cv.getContext('webgl2') || cv.getContext('webgl'); gl = !!x; var l = x && x.getExtension('WEBGL_lose_context'); if (l) l.loseContext(); } catch (e) {}
+  try { var cv = document.createElement('canvas'), x = cv.getContext('webgl2') || cv.getContext('webgl'); gl = !!x; var ri = x && x.getExtension('WEBGL_debug_renderer_info'); if (ri && /swiftshader|llvmpipe|softpipe|software|basic render/i.test(x.getParameter(ri.UNMASKED_RENDERER_WEBGL))) gl = false; var l = x && x.getExtension('WEBGL_lose_context'); if (l) l.loseContext(); } catch (e) {}
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   /* touch screens (phones, tablets): no pinned, scroll-scrubbed films; scenes play on a timer instead */
   var touch = matchMedia('(hover: none) and (pointer: coarse)').matches;
@@ -51,37 +51,25 @@
 <link rel="modulepreload" href="/static/js/main.js?v=b4146020">
 <link rel="modulepreload" href="/static/js/timing.js?v=efb2bbe9">
 <link rel="modulepreload" href="/static/js/nav.js?v=8e8e58d7">
-<link rel="modulepreload" href="/static/js/scenes/particles.js?v=88d93cc4">
-<link rel="modulepreload" href="/static/vendor/three/three.module.js?v=6f0d18b1">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/EffectComposer.js?v=460c8b24">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/RenderPass.js?v=0bb3b352">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/UnrealBloomPass.js?v=bc123526">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/OutputPass.js?v=4031c971">
-<link rel="modulepreload" href="/static/js/scenes/yield.js?v=c5724892">
-<link rel="modulepreload" href="/static/vendor/three/three.core.js?v=c001a388">
-<link rel="modulepreload" href="/static/vendor/three/addons/shaders/CopyShader.js?v=41d281b4">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/ShaderPass.js?v=b188f5e0">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/MaskPass.js?v=60017eab">
-<link rel="modulepreload" href="/static/vendor/three/addons/postprocessing/Pass.js?v=9c1a4327">
-<link rel="modulepreload" href="/static/vendor/three/addons/shaders/LuminosityHighPassShader.js?v=c7816aae">
-<link rel="modulepreload" href="/static/vendor/three/addons/shaders/OutputShader.js?v=8f72cd38">
+<script>if (!document.documentElement.classList.contains('static')) ["/static/js/scenes/particles.js?v=88d93cc4","/static/vendor/three/three.module.js?v=6f0d18b1","/static/vendor/three/addons/postprocessing/EffectComposer.js?v=460c8b24","/static/vendor/three/addons/postprocessing/RenderPass.js?v=0bb3b352","/static/vendor/three/addons/postprocessing/UnrealBloomPass.js?v=bc123526","/static/vendor/three/addons/postprocessing/OutputPass.js?v=4031c971","/static/js/scenes/yield.js?v=c5724892","/static/vendor/three/three.core.js?v=c001a388","/static/vendor/three/addons/shaders/CopyShader.js?v=41d281b4","/static/vendor/three/addons/postprocessing/ShaderPass.js?v=b188f5e0","/static/vendor/three/addons/postprocessing/MaskPass.js?v=60017eab","/static/vendor/three/addons/postprocessing/Pass.js?v=9c1a4327","/static/vendor/three/addons/shaders/LuminosityHighPassShader.js?v=c7816aae","/static/vendor/three/addons/shaders/OutputShader.js?v=8f72cd38"].forEach(function (h) { var l = document.createElement('link'); l.rel = 'modulepreload'; l.href = h; document.head.appendChild(l); });</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="nav" id="nav">
   <a class="brand" href="/" aria-label="SHIFROM home">
-    <img class="brand-mark" src="/static/favicon.png?v=b9180644" width="192" height="192" alt="">
+    <img class="brand-mark" src="/static/img/nav/brand-mark.webp?v=b3b954ba" width="104" height="104" alt="">
     <span class="brand-word">
       <img class="wm-img" src="/static/shifrom-wordmark-white.png" width="781" height="119" alt="">
       <span class="wm-type" aria-hidden="true">SHIFROM</span>
     </span>
   </a>
   <nav class="links" aria-label="Main">
-    <a href="/" aria-current="page">Home</a>
     <a href="/about.html">About</a>
     <a href="/roadmap.html">Roadmap</a>
     <a href="/writeups/">Engineering</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/compare.html">Compare</a>
     <a href="/donate.html">Support</a>
   </nav>
   <div class="lang" role="group" aria-label="Language">
@@ -96,6 +84,8 @@
         <a href="/about.html">About</a>
         <a href="/roadmap.html">Roadmap</a>
         <a href="/writeups/">Engineering</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/compare.html">Compare</a>
         <a href="/donate.html">Support</a>
       </nav>
       <div class="menu-lang">
@@ -131,7 +121,7 @@
       </div>
     </div>
 
-    <div class="hero-story" aria-label="What happens to a message">
+    <div class="hero-story" role="group" aria-label="What happens to a message">
       <div class="beat" data-at="1">
         <picture class="beat-still" aria-hidden="true"><source media="(max-width: 700px)" srcset="/static/img/stills/hero-mark-mobile.webp?v=3ed3689a"><img src="/static/img/stills/hero-mark-desktop.webp?v=dbd20f22" alt="" width="1440" height="900" loading="lazy" decoding="async"></picture>
         <p class="beat-line">Privacy that holds under pressure.</p>
@@ -285,7 +275,7 @@
 
   <!-- 6. Support -->
   <section class="support" id="support" aria-labelledby="support-h">
-    <img class="support-mark" src="/static/favicon.png?v=b9180644" width="192" height="192" alt="" loading="lazy" decoding="async">
+    <img class="support-mark" src="/static/img/nav/brand-mark-192.webp?v=a5ae9937" width="192" height="192" alt="" loading="lazy" decoding="async">
     <h2 id="support-h">Help SHIFROM grow.</h2>
     <p>SHIFROM is independently developed and does not sell user data. Donations fund iOS development, infrastructure and an independent security audit before&nbsp;v1.0.</p>
     <div class="actions">
@@ -297,7 +287,7 @@
 
 <footer class="foot">
   <div class="foot-id">
-    <img src="/static/favicon.png?v=b9180644" width="192" height="192" alt="" loading="lazy" decoding="async">
+    <img src="/static/img/nav/brand-mark.webp?v=b3b954ba" width="104" height="104" alt="" loading="lazy" decoding="async">
     <p><span class="foot-name">SHIFROM</span> <span>Maintained by Willen LLC · Wyoming, USA · AGPL-3.0-or-later</span></p>
   </div>
   <nav class="foot-links" aria-label="Footer">
