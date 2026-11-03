@@ -16,6 +16,31 @@
     # Turn off automatic HTTPS redirect for /health to keep uptime probes cheap,
     # but still serve over TLS.
     # (Caddy auto-HTTPS is on by default; this is just the admin email.)
+    log default {
+        exclude http.log.error http.log.access
+    }
+    log http_request_errors {
+        include http.log.error
+        output stdout
+        level ERROR
+        format filter {
+            wrap json {
+                message_key ""
+                stacktrace_key ""
+            }
+            fields {
+                request delete
+                resp_headers delete
+                user_id delete
+                error delete
+                err_trace delete
+                uri delete
+                url delete
+                headers delete
+                upstream delete
+            }
+        }
+    }
 }
 
 # -----------------------------------------------------------------------------
@@ -62,7 +87,23 @@ relay.phntm.pro {
     # Matches the relay's in-process TraceLayer policy (never logs ?token=).
     log {
         output stdout
-        format json
+        format filter {
+            wrap json {
+                message_key ""
+                stacktrace_key ""
+            }
+            fields {
+                request delete
+                resp_headers delete
+                user_id delete
+                error delete
+                err_trace delete
+                uri delete
+                url delete
+                headers delete
+                upstream delete
+            }
+        }
         level  INFO
     }
 }
@@ -112,7 +153,23 @@ ntfy.phntm.pro {
 
     log {
         output stdout
-        format json
+        format filter {
+            wrap json {
+                message_key ""
+                stacktrace_key ""
+            }
+            fields {
+                request delete
+                resp_headers delete
+                user_id delete
+                error delete
+                err_trace delete
+                uri delete
+                url delete
+                headers delete
+                upstream delete
+            }
+        }
         level  INFO
     }
 }
@@ -184,7 +241,23 @@ bridge.phntm.pro {
 
     log {
         output stdout
-        format json
+        format filter {
+            wrap json {
+                message_key ""
+                stacktrace_key ""
+            }
+            fields {
+                request delete
+                resp_headers delete
+                user_id delete
+                error delete
+                err_trace delete
+                uri delete
+                url delete
+                headers delete
+                upstream delete
+            }
+        }
         level  INFO
     }
 }
@@ -200,7 +273,7 @@ bridge.phntm.pro {
 # then accept Caddy's Let's Encrypt cert.
 # Alternative: use DNS-01 via Cloudflare API — see deploy/README.md.
 
-phntm.pro, www.phntm.pro {
+phntm.pro, www.phntm.pro, shifrom.com, www.shifrom.com {
     header {
         Strict-Transport-Security "max-age=31536000; includeSubDomains"
         X-Content-Type-Options    "nosniff"
@@ -354,7 +427,23 @@ phntm.pro, www.phntm.pro {
 
     log {
         output stdout
-        format json
+        format filter {
+            wrap json {
+                message_key ""
+                stacktrace_key ""
+            }
+            fields {
+                request delete
+                resp_headers delete
+                user_id delete
+                error delete
+                err_trace delete
+                uri delete
+                url delete
+                headers delete
+                upstream delete
+            }
+        }
         level  INFO
     }
 }
