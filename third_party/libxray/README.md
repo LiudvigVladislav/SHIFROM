@@ -16,7 +16,7 @@ SHIFROM does not modify any of the source code compiled into it.
 |---|---|
 | Vendored in | commit `0c157289e8ec` (2026-05-06) |
 | Built by | `.github/workflows/build-libxray.yml`, run 25448646675 (2026-05-06), Go 1.26.2, NDK r27c |
-| libXray | `main` at [`452c02e3caef3aa628bb3b812dc8d41024a90207`](https://github.com/XTLS/libXray/tree/452c02e3caef3aa628bb3b812dc8d41024a90207) (2026-05-04) |
+| libXray | `main` at [`452c02e3caef3aa628bb3b812dc8d41024a90207`](https://github.com/XTLS/libXray/tree/452c02e3caef3aa628bb3b812dc8d41024a90207) (2026-05-04), **reconstructed indirectly, not recorded** — see below |
 | Xray-core | [`v1.260327.0`](https://pkg.go.dev/github.com/xtls/xray-core@v1.260327.0) (release v26.3.27, commit `d2758a023cd7`) |
 
 The run was started with the default ref, `main`, and its log has since expired,
@@ -31,6 +31,10 @@ module list. All four ABIs embed the same modules.
 
 `licenses/` holds the licence, notice and patent files of every module compiled
 into `libgojni.so`, copied verbatim from the exact versions in the table.
+`sing`, `sing-shadowsocks` and `juju/ratelimit` ship only a short GPLv3 or
+LGPLv3 notice; both licences require a copy of the GPL itself, so the script
+adds the full text (`GPL-3.0.txt`, from gnu.org) to those directories as
+`COPYING-GPL-3.0.txt`.
 `collect-licenses.sh` regenerates the directory from the binary:
 
 ```bash

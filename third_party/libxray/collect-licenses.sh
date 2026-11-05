@@ -51,6 +51,13 @@ copy_licences() {   # <source dir> <destination dir>
         printf 'No licence file in %s\n' "$1" >&2
         exit 1
     fi
+    # GPLv3 and LGPLv3 both require a copy of the GPL itself. Some modules ship
+    # only the short "licensed under the GPL" notice, so attach the full text.
+    # (MPL-2.0 names the GPL too, as a secondary licence; that does not count.)
+    if grep -qE 'terms of the GNU (Lesser )?General Public License as published|GNU LESSER GENERAL PUBLIC LICENSE' "$2"/* &&
+       ! grep -q 'TERMS AND CONDITIONS' "$2"/*; then
+        cp "$HERE/GPL-3.0.txt" "$2/COPYING-GPL-3.0.txt"
+    fi
 }
 
 rm -rf "$OUT"

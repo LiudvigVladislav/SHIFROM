@@ -89,7 +89,10 @@ in `third_party/libxray/`.
 
 libXray
   Upstream:  https://github.com/XTLS/libXray
-  Version:   commit 452c02e3caef3aa628bb3b812dc8d41024a90207 (2026-05-04)
+  Version:   commit 452c02e3caef3aa628bb3b812dc8d41024a90207 (2026-05-04),
+             reconstructed indirectly: the build log has expired and the
+             binary records libXray only as a local checkout. See
+             third_party/libxray/README.md for how it was established.
   Licence:   MIT — Copyright (c) 2023-2025 XTLS
   Used in:   gomobile bindings that start and stop Xray-core inside the
              app process.
@@ -118,7 +121,8 @@ Other Go modules compiled into libgojni.so
   Licences:  MIT, BSD-2-Clause, BSD-3-Clause (with Go's PATENTS grant),
              Apache-2.0; GPL-3.0-or-later (github.com/sagernet/sing,
              github.com/sagernet/sing-shadowsocks); LGPL-3.0 with a linking
-             exception (github.com/juju/ratelimit).
+             exception (github.com/juju/ratelimit); the full GPLv3 text is
+             included for these three.
   Details:   third_party/libxray/README.md and third_party/libxray/licenses/.
 
 ────────────────────────────────────────────────────────────────────────────────

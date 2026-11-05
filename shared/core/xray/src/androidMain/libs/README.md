@@ -41,7 +41,8 @@ When XTLS/libXray ships a release we want to pick up:
 
 ## Provenance
 
-Current build: libXray `main` at `452c02e3caef` (Xray-core v1.260327.0),
+Current build: libXray `main` at `452c02e3caef` (reconstructed indirectly;
+Xray-core v1.260327.0 is recorded in the binary),
 built by `gomobile bind` with NDK r27c and Go 1.26.2 on 2026-05-06, vendored
 in commit `0c157289e8ec`. Exact versions, licences and how they were
 established: `third_party/libxray/README.md`.
