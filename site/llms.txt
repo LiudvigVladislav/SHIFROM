@@ -4,7 +4,7 @@
 
 Important qualifiers that travel with every claim below:
 
-- SHIFROM is in Alpha 2. Source builds and tagged development snapshots are on GitHub; there is no public end-user APK or open beta yet. Public builds come with Beta.
+- SHIFROM is in Alpha 2. Source builds and tagged development snapshots are on GitHub; apart from the historical Alpha 1 test APK, there is no public end-user build or open beta yet. Public builds come with Beta.
 - The custom protocol composition has not yet received an independent security audit.
 - Group chats and calls are not production-ready.
 - REALITY makes traffic resemble ordinary TLS. It is not an anonymity system and may not bypass every DPI policy; founder-run tests covered specific networks and dates.
