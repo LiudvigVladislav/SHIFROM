@@ -36,9 +36,12 @@ When XTLS/libXray ships a release we want to pick up:
 
 4. `./gradlew :shared:core:xray:assemble` to verify, then commit the
    updated artefacts in a single commit referencing the source SHA.
+5. Refresh the licence files and provenance in `third_party/libxray/`
+   (see its README) and the Xray entries in `NOTICE`.
 
 ## Provenance
 
-Initial vendoring: libXray @ `main` (2026-05-07), built via
-`gomobile bind` with NDK r27c, Go 1.26.2 — see the workflow run linked from
-the introducing commit for full reproducibility metadata.
+Current build: libXray `main` at `452c02e3caef` (Xray-core v1.260327.0),
+built by `gomobile bind` with NDK r27c and Go 1.26.2 on 2026-05-06, vendored
+in commit `0c157289e8ec`. Exact versions, licences and how they were
+established: `third_party/libxray/README.md`.

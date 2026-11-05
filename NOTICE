@@ -78,6 +78,50 @@ OkHttp (com.squareup.okhttp3)
              (forceCancelAllEngineCalls).
 
 ────────────────────────────────────────────────────────────────────────────────
+Outer transport — Xray (shared/core/xray)
+────────────────────────────────────────────────────────────────────────────────
+
+The Android app embeds a Go library built from libXray, vendored as
+`libXray.jar` plus `libgojni.so` per ABI. SHIFROM does not modify its
+source. Build provenance, the full list of the 36 Go modules compiled
+into it, and the verbatim licence, notice and patent files of each are
+in `third_party/libxray/`.
+
+libXray
+  Upstream:  https://github.com/XTLS/libXray
+  Version:   commit 452c02e3caef3aa628bb3b812dc8d41024a90207 (2026-05-04)
+  Licence:   MIT — Copyright (c) 2023-2025 XTLS
+  Used in:   gomobile bindings that start and stop Xray-core inside the
+             app process.
+
+Xray-core
+  Upstream:  https://github.com/XTLS/Xray-core
+  Version:   v1.260327.0 (release v26.3.27,
+             commit d2758a023cd7f4174a5a5fa4ff66e487d4342ba0)
+  Licence:   MPL-2.0 (file-level copyleft; no file carries the Exhibit B
+             "Incompatible With Secondary Licenses" notice)
+  Used in:   VLESS + REALITY outer transport and the local SOCKS5
+             listener the app routes through.
+
+REALITY (github.com/xtls/reality)
+  Upstream:  https://github.com/XTLS/REALITY
+  Version:   commit 9234c772ba8f181f31c3e81dc2b4177322e5a9a9
+  Licence:   MPL-2.0 — Copyright (c) 2023 RPRX; files derived from Go's
+             crypto/tls are BSD-3-Clause — Copyright (c) 2009 The Go Authors
+  Used in:   REALITY TLS handshake, compiled into Xray-core.
+
+  The source code of Xray-core and REALITY at these exact versions is
+  available from the upstream links above, from the Go module proxy
+  (proxy.golang.org), and on request from legal@shifrom.com.
+
+Other Go modules compiled into libgojni.so
+  Licences:  MIT, BSD-2-Clause, BSD-3-Clause (with Go's PATENTS grant),
+             Apache-2.0; GPL-3.0-or-later (github.com/sagernet/sing,
+             github.com/sagernet/sing-shadowsocks); LGPL-3.0 with a linking
+             exception (github.com/juju/ratelimit).
+  Details:   third_party/libxray/README.md and third_party/libxray/licenses/.
+
+────────────────────────────────────────────────────────────────────────────────
 Local storage
 ────────────────────────────────────────────────────────────────────────────────
 

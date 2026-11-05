@@ -21,10 +21,10 @@
 # run page. Vendor it into shared/core/xray/src/androidMain/libs/ in a
 # follow-up commit.
 #
-# License: Xray-core MPL-2.0 with Exhibit B; libXray itself MIT.
-# Aggregating the resulting .so into our AGPL-3.0-or-later APK is
-# permitted (file-level copyleft on Xray, no source modifications).
-# Same posture as v2rayNG / Hiddify ship today.
+# License: Xray-core MPL-2.0 (file-level copyleft; Exhibit B appears only
+# as the template inside the licence text, no file attaches it); libXray
+# itself MIT. The .so also compiles in Go modules under other licences —
+# see third_party/libxray/ and refresh it whenever the vendored build changes.
 
 name: Build libXray.aar
 
