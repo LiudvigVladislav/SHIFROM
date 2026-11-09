@@ -4,7 +4,8 @@
 compile-time mutex; Phase 2 #80 added the `TransportManager` runtime selector
 with per-kind cold-start timeouts; Phase 3 wires the Settings UI selector +
 Ghost confirm dialog + mode-switch graceful reconnect; behaviour documented
-in [`PRIVACY_MODE_BEHAVIOR.md`](../PRIVACY_MODE_BEHAVIOR.md))
+in [`PRIVACY_MODE_BEHAVIOR.md`](../PRIVACY_MODE_BEHAVIOR.md); amended 2026-11-10, see
+[Amendment 2026-11-10](#amendment-2026-11-10--probe-budgets-route-memory-and-tor-bootstrap-as-shipped))
 **Date:** 2026-05-09
 **Deciders:** Vladislav Liudvig (solo author)
 **Related:** [ADR-016](ADR-016-tor-unified-push-hybrid-transport.md) (Tor +
@@ -105,6 +106,10 @@ ordered chain:
 5. Failure → tear down, log the reason, advance to the next entry in the chain.
 6. Chain exhausted → return `Result.failure(NoTransportReachableException)`.
 
+> **Superseded in part (2026-11-10).** The probe budget is per kind, not a
+> uniform 5 s, and step 4 records the hint only when the primary kind wins.
+> See [Amendment 2026-11-10](#amendment-2026-11-10--probe-budgets-route-memory-and-tor-bootstrap-as-shipped).
+
 #### Per-kind timeouts (split prepare vs probe)
 
 The chain walk uses a split timeout: cold subsystem boot needs much longer
@@ -122,6 +127,9 @@ review before merge.
 Probe budget is uniform 5 s for every kind — once the path is up, the
 relay's `/health` round-trip is sub-second.
 
+> **Superseded in part (2026-11-10).** The Tor row and the uniform 5 s probe
+> budget no longer match the code. See [Amendment 2026-11-10](#amendment-2026-11-10--probe-budgets-route-memory-and-tor-bootstrap-as-shipped).
+
 ### Memory of last working transport
 
 `LocalConfig.lastWorkingTransport` is a hint, not a binding. On the next
@@ -130,6 +138,9 @@ re-ordered to put `lastWorkingTransport` first — saves a 5-second timeout
 when nothing has changed. The hint resets after `LAST_SUCCESS_TTL_MS =
 24 * 3600 * 1000` ms (24 hours) so a long-stale value cannot pin the user
 to a transport that is now broken.
+
+> **Superseded (2026-11-10).** The chain is no longer re-ordered, and a hint
+> naming a fallback kind is not kept. See [Amendment 2026-11-10](#amendment-2026-11-10--probe-budgets-route-memory-and-tor-bootstrap-as-shipped).
 
 ### Schema migration
 
@@ -200,6 +211,8 @@ Changing `privacyMode` while connected:
   `/auth/challenge` round trips before reaching the relay's WS upgrade.
   Worst case: ~15 s on initial connect (3 × 5 s timeout). Memory of last
   successful transport reduces this to ~1 s on the steady state.
+  *(Superseded 2026-11-10: the per-kind budgets make the worst case much
+  longer; see [Amendment 2026-11-10](#amendment-2026-11-10--probe-budgets-route-memory-and-tor-bootstrap-as-shipped).)*
 * The build matrix collapses: there is no longer a "Tor build" or
   "Xray build". Both subsystems compile in always. APK size grows by the
   Tor binary size (~25 MB in the kmp-tor native bundle); REALITY libXray
@@ -250,3 +263,87 @@ Changing `privacyMode` while connected:
 * Mode-switch graceful reconnect.
 * Test matrix (8 scenarios from the original Track 2B plan).
 * `PRIVACY_MODE_BEHAVIOR.md` + `KNOWN_ISSUES.md` + `README.md` updates.
+
+---
+
+## Amendment 2026-11-10 — probe budgets, route memory and Tor bootstrap as shipped
+
+The sections above describe the design as accepted on 2026-05-09. The code
+changed after that, and three statements no longer hold. This amendment
+records the behaviour of `master` at commit `35b0f8b`; the original text is
+kept as it was, with a pointer here.
+
+### 1. Probe budget is per kind
+
+The walk wraps each probe in an outer timeout from
+`TransportManager.probeTimeoutFor()`, not `PROBE_TIMEOUT_MS`. That constant
+(5 s) is still declared for callers and tests that import it, but the walk
+does not use it.
+
+| Kind | Inner budget (one probe call) | Outer budget (`probeTimeoutFor`) |
+|---|---|---|
+| `Direct` | 10 s per attempt, 2 attempts, 400 ms between them (`AndroidNativeOkHttpDirectProbe`) | 25 s |
+| `Reality` | 20 s (`KtorTransportProbe.callTimeoutFor`) | 30 s |
+| `Tor` | 60 s (`KtorTransportProbe.callTimeoutFor`) | 90 s |
+
+Each outer budget is the inner budget plus a margin, so the inner timeout
+fires first. A 2026-05-11 regression, where the outer budget was smaller than
+the inner one and cut every REALITY probe short, is the reason for this rule.
+`KtorTransportProbe.callTimeoutFor` still lists 4 s for `Direct`, but
+`KtorTransportProbe.reachable` hands Direct to `AndroidNativeOkHttpDirectProbe`,
+so that value is not used.
+
+### 2. The last working route is remembered only for the primary kind
+
+Since 2026-05-27 (PR-RECV-DIAG1 v1.7) the hint no longer changes the order of
+the chain:
+
+- `onSuccess` saves `lastWorkingTransport` and `lastSuccessAt` only when the
+  winning kind is the first entry of the active strategy's chain. When a
+  fallback wins, both are cleared.
+- `reorderChain` returns the strategy's chain unchanged in every case. It only
+  decides whether to keep the hint, and clears it when it is older than
+  `LAST_SUCCESS_TTL_MS` (24 h), not in the current chain, or not the primary.
+- The hint is also cleared on a Privacy Mode switch (`AppContainer.setPrivacyMode`)
+  and before a network-change rewalk (`TransportRewalkCoordinator`).
+
+The walk therefore always starts at the mode's first kind. The earlier rule let
+a single glitch make Tor the first choice for up to 24 hours: Direct and
+REALITY fail once, Tor wins, Tor is saved as the hint and moved to the front,
+and from then on it wins every time because it is tried first. Field test
+#84.8 reproduced exactly that. The `LocalConfig` table above still calls the
+field a "Reorder hint"; read it as "primary-success record".
+
+### 3. Tor prepare is a bridge rotation, not one 600 s budget
+
+`TOR_PREPARE_TIMEOUT_MS` no longer exists. Tor prepare walks
+`TransportManager.BRIDGE_ROTATION_ORDER`, one budget per bridge profile:
+
+| Profile | Budget |
+|---|---|
+| `KitchenSink` | 600 s |
+| `SnowflakeOnly` | 420 s |
+| `Obfs4Only` | 180 s |
+| `MeekLite` | 60 s |
+
+The worst case, when every profile has to be tried, is 1260 s. A warm restart
+returns within the first profile in seconds.
+
+### 4. Worst case for the Standard chain
+
+With nothing reachable, the Standard walk spends up to 25 s on Direct, up to
+30 s preparing and 30 s probing REALITY, then up to 1260 s preparing and 90 s
+probing Tor. The "~15 s" figure in **Costs** applied to the original uniform
+budgets only. In practice the walk ends at the first kind that answers.
+
+### Sources
+
+- [`TransportManager.kt`](../../shared/core/transport/src/commonMain/kotlin/phantom/core/transport/TransportManager.kt):
+  `probeTimeoutFor`, `onSuccess`, `reorderChain`, `prepareTransport`,
+  `REALITY_PREPARE_TIMEOUT_MS`, `BRIDGE_ROTATION_ORDER`
+- [`KtorTransportProbe.kt`](../../shared/core/transport/src/androidMain/kotlin/phantom/core/transport/KtorTransportProbe.kt): `callTimeoutFor`
+- [`AndroidNativeOkHttpDirectProbe.kt`](../../shared/core/transport/src/androidMain/kotlin/phantom/core/transport/AndroidNativeOkHttpDirectProbe.kt):
+  `CALL_TIMEOUT_MS`, `MAX_ATTEMPTS`, `RETRY_DELAY_MS`
+- [`TransportPreferences.kt`](../../shared/core/transport/src/commonMain/kotlin/phantom/core/transport/TransportPreferences.kt): `LAST_SUCCESS_TTL_MS`
+- [`TransportManagerTest.kt`](../../shared/core/transport/src/commonTest/kotlin/phantom/core/transport/TransportManagerTest.kt):
+  the primary-only hint tests
