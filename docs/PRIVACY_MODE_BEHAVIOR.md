@@ -87,6 +87,15 @@ put the previously-successful kind first — saving the cold-start cost. Hints
 expire after 24 hours so a long-stale value cannot pin the user to a path
 that is no longer reachable.
 
+> **Correction (2026-11-10).** Three details above are out of date. The probe
+> budget is per kind: 25 s for Direct (two 10 s attempts), 30 s for REALITY,
+> 90 s for Tor. Tor bootstrap walks four bridge profiles whose budgets add
+> up to 1260 s; stops between profiles come on top. The hint no longer
+> reorders the chain: it is saved only when the mode's declared first kind
+> wins and cleared when a fallback wins. Every walk follows the mode's
+> declared order, except that REALITY is skipped while an Android VPN is
+> active, so Private then starts with Tor. Details: [ADR-020, Amendment 2026-11-10](adr/ADR-020-Adaptive-Transport-Selection.md#amendment-2026-11-10--probe-budgets-route-memory-and-tor-bootstrap-as-shipped).
+
 ---
 
 ## What the relay sees per mode
@@ -136,6 +145,10 @@ The eight scenarios from the Track 2B plan that exercise this end-to-end:
 | 20 | Privacy Mode switch while connected (any → any) | Notification shows brief Connecting then Online via new kind |
 | 21 | Ghost mode without Tor available | Connect aborts with "Cannot reach relay (tried 1)" — no silent downgrade |
 | 22 | All transports fail (airplane mode + bad relay endpoint) | Chain exhausts, `transportFailureCount` increments, user-visible error |
+
+Rows 15 and 18 predate the 2026-11-10 correction above. In row 15 no hint is
+recorded, because REALITY is a fallback in Standard mode. In row 18 the
+network change clears the hint before the next walk.
 
 These are the "B6 test matrix" deliverable from the original Track 2B plan;
 results recorded in `KNOWN_ISSUES.md` once Vladislav runs them.
