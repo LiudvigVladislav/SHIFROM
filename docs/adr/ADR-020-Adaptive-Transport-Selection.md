@@ -107,7 +107,8 @@ ordered chain:
 6. Chain exhausted → return `Result.failure(NoTransportReachableException)`.
 
 > **Superseded in part (2026-11-10).** The probe budget is per kind, not a
-> uniform 5 s, and step 4 records the hint only when the primary kind wins.
+> uniform 5 s, and step 4 records the hint only when the strategy's declared
+> primary wins.
 > See [Amendment 2026-11-10](#amendment-2026-11-10--probe-budgets-route-memory-and-tor-bootstrap-as-shipped).
 
 #### Per-kind timeouts (split prepare vs probe)
@@ -295,8 +296,9 @@ so that value is not used.
 
 ### 2. The last working route is remembered only for the primary kind
 
-Since 2026-05-27 (PR-RECV-DIAG1 v1.7) the hint no longer changes the order of
-the chain:
+Since 2026-05-27 (PR-RECV-DIAG1, [#234](https://github.com/LiudvigVladislav/SHIFROM/pull/234),
+commit [`684c2be6`](https://github.com/LiudvigVladislav/SHIFROM/commit/684c2be6a2946af37033b6c4b5098f7b75a16b64))
+the hint no longer changes the order of the chain:
 
 - `onSuccess` saves `lastWorkingTransport` and `lastSuccessAt` only when the
   winning kind is the first entry of the active strategy's chain. When a
@@ -305,14 +307,24 @@ the chain:
   decides whether to keep the hint, and clears it when it is older than
   `LAST_SUCCESS_TTL_MS` (24 h), not in the current chain, or not the primary.
 - The hint is also cleared on a Privacy Mode switch (`AppContainer.setPrivacyMode`)
-  and before a network-change rewalk (`TransportRewalkCoordinator`).
+  and when `TransportRewalkCoordinator` actually reconnects after a network
+  change. A network callback that the coordinator treats as a no-op
+  (`QuiescencePreserved`) leaves the hint alone.
 
-The walk therefore always starts at the mode's first kind. The earlier rule let
-a single glitch make Tor the first choice for up to 24 hours: Direct and
-REALITY fail once, Tor wins, Tor is saved as the hint and moved to the front,
-and from then on it wins every time because it is tried first. Field test
-#84.8 reproduced exactly that. The `LocalConfig` table above still calls the
-field a "Reorder hint"; read it as "primary-success record".
+The walk therefore follows the strategy's declared order, with one filter on
+top: when an Android VPN is active, `walkChainOnce` drops REALITY from the
+walk. Under a VPN, Private starts with Tor and Standard walks Direct → Tor.
+The hint is still compared with the declared primary (`strategy.chain.first()`),
+so a Tor win in Private mode under a VPN is a fallback win and saves no hint.
+
+The earlier rule could pin Tor as the first choice after a single glitch:
+Direct and REALITY fail once, Tor wins, Tor is saved as the hint and moved to
+the front, and from then on it wins every time because it is tried first.
+Before #234, `onSuccess` also refreshed `lastSuccessAt` on every success, so
+the 24 h TTL counted from the last Tor connect, not from the first failure; as
+long as Tor kept connecting, the lock-in could last longer than 24 hours.
+Field test #84.8 reproduced the lock-in. The `LocalConfig` table above still
+calls the field a "Reorder hint"; read it as "primary-success record".
 
 ### 3. Tor prepare is a bridge rotation, not one 600 s budget
 
@@ -326,20 +338,31 @@ field a "Reorder hint"; read it as "primary-success record".
 | `Obfs4Only` | 180 s |
 | `MeekLite` | 60 s |
 
-The worst case, when every profile has to be tried, is 1260 s. A warm restart
-returns within the first profile in seconds.
+The bootstrap budgets add up to 1260 s. That is the sum of the configured
+windows, not a ceiling on the whole Tor prepare: stopping Tor between profiles
+and after a failed profile runs outside these windows, with its own 3 s stop
+budget (`SUBSYSTEM_STOP_TIMEOUT_MS`). On a warm restart Tor is usually already
+bootstrapped and becomes ready within the first profile.
 
-### 4. Worst case for the Standard chain
+Likewise for REALITY, `REALITY_PREPARE_TIMEOUT_MS` (30 s) covers the wait for
+`Ready` after the start call. Start admission (its own 3 s budget) and the
+start call itself come before it.
 
-With nothing reachable, the Standard walk spends up to 25 s on Direct, up to
-30 s preparing and 30 s probing REALITY, then up to 1260 s preparing and 90 s
-probing Tor. The "~15 s" figure in **Costs** applied to the original uniform
-budgets only. In practice the walk ends at the first kind that answers.
+### 4. Configured budgets for the Standard chain
+
+With no VPN and nothing reachable, the large configured stage budgets of the
+Standard walk are: Direct probe 25 s; REALITY ready-wait 30 s and probe 30 s;
+Tor bootstrap windows 1260 s and probe 90 s. Their nominal sum is 1435 s
+(23 min 55 s). This is not a measured or guaranteed maximum: start admission,
+subsystem start and teardown run outside these budgets, and a kind whose
+prepare fails is not probed at all. The "~15 s" figure in **Costs** applied to
+the original uniform budgets only. In practice the walk ends at the first kind
+that answers.
 
 ### Sources
 
 - [`TransportManager.kt`](../../shared/core/transport/src/commonMain/kotlin/phantom/core/transport/TransportManager.kt):
-  `probeTimeoutFor`, `onSuccess`, `reorderChain`, `prepareTransport`,
+  `walkChainOnce`, `probeTimeoutFor`, `onSuccess`, `reorderChain`, `prepareTransport`,
   `REALITY_PREPARE_TIMEOUT_MS`, `BRIDGE_ROTATION_ORDER`
 - [`KtorTransportProbe.kt`](../../shared/core/transport/src/androidMain/kotlin/phantom/core/transport/KtorTransportProbe.kt): `callTimeoutFor`
 - [`AndroidNativeOkHttpDirectProbe.kt`](../../shared/core/transport/src/androidMain/kotlin/phantom/core/transport/AndroidNativeOkHttpDirectProbe.kt):

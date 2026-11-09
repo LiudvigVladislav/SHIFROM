@@ -89,10 +89,12 @@ that is no longer reachable.
 
 > **Correction (2026-11-10).** Three details above are out of date. The probe
 > budget is per kind: 25 s for Direct (two 10 s attempts), 30 s for REALITY,
-> 90 s for Tor. Tor bootstrap walks four bridge profiles, up to 1260 s in
-> total. The hint no longer reorders the chain: it is saved only when the
-> mode's first kind wins, cleared when a fallback wins, and every walk starts
-> from the first kind. Details: [ADR-020, Amendment 2026-11-10](adr/ADR-020-Adaptive-Transport-Selection.md#amendment-2026-11-10--probe-budgets-route-memory-and-tor-bootstrap-as-shipped).
+> 90 s for Tor. Tor bootstrap walks four bridge profiles whose budgets add
+> up to 1260 s; stops between profiles come on top. The hint no longer
+> reorders the chain: it is saved only when the mode's declared first kind
+> wins and cleared when a fallback wins. Every walk follows the mode's
+> declared order, except that REALITY is skipped while an Android VPN is
+> active, so Private then starts with Tor. Details: [ADR-020, Amendment 2026-11-10](adr/ADR-020-Adaptive-Transport-Selection.md#amendment-2026-11-10--probe-budgets-route-memory-and-tor-bootstrap-as-shipped).
 
 ---
 
